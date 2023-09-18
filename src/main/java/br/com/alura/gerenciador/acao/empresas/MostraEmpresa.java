@@ -10,12 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.NoArgsConstructor;
 import main.java.br.com.alura.gerenciador.acao.AcaoComEntityManager;
 import main.java.br.com.alura.gerenciador.modelo.Empresa;
-import main.java.br.com.alura.gerenciador.repository.EmpresaRepository;
+import main.java.br.com.alura.gerenciador.repository.EmpresaService;
 
 @NoArgsConstructor
 public class MostraEmpresa extends AcaoComEntityManager{
 
-	private EmpresaRepository repository = new EmpresaRepository(getEntityManager());
+	private EmpresaService service = new EmpresaService(this.em);
 	
 	public MostraEmpresa(EntityManager em) {
 		super(em);
@@ -28,7 +28,7 @@ public class MostraEmpresa extends AcaoComEntityManager{
 		String paramId = request.getParameter("id");
 		Long id = Long.valueOf(paramId);
 		
-		Empresa empresa = repository.getEmpresaById(id);
+		Empresa empresa = service.findEmpresaById(id);
 		request.setAttribute("empresa", empresa);
 		
 		return "forward:formAlteraEmpresa.jsp";

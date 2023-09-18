@@ -11,12 +11,12 @@ import javax.servlet.http.HttpSession;
 import lombok.NoArgsConstructor;
 import main.java.br.com.alura.gerenciador.acao.AcaoComEntityManager;
 import main.java.br.com.alura.gerenciador.modelo.Usuario;
-import main.java.br.com.alura.gerenciador.repository.UsuarioRepository;
+import main.java.br.com.alura.gerenciador.repository.UsuarioService;
 
 @NoArgsConstructor
 public class Login extends AcaoComEntityManager{
 
-	private UsuarioRepository repository = new UsuarioRepository(getEntityManager());
+	private UsuarioService service = new UsuarioService(this.em);
 	
 	public Login(EntityManager em) {
 		super(em);
@@ -30,7 +30,7 @@ public class Login extends AcaoComEntityManager{
 		
 		System.out.println("Logando " + login);
 		
-		Usuario usuario = repository.buscarPorLogin(login);
+		Usuario usuario = service.findByLogin(login);
 		
 		if(usuario != null && usuario.verificarSenha(senha)) {
 			System.out.println("Usuario existe");

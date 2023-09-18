@@ -13,12 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.NoArgsConstructor;
 import main.java.br.com.alura.gerenciador.acao.AcaoComEntityManager;
 import main.java.br.com.alura.gerenciador.modelo.Empresa;
-import main.java.br.com.alura.gerenciador.repository.EmpresaRepository;
+import main.java.br.com.alura.gerenciador.repository.EmpresaService;
 
 @NoArgsConstructor
 public class NovaEmpresa extends AcaoComEntityManager{
 
-	private EmpresaRepository repository = new EmpresaRepository(getEntityManager());
+	private EmpresaService service = new EmpresaService(this.em);
 	
 	public NovaEmpresa(EntityManager em) {
 		super(em);
@@ -42,7 +42,7 @@ public class NovaEmpresa extends AcaoComEntityManager{
 		Empresa empresa = new Empresa();
 		empresa.setNome(nome);
 		empresa.setDataAbertura(dataFormatada);
-		repository.persist(empresa);
+		service.persist(empresa);
 		System.out.println("Empresa cadastrada!");
 		
 		request.setAttribute("empresa", empresa.getNome());

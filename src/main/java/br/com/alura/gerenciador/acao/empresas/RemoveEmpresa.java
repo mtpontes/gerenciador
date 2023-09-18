@@ -10,12 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.NoArgsConstructor;
 import main.java.br.com.alura.gerenciador.acao.AcaoComEntityManager;
 import main.java.br.com.alura.gerenciador.modelo.Empresa;
-import main.java.br.com.alura.gerenciador.repository.EmpresaRepository;
+import main.java.br.com.alura.gerenciador.repository.EmpresaService;
 
 @NoArgsConstructor
 public class RemoveEmpresa extends AcaoComEntityManager{
 
-	private EmpresaRepository repository = new EmpresaRepository(getEntityManager());
+	private EmpresaService service = new EmpresaService(this.em);
 	
 	public RemoveEmpresa(EntityManager em) {
 		super(em);
@@ -30,9 +30,9 @@ public class RemoveEmpresa extends AcaoComEntityManager{
 		
 		System.out.println(id);
 		
-		Empresa empresa = repository.getEmpresaById(id);
+		Empresa empresa = service.findEmpresaById(id);
 		empresa.setAtivo(false);
-		repository.persist(empresa);
+		service.persist(empresa);
 		
 		return "redirect:entrada?acao=ListaEmpresas";
 	

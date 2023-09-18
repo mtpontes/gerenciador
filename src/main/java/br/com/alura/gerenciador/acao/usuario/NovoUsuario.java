@@ -11,11 +11,12 @@ import lombok.NoArgsConstructor;
 import main.java.br.com.alura.gerenciador.acao.AcaoComEntityManager;
 import main.java.br.com.alura.gerenciador.modelo.Usuario;
 import main.java.br.com.alura.gerenciador.repository.UsuarioRepository;
+import main.java.br.com.alura.gerenciador.repository.UsuarioService;
 
 @NoArgsConstructor
 public class NovoUsuario extends AcaoComEntityManager{
 
-	private UsuarioRepository repository = new UsuarioRepository(getEntityManager());
+	private UsuarioService service = new UsuarioService(this.em);
 	
 	public NovoUsuario(EntityManager em) {
 		super(em);
@@ -31,7 +32,7 @@ public class NovoUsuario extends AcaoComEntityManager{
 		
 		Usuario usuario = new Usuario(login, senha);
 		
-		repository.persist(usuario);
+		service.persist(usuario);
 		System.out.println("USUARIOS CADASTRADO");
 				
 		request.setAttribute("usuario", usuario.getLogin());

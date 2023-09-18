@@ -12,14 +12,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public abstract class AcaoComEntityManager {
 	
-	private EntityManager em;
+	protected EntityManager em;
 	
 	public AcaoComEntityManager(EntityManager em) {
 		this.em = em;
-	}
-	
-	public EntityManager getEntityManager() {
-		return this.em;
 	}
 	
 	public abstract String executa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;

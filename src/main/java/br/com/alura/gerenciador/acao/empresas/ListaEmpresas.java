@@ -11,12 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.NoArgsConstructor;
 import main.java.br.com.alura.gerenciador.acao.AcaoComEntityManager;
 import main.java.br.com.alura.gerenciador.modelo.Empresa;
-import main.java.br.com.alura.gerenciador.repository.EmpresaRepository;
+import main.java.br.com.alura.gerenciador.repository.EmpresaService;
 
 @NoArgsConstructor
 public class ListaEmpresas extends AcaoComEntityManager{
 
-	private EmpresaRepository repository = new EmpresaRepository(getEntityManager());
+	private EmpresaService service = new EmpresaService(this.em);
 	
 	public ListaEmpresas(EntityManager em) {
 			super(em);
@@ -26,7 +26,7 @@ public class ListaEmpresas extends AcaoComEntityManager{
 	public String executa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("listando empresas");
 		
-		List<Empresa> lista = repository.getEmpresas();
+		List<Empresa> lista = service.findEmpresas();
 		request.setAttribute("empresas", lista);
 		
 		return "forward:listaEmpresas.jsp";
