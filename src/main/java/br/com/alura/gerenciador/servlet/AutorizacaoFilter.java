@@ -1,4 +1,4 @@
-package br.com.alura.gerenciador.servlet;
+package main.java.br.com.alura.gerenciador.servlet;
 
 import java.io.IOException;
 

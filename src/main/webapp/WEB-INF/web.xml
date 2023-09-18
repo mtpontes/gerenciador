@@ -7,7 +7,7 @@
 
   <filter>
   	<filter-name>MF</filter-name>
-  	<filter-class>br.com.alura.gerenciador.servlet.MonitoramentoFilter</filter-class>
+  	<filter-class>main.java.br.com.alura.gerenciador.servlet.MonitoramentoFilter</filter-class>
   </filter>
   <filter-mapping>
 	<filter-name>MF</filter-name>
@@ -16,7 +16,7 @@
   
   <filter>
   	<filter-name>AF</filter-name>
-  	<filter-class>br.com.alura.gerenciador.servlet.AutorizacaoFilter</filter-class>
+  	<filter-class>main.java.br.com.alura.gerenciador.servlet.AutorizacaoFilter</filter-class>
   </filter>
   <filter-mapping>
 	<filter-name>AF</filter-name>
@@ -25,7 +25,7 @@
   
   <filter>
   	<filter-name>CF</filter-name>
-  	<filter-class>br.com.alura.gerenciador.servlet.ControladorFilter</filter-class>
+  	<filter-class>main.java.br.com.alura.gerenciador.servlet.ControladorFilter</filter-class>
   </filter>
   <filter-mapping>
 	<filter-name>CF</filter-name>

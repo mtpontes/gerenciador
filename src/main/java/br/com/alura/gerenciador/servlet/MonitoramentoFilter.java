@@ -1,4 +1,4 @@
-package br.com.alura.gerenciador.servlet;
+package main.java.br.com.alura.gerenciador.servlet;
 
 import java.io.IOException;
 
@@ -7,7 +7,6 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 
 //@WebFilter(urlPatterns="/entrada")
 public class MonitoramentoFilter implements Filter {
