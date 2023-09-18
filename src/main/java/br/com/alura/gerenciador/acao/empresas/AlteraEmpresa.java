@@ -1,25 +1,31 @@
-package main.java.br.com.alura.gerenciador.acao;
+package main.java.br.com.alura.gerenciador.acao.empresas;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.br.com.alura.gerenciador.modelo.Banco;
+import main.java.br.com.alura.gerenciador.acao.Acao;
 import main.java.br.com.alura.gerenciador.modelo.Empresa;
+import main.java.br.com.alura.gerenciador.repository.EmpresaRepository;
 
-public class NovaEmpresa  implements Acao {
+public class AlteraEmpresa implements Acao {
 
-	public String executa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-		System.out.println("Cadastrando nova empresa");
+	public String executa(HttpServletRequest request, HttpServletResponse response, EntityManager em) throws ServletException, IOException {
+		EmpresaRepository repository = new EmpresaRepository(em);
 		
 		String nomeEmpresa = request.getParameter("nome");
 		String paramDataEmpresa = request.getParameter("data");
+		String paramId = request.getParameter("id");
+		Long id = Long.valueOf(paramId);
+		
+		System.out.println("acao altera empresa " + id);
 		
 		Date dataAbertura = null;
 		try {
@@ -29,16 +35,15 @@ public class NovaEmpresa  implements Acao {
 			throw new ServletException(e);
 		}
 		
-		Empresa empresa = new Empresa();
+		
+		Empresa empresa = repository.getEmpresaById(id);
+		empresa.setId(id);
 		empresa.setNome(nomeEmpresa);
 		empresa.setDataAbertura(dataAbertura);
-		
-		Banco banco = new Banco();
-		banco.adiciona(empresa);
-		
-		request.setAttribute("empresa", empresa.getNome());
+		repository.persist(empresa);
 		
 		return "redirect:entrada?acao=ListaEmpresas";
 	
 	}
 }
+
