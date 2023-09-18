@@ -10,11 +10,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.br.com.alura.gerenciador.acao.Acao;
+import main.java.br.com.alura.gerenciador.acao.AcaoComEntityManager;
 import main.java.br.com.alura.gerenciador.modelo.Empresa;
 import main.java.br.com.alura.gerenciador.repository.EmpresaRepository;
 
-public class NovaEmpresa implements Acao {
+public class NovaEmpresa implements AcaoComEntityManager {
 	
 	@Override
 	public String executa(HttpServletRequest request, HttpServletResponse response, EntityManager em) throws ServletException, IOException {

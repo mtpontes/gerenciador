@@ -8,11 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import main.java.br.com.alura.gerenciador.acao.Acao;
+import main.java.br.com.alura.gerenciador.acao.AcaoComEntityManager;
 import main.java.br.com.alura.gerenciador.modelo.Usuario;
 import main.java.br.com.alura.gerenciador.repository.UsuarioRepository;
 
-public class Login implements Acao {
+public class Login implements AcaoComEntityManager {
 	
 
 	@Override

@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import main.java.br.com.alura.gerenciador.acao.Acao;
+import main.java.br.com.alura.gerenciador.acao.AcaoComEntityManager;
 
-public class Logout implements Acao {
+public class Logout implements AcaoComEntityManager {
 
 
 	@Override

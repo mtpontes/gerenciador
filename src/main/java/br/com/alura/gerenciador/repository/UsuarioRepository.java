@@ -17,7 +17,9 @@ public class UsuarioRepository {
 	
 	@Transactional
 	public void persist(Usuario produto) {
+		em.getTransaction().begin();
 		this.em.persist(produto);
+		em.getTransaction().commit();
 	}
 	
 	

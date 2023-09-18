@@ -1,6 +1,8 @@
 package main.java.br.com.alura.gerenciador.servlet;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.persistence.EntityManager;
 import javax.servlet.Filter;
@@ -13,7 +15,8 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.br.com.alura.gerenciador.acao.Acao;
+import main.java.br.com.alura.gerenciador.acao.AcaoComEntityManager;
+import main.java.br.com.alura.gerenciador.acao.AcaoSemEntityManager;
 import main.java.br.com.alura.gerenciador.util.JPAUtil;
 
 
@@ -33,11 +36,22 @@ public class ControladorFilter implements Filter {
 		
 		String nome;
 		try {
-			Class classe = Class.forName(nomeDaClasse);//carrega a classe com o nome
-			Acao acao = (Acao) classe.newInstance();
-			nome = acao.executa(request,response, em);
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-			throw new ServletException(e);
+		    Class<?> classe = Class.forName(nomeDaClasse);
+		    Constructor<?> constructor = classe.getDeclaredConstructor();
+		    constructor.setAccessible(true);
+		    Object instancia = constructor.newInstance();
+		    
+		    if (instancia instanceof AcaoComEntityManager) {
+				AcaoComEntityManager acao = (AcaoComEntityManager) instancia;
+				nome = acao.executa(request, response, em);
+			} else if (instancia instanceof AcaoSemEntityManager) {
+				AcaoSemEntityManager acao = (AcaoSemEntityManager) instancia;
+				nome = acao.executa(request, response);
+			} else {
+				throw new ServletException("A instância não implementa nenhuma interface válida");
+			}
+		} catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+		    throw new ServletException(e);
 		}
 		String[] tipoEEndereco = nome.split(":");
 		if(tipoEEndereco[0].equals("forward")) {
