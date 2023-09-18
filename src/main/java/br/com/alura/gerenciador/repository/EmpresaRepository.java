@@ -42,8 +42,4 @@ public class EmpresaRepository {
 		em.getTransaction().begin();
 		em.getTransaction().commit();
 	}
-
-
-	
-	
 }
