@@ -12,13 +12,16 @@ import main.java.br.com.alura.gerenciador.acao.AcaoComEntityManager;
 import main.java.br.com.alura.gerenciador.modelo.Empresa;
 import main.java.br.com.alura.gerenciador.repository.EmpresaRepository;
 
-public class ListaEmpresas implements AcaoComEntityManager{
+public class ListaEmpresas extends AcaoComEntityManager{
+
+	private EmpresaRepository repository = new EmpresaRepository(getEntityManager());
 	
-	
-	@Override
-	public String executa(HttpServletRequest request, HttpServletResponse response, EntityManager em) throws ServletException, IOException {
-		EmpresaRepository repository = new EmpresaRepository(em);
+	public ListaEmpresas(EntityManager em) {
+			super(em);
+	}
 		
+	@Override
+	public String executa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("listando empresas");
 		
 		List<Empresa> lista = repository.getEmpresas();
@@ -26,5 +29,4 @@ public class ListaEmpresas implements AcaoComEntityManager{
 		
 		return "forward:listaEmpresas.jsp";
 	}
-
 }

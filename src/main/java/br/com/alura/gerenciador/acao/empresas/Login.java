@@ -12,13 +12,17 @@ import main.java.br.com.alura.gerenciador.acao.AcaoComEntityManager;
 import main.java.br.com.alura.gerenciador.modelo.Usuario;
 import main.java.br.com.alura.gerenciador.repository.UsuarioRepository;
 
-public class Login implements AcaoComEntityManager {
+public class Login extends AcaoComEntityManager{
+
+	private UsuarioRepository repository = new UsuarioRepository(getEntityManager());
 	
+	public Login(EntityManager em) {
+		super(em);
+	}
 
 	@Override
-	public String executa(HttpServletRequest request, HttpServletResponse response, EntityManager em)
-			throws ServletException, IOException {
-		UsuarioRepository repository = new UsuarioRepository(em);
+	public String executa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("Processando login...");
 		String login = request.getParameter("login");
 		String senha = request.getParameter("senha");
 		
@@ -26,7 +30,7 @@ public class Login implements AcaoComEntityManager {
 		
 		Usuario usuario = repository.buscarPorLogin(login);
 		
-		if(usuario != null && senha.equals(usuario.getSenha())) {
+		if(usuario != null && usuario.verificarSenha(senha)) {
 			System.out.println("Usuario existe");
 			HttpSession sessao = request.getSession();
 			sessao.setAttribute("usuarioLogado", usuario);
@@ -36,3 +40,4 @@ public class Login implements AcaoComEntityManager {
 		}
 	}
 }
+

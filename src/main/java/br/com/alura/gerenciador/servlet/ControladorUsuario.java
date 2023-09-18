@@ -42,13 +42,17 @@ public class ControladorUsuario implements Filter {
 		    Object instancia = constructor.newInstance();
 		    
 		    if (instancia instanceof AcaoComEntityManager) {
+		    	constructor = classe.getDeclaredConstructor(EntityManager.class);
+		    	constructor.setAccessible(true);
+		    	instancia = constructor.newInstance(em);
+		    	
 				AcaoComEntityManager acao = (AcaoComEntityManager) instancia;
-				nome = acao.executa(request, response, em);
+				nome = acao.executa(request, response);
 			} else if (instancia instanceof AcaoSemEntityManager) {
 				AcaoSemEntityManager acao = (AcaoSemEntityManager) instancia;
 				nome = acao.executa(request, response);
 			} else {
-				throw new ServletException("A instância não implementa nenhuma interface válida");
+				throw new ServletException("A instancia não implementa nenhuma interface/classe valida");
 			}
 		} catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
 		    throw new ServletException(e);

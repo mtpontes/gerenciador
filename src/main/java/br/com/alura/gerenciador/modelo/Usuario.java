@@ -35,6 +35,11 @@ public class Usuario {
 	@Getter
 	private String senha;
 	private static final String secret = System.getenv("SECRET");
+	
+	public Usuario(String login, String senha) {
+		this.login = login;
+		this.senha = hashSenha(senha);
+	}
 
 	public boolean ehIgual(String login, String senha) {
 		if(!this.login.equals(login)) {
@@ -47,9 +52,9 @@ public class Usuario {
 		return true;
 	}
 	
-	public void setSenha(String senha) {
+	public String hashSenha(String senha) {
         System.err.println("Definindo senha... A variável de ambiente é: " + secret);
-		this.senha = BCrypt.withDefaults().hashToString(4, (secret + senha).toCharArray());
+		return BCrypt.withDefaults().hashToString(4, (secret + senha).toCharArray());
 	}
 	
     public boolean verificarSenha(String senha) {

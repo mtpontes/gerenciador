@@ -11,11 +11,16 @@ import main.java.br.com.alura.gerenciador.acao.AcaoComEntityManager;
 import main.java.br.com.alura.gerenciador.modelo.Empresa;
 import main.java.br.com.alura.gerenciador.repository.EmpresaRepository;
 
-public class MostraEmpresa implements AcaoComEntityManager{
+public class MostraEmpresa extends AcaoComEntityManager{
+
+	private EmpresaRepository repository = new EmpresaRepository(getEntityManager());
+	
+	public MostraEmpresa(EntityManager em) {
+		super(em);
+	}
 
 	@Override
-	public String executa(HttpServletRequest request, HttpServletResponse response, EntityManager em) throws ServletException, IOException {
-		EmpresaRepository repository = new EmpresaRepository(em);
+	public String executa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("mostrando dados da empresa");
 		
 		String paramId = request.getParameter("id");

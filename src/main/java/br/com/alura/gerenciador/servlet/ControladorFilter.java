@@ -42,8 +42,12 @@ public class ControladorFilter implements Filter {
 		    Object instancia = constructor.newInstance();
 		    
 		    if (instancia instanceof AcaoComEntityManager) {
+			    constructor = classe.getDeclaredConstructor(EntityManager.class);
+			    constructor.setAccessible(true);
+			    instancia = constructor.newInstance(em);
+		    	
 				AcaoComEntityManager acao = (AcaoComEntityManager) instancia;
-				nome = acao.executa(request, response, em);
+				nome = acao.executa(request, response);
 			} else if (instancia instanceof AcaoSemEntityManager) {
 				AcaoSemEntityManager acao = (AcaoSemEntityManager) instancia;
 				nome = acao.executa(request, response);
@@ -61,6 +65,4 @@ public class ControladorFilter implements Filter {
 			response.sendRedirect(tipoEEndereco[1]);
 		}
 	}
-
-	
 }

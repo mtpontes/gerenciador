@@ -14,12 +14,17 @@ import main.java.br.com.alura.gerenciador.acao.AcaoComEntityManager;
 import main.java.br.com.alura.gerenciador.modelo.Empresa;
 import main.java.br.com.alura.gerenciador.repository.EmpresaRepository;
 
-public class NovaEmpresa implements AcaoComEntityManager {
+public class NovaEmpresa extends AcaoComEntityManager{
+
+	private EmpresaRepository repository = new EmpresaRepository(getEntityManager());
+	
+	public NovaEmpresa(EntityManager em) {
+		super(em);
+	}
 	
 	@Override
-	public String executa(HttpServletRequest request, HttpServletResponse response, EntityManager em) throws ServletException, IOException {
-		System.out.println("Cadastrando nova empresa");
-		EmpresaRepository repository = new EmpresaRepository(em);
+	public String executa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("Cadastrando nova empresa...");
 		
 		String nome = request.getParameter("nome");
 		String dataAbertura = request.getParameter("data");
@@ -36,6 +41,7 @@ public class NovaEmpresa implements AcaoComEntityManager {
 		empresa.setNome(nome);
 		empresa.setDataAbertura(dataFormatada);
 		repository.persist(empresa);
+		System.out.println("Empresa cadastrada!");
 		
 		request.setAttribute("empresa", empresa.getNome());
 		return "redirect:entrada?acao=ListaEmpresas";
