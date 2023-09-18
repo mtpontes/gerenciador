@@ -1,3 +1,20 @@
+# Arquivos e diretórios do Eclipse
 .classpath
+.factorypath
 .project
 .settings/
+
+# Diretório de construção Maven
+target/
+
+# Logs e arquivos temporários
+*.log
+*.tmp
+
+# Arquivos de compilação Java
+*.class
+
+# Maven
+log/
+target/
+.idea/
