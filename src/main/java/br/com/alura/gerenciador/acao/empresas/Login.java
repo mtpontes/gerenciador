@@ -11,12 +11,12 @@ import javax.servlet.http.HttpSession;
 import lombok.NoArgsConstructor;
 import main.java.br.com.alura.gerenciador.acao.AcaoComEntityManager;
 import main.java.br.com.alura.gerenciador.modelo.Usuario;
-import main.java.br.com.alura.gerenciador.repository.UsuarioService;
+import main.java.br.com.alura.gerenciador.repository.RepositoryUsuario;
 
 @NoArgsConstructor
 public class Login extends AcaoComEntityManager{
 
-	private UsuarioService service = new UsuarioService(this.em);
+	private RepositoryUsuario service = new RepositoryUsuario(this.em);
 	
 	public Login(EntityManager em) {
 		super(em);

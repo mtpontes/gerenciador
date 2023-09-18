@@ -25,6 +25,11 @@ public class Empresa {
 	private Date dataAbertura = new Date();
 	private Boolean ativo = true;
 	
+	public Empresa(String nome, Date datAbertura) {
+		this.nome = nome;
+		this.dataAbertura = dataAbertura;
+	}
+	
 	public void setDataAbertura(Date dataAbertura) {
 		this.dataAbertura = dataAbertura;
 	}

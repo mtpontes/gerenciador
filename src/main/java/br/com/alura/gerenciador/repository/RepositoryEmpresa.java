@@ -8,10 +8,10 @@ import javax.persistence.Query;
 
 import main.java.br.com.alura.gerenciador.modelo.Empresa;
 
-public class EmpresaService implements EmpresaRepository{
+public class RepositoryEmpresa implements EmpresaRepository{
 	
 	private EntityManager em;
-	public EmpresaService(EntityManager em) {
+	public RepositoryEmpresa(EntityManager em) {
 		this.em  = em;
 	}
 	

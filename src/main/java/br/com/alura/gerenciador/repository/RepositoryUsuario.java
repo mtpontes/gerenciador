@@ -7,11 +7,11 @@ import javax.transaction.Transactional;
 
 import main.java.br.com.alura.gerenciador.modelo.Usuario;
 
-public class UsuarioService implements UsuarioRepository{
+public class RepositoryUsuario implements UsuarioRepository{
 	
 	private EntityManager em;
 	
-	public UsuarioService(EntityManager entityManager) {
+	public RepositoryUsuario(EntityManager entityManager) {
 		this.em = entityManager;
 	}
 

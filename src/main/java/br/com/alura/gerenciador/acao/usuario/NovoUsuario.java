@@ -11,12 +11,12 @@ import lombok.NoArgsConstructor;
 import main.java.br.com.alura.gerenciador.acao.AcaoComEntityManager;
 import main.java.br.com.alura.gerenciador.modelo.Usuario;
 import main.java.br.com.alura.gerenciador.repository.UsuarioRepository;
-import main.java.br.com.alura.gerenciador.repository.UsuarioService;
+import main.java.br.com.alura.gerenciador.repository.RepositoryUsuario;
 
 @NoArgsConstructor
 public class NovoUsuario extends AcaoComEntityManager{
 
-	private UsuarioService service = new UsuarioService(this.em);
+	private RepositoryUsuario service = new RepositoryUsuario(this.em);
 	
 	public NovoUsuario(EntityManager em) {
 		super(em);

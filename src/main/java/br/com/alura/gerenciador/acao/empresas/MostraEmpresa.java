@@ -10,12 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.NoArgsConstructor;
 import main.java.br.com.alura.gerenciador.acao.AcaoComEntityManager;
 import main.java.br.com.alura.gerenciador.modelo.Empresa;
-import main.java.br.com.alura.gerenciador.repository.EmpresaService;
+import main.java.br.com.alura.gerenciador.repository.RepositoryEmpresa;
 
 @NoArgsConstructor
 public class MostraEmpresa extends AcaoComEntityManager{
 
-	private EmpresaService service = new EmpresaService(this.em);
+	private RepositoryEmpresa service= new RepositoryEmpresa(this.em);
 	
 	public MostraEmpresa(EntityManager em) {
 		super(em);
