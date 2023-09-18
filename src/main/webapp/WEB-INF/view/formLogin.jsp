@@ -18,6 +18,10 @@
 	
 		<input type="submit" />
 	</form>
+	
+	<div>
+		<a href="usuario?acao=NovoUsuarioForm">Criar conta</a>
+	</div>
 
 </body>
 </html>

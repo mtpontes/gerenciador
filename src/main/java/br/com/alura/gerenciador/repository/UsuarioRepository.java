@@ -16,7 +16,7 @@ public class UsuarioRepository {
 	}
 	
 	@Transactional
-	public void cadastrar(Usuario produto) {
+	public void persist(Usuario produto) {
 		this.em.persist(produto);
 	}
 	

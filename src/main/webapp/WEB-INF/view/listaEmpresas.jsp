@@ -36,6 +36,10 @@
 		</c:forEach>
 	</ul>
 	
+	<div>
+		<a href="entrada?acao=NovaEmpresaForm">Nova Empresa</a>
+	</div>
+	
 </body>
 </html>
 
