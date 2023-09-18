@@ -8,10 +8,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.NoArgsConstructor;
 import main.java.br.com.alura.gerenciador.acao.AcaoComEntityManager;
 import main.java.br.com.alura.gerenciador.modelo.Empresa;
 import main.java.br.com.alura.gerenciador.repository.EmpresaRepository;
 
+@NoArgsConstructor
 public class ListaEmpresas extends AcaoComEntityManager{
 
 	private EmpresaRepository repository = new EmpresaRepository(getEntityManager());

@@ -7,6 +7,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public abstract class AcaoComEntityManager {
 	
 	private EntityManager em;

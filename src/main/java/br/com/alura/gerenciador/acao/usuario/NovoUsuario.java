@@ -7,10 +7,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.NoArgsConstructor;
 import main.java.br.com.alura.gerenciador.acao.AcaoComEntityManager;
 import main.java.br.com.alura.gerenciador.modelo.Usuario;
 import main.java.br.com.alura.gerenciador.repository.UsuarioRepository;
 
+@NoArgsConstructor
 public class NovoUsuario extends AcaoComEntityManager{
 
 	private UsuarioRepository repository = new UsuarioRepository(getEntityManager());
