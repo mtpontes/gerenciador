@@ -1,4 +1,4 @@
-package main.java.br.com.alura.gerenciador.acao.empresas;
+package main.java.br.com.alura.gerenciador.acao.empresa;
 
 import java.io.IOException;
 
@@ -10,17 +10,17 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.NoArgsConstructor;
 import main.java.br.com.alura.gerenciador.acao.AcaoComEntityManager;
 import main.java.br.com.alura.gerenciador.modelo.Empresa;
-import main.java.br.com.alura.gerenciador.repository.RepositoryEmpresa;
+import main.java.br.com.alura.gerenciador.repository.EmpresaRepositoryMySQL;
 
 @NoArgsConstructor
 public class MostraEmpresa extends AcaoComEntityManager{
 
-	private RepositoryEmpresa service= new RepositoryEmpresa(this.em);
+	private EmpresaRepositoryMySQL repository = new EmpresaRepositoryMySQL(this.em);
 	
 	public MostraEmpresa(EntityManager em) {
 		super(em);
 	}
-
+	
 	@Override
 	public String executa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("mostrando dados da empresa");
@@ -28,7 +28,7 @@ public class MostraEmpresa extends AcaoComEntityManager{
 		String paramId = request.getParameter("id");
 		Long id = Long.valueOf(paramId);
 		
-		Empresa empresa = service.findEmpresaById(id);
+		Empresa empresa = repository.findEmpresaById(id);
 		request.setAttribute("empresa", empresa);
 		
 		return "forward:formAlteraEmpresa.jsp";

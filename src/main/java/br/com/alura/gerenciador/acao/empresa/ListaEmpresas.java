@@ -1,4 +1,4 @@
-package main.java.br.com.alura.gerenciador.acao.empresas;
+package main.java.br.com.alura.gerenciador.acao.empresa;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,22 +11,22 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.NoArgsConstructor;
 import main.java.br.com.alura.gerenciador.acao.AcaoComEntityManager;
 import main.java.br.com.alura.gerenciador.modelo.Empresa;
-import main.java.br.com.alura.gerenciador.repository.RepositoryEmpresa;
+import main.java.br.com.alura.gerenciador.repository.EmpresaRepositoryMySQL;
 
 @NoArgsConstructor
 public class ListaEmpresas extends AcaoComEntityManager{
 
-	private RepositoryEmpresa service = new RepositoryEmpresa(this.em);
+	private EmpresaRepositoryMySQL repository = new EmpresaRepositoryMySQL(this.em);
 	
 	public ListaEmpresas(EntityManager em) {
-			super(em);
+		super(em);
 	}
 		
 	@Override
 	public String executa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("listando empresas");
 		
-		List<Empresa> lista = service.findEmpresas();
+		List<Empresa> lista = repository.findEmpresas();
 		request.setAttribute("empresas", lista);
 		
 		return "forward:listaEmpresas.jsp";

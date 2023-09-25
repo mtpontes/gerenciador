@@ -1,5 +1,4 @@
-package main.java.br.com.alura.gerenciador.acao.empresas;
-
+package main.java.br.com.alura.gerenciador.acao.empresa;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -14,13 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.NoArgsConstructor;
 import main.java.br.com.alura.gerenciador.acao.AcaoComEntityManager;
 import main.java.br.com.alura.gerenciador.modelo.Empresa;
-import main.java.br.com.alura.gerenciador.repository.RepositoryEmpresa;
-
+import main.java.br.com.alura.gerenciador.repository.EmpresaRepositoryMySQL;
 
 @NoArgsConstructor
 public class AlteraEmpresa extends AcaoComEntityManager {
 
-	private RepositoryEmpresa service = new RepositoryEmpresa(this.em);
+	private EmpresaRepositoryMySQL repository = new EmpresaRepositoryMySQL(this.em);
 	
 	public AlteraEmpresa(EntityManager em) {
 		super(em);
@@ -44,11 +42,10 @@ public class AlteraEmpresa extends AcaoComEntityManager {
 		}
 		
 		
-		Empresa empresa = service.findEmpresaById(id);
-		empresa.setId(id);
+		Empresa empresa = repository.findEmpresaById(id);
 		empresa.setNome(nomeEmpresa);
 		empresa.setDataAbertura(dataAbertura);
-		service.persist(empresa);
+		repository.persist(empresa);
 		
 		return "redirect:entrada?acao=ListaEmpresas";
 	

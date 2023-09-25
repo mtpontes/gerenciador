@@ -1,4 +1,4 @@
-package main.java.br.com.alura.gerenciador.acao.empresas;
+package main.java.br.com.alura.gerenciador.acao.empresa;
 
 import java.io.IOException;
 
@@ -10,12 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.NoArgsConstructor;
 import main.java.br.com.alura.gerenciador.acao.AcaoComEntityManager;
 import main.java.br.com.alura.gerenciador.modelo.Empresa;
-import main.java.br.com.alura.gerenciador.repository.RepositoryEmpresa;
+import main.java.br.com.alura.gerenciador.repository.EmpresaRepositoryMySQL;
 
 @NoArgsConstructor
 public class RemoveEmpresa extends AcaoComEntityManager{
 
-	private RepositoryEmpresa repository = new RepositoryEmpresa(this.em);
+	private EmpresaRepositoryMySQL repository = new EmpresaRepositoryMySQL(this.em);
 	
 	public RemoveEmpresa(EntityManager em) {
 		super(em);
@@ -27,8 +27,6 @@ public class RemoveEmpresa extends AcaoComEntityManager{
 		
 		String paramId = request.getParameter("id");
 		Long id = Long.valueOf(paramId);
-		
-		System.out.println(id);
 		
 		Empresa empresa = repository.findEmpresaById(id);
 		empresa.setAtivo(false);

@@ -13,4 +13,7 @@ public interface UsuarioRepository {
 
 	@Transactional
 	public abstract void update(String login);
+	
+	@Transactional
+	public abstract void delete(Long id);
 }

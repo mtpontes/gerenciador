@@ -20,39 +20,35 @@ import main.java.br.com.alura.gerenciador.acao.AcaoSemEntityManager;
 import main.java.br.com.alura.gerenciador.util.JPAUtil;
 
 
-@WebFilter("/entrada")
+//@WebFilter("/usuario")
 public class ControladorFilter implements Filter {
 
 	private EntityManager em = JPAUtil.getEntityManager();
 	
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
 		
-		System.out.println("ControladorFilter");
+		System.out.println("Controlador de Usuarios");
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
 		
 		String paramAcao = request.getParameter("acao");
-		String nomeDaClasse = "main.java.br.com.alura.gerenciador.acao.empresas." + paramAcao;
+		String nomeDaClasse = "main.java.br.com.alura.gerenciador.acao.empresa." + paramAcao;
 		
 		String nome;
 		try {
-		    Class<?> classe = Class.forName(nomeDaClasse);
-		    Constructor<?> constructor = classe.getDeclaredConstructor();
-		    constructor.setAccessible(true);
-		    Object instancia = constructor.newInstance();
-		    
+			Object instancia = criaInstanciaComEntityManager(nomeDaClasse, null);
+			
 		    if (instancia instanceof AcaoComEntityManager) {
-			    constructor = classe.getDeclaredConstructor(EntityManager.class);
-			    constructor.setAccessible(true);
-			    instancia = constructor.newInstance(em);
+		    	Object instanciaComEntityManager = criaInstanciaComEntityManager(nomeDaClasse, em);
 		    	
-				AcaoComEntityManager acao = (AcaoComEntityManager) instancia;
+		    	AcaoComEntityManager acao = (AcaoComEntityManager) instanciaComEntityManager;
 				nome = acao.executa(request, response);
+				
 			} else if (instancia instanceof AcaoSemEntityManager) {
 				AcaoSemEntityManager acao = (AcaoSemEntityManager) instancia;
 				nome = acao.executa(request, response);
 			} else {
-				throw new ServletException("A instância não implementa nenhuma interface válida");
+				throw new ServletException("A instancia não implementa nenhuma interface/classe valida");
 			}
 		} catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
 		    throw new ServletException(e);
@@ -64,5 +60,25 @@ public class ControladorFilter implements Filter {
 		} else {
 			response.sendRedirect(tipoEEndereco[1]);
 		}
+	}
+
+
+	public Object criaInstanciaComEntityManager(String nomeDaClasse, EntityManager em)
+			throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException,
+			IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		
+		if (em == null) {
+			Class<?> classe = Class.forName(nomeDaClasse);
+			Constructor<?> constructor = classe.getDeclaredConstructor();
+			constructor.setAccessible(true);
+			Object instancia = constructor.newInstance();
+			return instancia;
+		}
+		
+		Class<?> classe = Class.forName(nomeDaClasse);
+		Constructor<?> constructor = classe.getDeclaredConstructor(EntityManager.class);
+		constructor.setAccessible(true);
+		Object instancia = constructor.newInstance(em);
+		return instancia;
 	}
 }

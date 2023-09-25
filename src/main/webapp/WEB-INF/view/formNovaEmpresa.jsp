@@ -15,7 +15,7 @@
 	<form action="${linkEntradaServlet }" method="post">
 	
 		Nome: <input type="text" name="nome"  />
-		Data Abertura: <input type="text" name="data"  />
+		Data Abertura: <input type="text" name="data" pattern="\d{2}/\d{2}/\d{4}"/>
 		
 		<input type="hidden" name="acao" value="NovaEmpresa">
 	

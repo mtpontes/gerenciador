@@ -1,4 +1,4 @@
-package main.java.br.com.alura.gerenciador.acao.empresas;
+package main.java.br.com.alura.gerenciador.acao.empresa;
 
 import java.io.IOException;
 
@@ -11,12 +11,12 @@ import javax.servlet.http.HttpSession;
 import lombok.NoArgsConstructor;
 import main.java.br.com.alura.gerenciador.acao.AcaoComEntityManager;
 import main.java.br.com.alura.gerenciador.modelo.Usuario;
-import main.java.br.com.alura.gerenciador.repository.RepositoryUsuario;
+import main.java.br.com.alura.gerenciador.repository.UsuarioRepositoryMySQL;
 
 @NoArgsConstructor
 public class Login extends AcaoComEntityManager{
 
-	private RepositoryUsuario service = new RepositoryUsuario(this.em);
+	private UsuarioRepositoryMySQL repository = new UsuarioRepositoryMySQL(this.em);
 	
 	public Login(EntityManager em) {
 		super(em);
@@ -30,7 +30,7 @@ public class Login extends AcaoComEntityManager{
 		
 		System.out.println("Logando " + login);
 		
-		Usuario usuario = service.findByLogin(login);
+		Usuario usuario = repository.findByLogin(login);
 		
 		if(usuario != null && usuario.verificarSenha(senha)) {
 			System.out.println("Usuario existe");
@@ -42,4 +42,3 @@ public class Login extends AcaoComEntityManager{
 		}
 	}
 }
-

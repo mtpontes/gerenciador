@@ -10,13 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.NoArgsConstructor;
 import main.java.br.com.alura.gerenciador.acao.AcaoComEntityManager;
 import main.java.br.com.alura.gerenciador.modelo.Usuario;
-import main.java.br.com.alura.gerenciador.repository.UsuarioRepository;
-import main.java.br.com.alura.gerenciador.repository.RepositoryUsuario;
+import main.java.br.com.alura.gerenciador.repository.UsuarioRepositoryMySQL;
 
 @NoArgsConstructor
 public class NovoUsuario extends AcaoComEntityManager{
 
-	private RepositoryUsuario service = new RepositoryUsuario(this.em);
+	private UsuarioRepositoryMySQL repository = new UsuarioRepositoryMySQL(this.em);
 	
 	public NovoUsuario(EntityManager em) {
 		super(em);
@@ -30,12 +29,15 @@ public class NovoUsuario extends AcaoComEntityManager{
 		String senha = request.getParameter("senha");
 		System.out.println("O valor de senha no request é: " + senha);
 		
-		Usuario usuario = new Usuario(login, senha);
+		Usuario usuario = new Usuario();
+		usuario.setLogin(login);
+		usuario.setSenha(senha);
 		
-		service.persist(usuario);
+		repository.persist(usuario);
 		System.out.println("USUARIOS CADASTRADO");
 				
 		request.setAttribute("usuario", usuario.getLogin());
 		return "redirect:entrada?acao=LoginForm";
+		
 	}
 }

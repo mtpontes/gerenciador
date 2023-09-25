@@ -20,7 +20,7 @@ import main.java.br.com.alura.gerenciador.acao.AcaoSemEntityManager;
 import main.java.br.com.alura.gerenciador.util.JPAUtil;
 
 
-@WebFilter("/usuario")
+//@WebFilter("/usuario")
 public class ControladorUsuario implements Filter {
 
 	private EntityManager em = JPAUtil.getEntityManager();
@@ -36,18 +36,14 @@ public class ControladorUsuario implements Filter {
 		
 		String nome;
 		try {
-		    Class<?> classe = Class.forName(nomeDaClasse);
-		    Constructor<?> constructor = classe.getDeclaredConstructor();
-		    constructor.setAccessible(true);
-		    Object instancia = constructor.newInstance();
-		    
+			Object instancia = criaInstanciaComEntityManager(nomeDaClasse, null);
+			
 		    if (instancia instanceof AcaoComEntityManager) {
-		    	constructor = classe.getDeclaredConstructor(EntityManager.class);
-		    	constructor.setAccessible(true);
-		    	instancia = constructor.newInstance(em);
+		    	Object instanciaComEntityManager = criaInstanciaComEntityManager(nomeDaClasse, em);
 		    	
-				AcaoComEntityManager acao = (AcaoComEntityManager) instancia;
+		    	AcaoComEntityManager acao = (AcaoComEntityManager) instanciaComEntityManager;
 				nome = acao.executa(request, response);
+				
 			} else if (instancia instanceof AcaoSemEntityManager) {
 				AcaoSemEntityManager acao = (AcaoSemEntityManager) instancia;
 				nome = acao.executa(request, response);
@@ -64,5 +60,25 @@ public class ControladorUsuario implements Filter {
 		} else {
 			response.sendRedirect(tipoEEndereco[1]);
 		}
+	}
+
+
+	public Object criaInstanciaComEntityManager(String nomeDaClasse, EntityManager em)
+			throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException,
+			IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		
+		if (em == null) {
+			Class<?> classe = Class.forName(nomeDaClasse);
+			Constructor<?> constructor = classe.getDeclaredConstructor();
+			constructor.setAccessible(true);
+			Object instancia = constructor.newInstance();
+			return instancia;
+		}
+		
+		Class<?> classe = Class.forName(nomeDaClasse);
+		Constructor<?> constructor = classe.getDeclaredConstructor(EntityManager.class);
+		constructor.setAccessible(true);
+		Object instancia = constructor.newInstance(em);
+		return instancia;
 	}
 }

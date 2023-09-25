@@ -8,10 +8,11 @@ import javax.persistence.Query;
 
 import main.java.br.com.alura.gerenciador.modelo.Empresa;
 
-public class RepositoryEmpresa implements EmpresaRepository{
+public class EmpresaRepositoryMySQL {
 	
 	private EntityManager em;
-	public RepositoryEmpresa(EntityManager em) {
+	
+	public EmpresaRepositoryMySQL(EntityManager em) {
 		this.em  = em;
 	}
 	
@@ -39,5 +40,11 @@ public class RepositoryEmpresa implements EmpresaRepository{
 	public void update(Empresa empresa) {
 		em.getTransaction().begin();
 		em.getTransaction().commit();
+	}
+
+
+	public List<Empresa> findEmpresasDoUsuario(Long id) {
+		return em.createNativeQuery("SELECT * FROM empresas WHERE usuario_id =:id", Empresa.class)
+				.setParameter("id", id).getResultList();
 	}
 }

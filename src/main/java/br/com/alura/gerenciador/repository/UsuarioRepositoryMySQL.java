@@ -7,11 +7,11 @@ import javax.transaction.Transactional;
 
 import main.java.br.com.alura.gerenciador.modelo.Usuario;
 
-public class RepositoryUsuario implements UsuarioRepository{
+public class UsuarioRepositoryMySQL implements UsuarioRepository{
 	
 	private EntityManager em;
 	
-	public RepositoryUsuario(EntityManager entityManager) {
+	public UsuarioRepositoryMySQL(EntityManager entityManager) {
 		this.em = entityManager;
 	}
 
@@ -40,4 +40,9 @@ public class RepositoryUsuario implements UsuarioRepository{
 		em.getTransaction().commit();
 	}
 
+	@Transactional
+	public void delete(Long id) {
+		;
+	}
+	
 }
