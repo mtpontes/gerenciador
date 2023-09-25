@@ -21,5 +21,4 @@ target/
 build/
 
 # Docker
-
-.dockerfile
+*.dockerfile

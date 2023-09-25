@@ -20,7 +20,7 @@ import main.java.br.com.alura.gerenciador.acao.AcaoSemEntityManager;
 import main.java.br.com.alura.gerenciador.util.JPAUtil;
 
 
-//@WebFilter("/usuario")
+//@WebFilter("/entrada")
 public class ControladorFilter implements Filter {
 
 	private EntityManager em = JPAUtil.getEntityManager();
