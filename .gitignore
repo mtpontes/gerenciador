@@ -3,7 +3,6 @@
 .factorypath
 .project
 .settings/
-df
 
 # Diretório de construção Maven
 target/
@@ -20,3 +19,7 @@ log/
 target/
 .idea/
 build/
+
+# Docker
+
+.dockerfile

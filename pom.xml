@@ -37,7 +37,6 @@
 			<version>8.0.33</version>
 		</dependency>
 			
-	    <!-- Servlet API (obrigatório para projetos web) -->
 	    <dependency>
 	        <groupId>javax.servlet</groupId>
 	        <artifactId>javax.servlet-api</artifactId>
@@ -53,15 +52,13 @@
 	        <scope>provided</scope>
 	    </dependency>
 	
-	    <!-- Implementação do Contêiner Servlet (Tomcat é um exemplo) -->
 	    <dependency>
 	        <groupId>org.apache.tomcat</groupId>
 	        <artifactId>tomcat-servlet-api</artifactId>
-	        <version>9.0.71</version> <!-- Use a versão correspondente ao seu Tomcat -->
+	        <version>9.0.71</version>
 	        <scope>provided</scope>
 	    </dependency>
 	
-	    <!-- Implementação do Contêiner JSP (Tomcat é um exemplo) -->
 	    <dependency>
 	        <groupId>org.apache.tomcat</groupId>
 	        <artifactId>tomcat-jasper</artifactId>
@@ -69,14 +66,12 @@
 	        <scope>provided</scope>
 	    </dependency>
 	
-	    <!-- JSTL (JavaServer Pages Standard Tag Library) -->
 	    <dependency>
 	        <groupId>javax.servlet</groupId>
 	        <artifactId>jstl</artifactId>
 	        <version>1.2</version>
 	    </dependency>
 	    
-		<!-- https://mvnrepository.com/artifact/at.favre.lib/bcrypt -->
 		<dependency>
 		    <groupId>at.favre.lib</groupId>
 		    <artifactId>bcrypt</artifactId>
