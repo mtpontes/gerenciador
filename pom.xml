@@ -5,6 +5,10 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
   
+  <properties>
+	  <java.version>10</java.version>
+  </properties>
+  
   	<dependencies>
 		  
 		<dependency>
@@ -89,7 +93,7 @@
         <artifactId>maven-war-plugin</artifactId>
         <version>3.2.3</version>
         <configuration>
-          <warSourceDirectory>webapp</warSourceDirectory>
+          <!-- <warSourceDirectory>webapp</warSourceDirectory>-->
         </configuration>
       </plugin>
       <plugin>

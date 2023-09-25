@@ -8,7 +8,7 @@ import javax.persistence.Query;
 
 import main.java.br.com.alura.gerenciador.modelo.Empresa;
 
-public class EmpresaRepositoryMySQL {
+public class EmpresaRepositoryMySQL implements EmpresaRepository {
 	
 	private EntityManager em;
 	
