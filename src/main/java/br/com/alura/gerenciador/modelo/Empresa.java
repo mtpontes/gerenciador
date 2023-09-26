@@ -1,5 +1,6 @@
 package main.java.br.com.alura.gerenciador.modelo;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -25,13 +26,12 @@ public class Empresa {
 	@Setter
 	private String nome;
 	@Setter
-	private Date dataAbertura = new Date();
-	@Setter
+	private LocalDate dataAbertura;
 	private Boolean ativo = true;
 	@ManyToOne @JoinColumn(name = "usuario_id")
 	private Usuario usuario;
 
-	public Empresa(String nome, Date dataAbertura, Usuario usuario) {
+	public Empresa(String nome, LocalDate dataAbertura, Usuario usuario) {
 		this.nome = nome;
 		this.dataAbertura = dataAbertura;
 		this.usuario = usuario;
@@ -41,7 +41,7 @@ public class Empresa {
 		this.ativo = false;
 	}
 	
-	public Empresa alteraDados(String nome, Date dataAbertura) {
+	public Empresa alteraDados(String nome, LocalDate dataAbertura) {
 		this.nome = nome;
 		this.dataAbertura = dataAbertura;
 		return this;

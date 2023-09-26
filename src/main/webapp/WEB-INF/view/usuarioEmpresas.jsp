@@ -3,6 +3,7 @@
 <%@ page import="java.util.List,main.java.br.com.alura.gerenciador.modelo.Empresa"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ page import="main.java.br.com.alura.gerenciador.util.DateUtil" %>
 
 <!DOCTYPE html>
 <html>
@@ -29,7 +30,7 @@
 		<c:forEach items="${empresas}" var="empresa">
 			
 			<li>
-				${empresa.nome } - <fmt:formatDate value="${empresa.dataAbertura }" pattern="dd/MM/yyyy"/> 
+	            ${empresa.nome } - ${DateUtil.formatDate(empresa.dataAbertura, "dd/MM/yyyy")}
 				<a href="/gerenciador/entrada?acao=MostraEmpresa&id=${empresa.id }">edita</a>
 				<a href="/gerenciador/entrada?acao=RemoveEmpresa&id=${empresa.id }">remove</a>
 			</li>

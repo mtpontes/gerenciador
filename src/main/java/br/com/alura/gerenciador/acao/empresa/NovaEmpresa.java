@@ -3,6 +3,8 @@ package main.java.br.com.alura.gerenciador.acao.empresa;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import javax.persistence.EntityManager;
@@ -30,18 +32,11 @@ public class NovaEmpresa extends AcaoComEntityManager{
 		System.out.println("Cadastrando nova empresa...");
 		
 		String nome = request.getParameter("nome");
-		String dataAbertura = request.getParameter("data");
 		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
+		String dataAbertura = request.getParameter("data");
+		LocalDate date = LocalDate.parse(dataAbertura, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		
-		Date dataFormatada = null;
-		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-			dataFormatada = sdf.parse(dataAbertura);
-		} catch (ParseException e) {
-			throw new ServletException(e);
-		}
-		
-		Empresa empresa = new Empresa(nome, dataFormatada, usuario);
+		Empresa empresa = new Empresa(nome, date, usuario);
 		repository.persist(empresa);
 		System.out.println("Empresa cadastrada!");
 		

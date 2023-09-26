@@ -31,7 +31,7 @@ public class ListaEmpresasUsuario extends AcaoComEntityManager {
 		//HttpSession sessao = request.getSession();
 		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
 		
-		List<Empresa> listaEmpresas = repository.findEmpresasDoUsuario(usuario.getId());
+		List<Empresa> listaEmpresas = repository.findEmpresasDoUsuarioByAtivoTrue(usuario.getId());
 		request.setAttribute("empresas", listaEmpresas);
 	
 		return "forward:usuarioEmpresas.jsp";

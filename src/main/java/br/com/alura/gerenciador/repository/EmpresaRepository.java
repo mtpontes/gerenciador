@@ -21,4 +21,6 @@ public interface EmpresaRepository {
 
 	public List<Empresa> findEmpresasDoUsuario(Long id);
 	
+	public List<Empresa> findEmpresasDoUsuarioByAtivoTrue(Long id);
+	
 }
