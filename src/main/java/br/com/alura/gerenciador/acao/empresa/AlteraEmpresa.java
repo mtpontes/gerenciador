@@ -42,10 +42,8 @@ public class AlteraEmpresa extends AcaoComEntityManager {
 		}
 		
 		
-		Empresa empresa = repository.findEmpresaById(id);
-		empresa.setNome(nomeEmpresa);
-		empresa.setDataAbertura(dataAbertura);
-		repository.persist(empresa);
+		Empresa empresa = repository.findEmpresaById(id).alteraDados(nomeEmpresa, dataAbertura);
+		repository.update(empresa);
 		
 		return "redirect:entrada?acao=ListaEmpresas";
 	

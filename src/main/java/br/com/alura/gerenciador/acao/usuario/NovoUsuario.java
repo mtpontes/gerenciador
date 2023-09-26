@@ -25,17 +25,10 @@ public class NovoUsuario extends AcaoComEntityManager{
 	public String executa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("CADASTRANDO NOVO USUARIO");
 		
-		String login = request.getParameter("login");
-		String senha = request.getParameter("senha");
-		System.out.println("O valor de senha no request é: " + senha);
-		
-		Usuario usuario = new Usuario();
-		usuario.setLogin(login);
-		usuario.setSenha(senha);
-		
+		Usuario usuario = new Usuario(request.getParameter("login"), request.getParameter("senha"));
 		repository.persist(usuario);
-		System.out.println("USUARIOS CADASTRADO");
-				
+		System.out.println("USUARIO CADASTRADO");
+
 		request.setAttribute("usuario", usuario.getLogin());
 		return "redirect:entrada?acao=LoginForm";
 		

@@ -16,15 +16,17 @@ import lombok.Setter;
 
 @NoArgsConstructor
 @Getter
-@Setter
 @Entity
 @Table(name = "empresas")
 public class Empresa {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Setter
 	private String nome;
+	@Setter
 	private Date dataAbertura = new Date();
+	@Setter
 	private Boolean ativo = true;
 	@ManyToOne @JoinColumn(name = "usuario_id")
 	private Usuario usuario;
@@ -35,12 +37,15 @@ public class Empresa {
 		this.usuario = usuario;
 	}
 	
+	public void removeEmpresa(Boolean ativo) {
+		this.ativo = false;
+	}
 	
-	public void setDataAbertura(Date dataAbertura) {
+	public Empresa alteraDados(String nome, Date dataAbertura) {
+		this.nome = nome;
 		this.dataAbertura = dataAbertura;
+		return this;
 	}
 	
-	public Date getDataAbertura() {
-		return dataAbertura;
-	}
+	
 }

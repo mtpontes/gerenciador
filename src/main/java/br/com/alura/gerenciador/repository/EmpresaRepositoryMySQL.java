@@ -39,6 +39,11 @@ public class EmpresaRepositoryMySQL implements EmpresaRepository {
 	
 	public void update(Empresa empresa) {
 		em.getTransaction().begin();
+		Empresa empresaDB = findEmpresaById(empresa.getId());
+		if (empresaDB != null) {
+			empresaDB.alteraDados(empresa.getNome(), empresa.getDataAbertura());
+			em.merge(empresaDB);
+		}
 		em.getTransaction().commit();
 	}
 
@@ -47,4 +52,5 @@ public class EmpresaRepositoryMySQL implements EmpresaRepository {
 		return em.createNativeQuery("SELECT * FROM empresas WHERE usuario_id =:id", Empresa.class)
 				.setParameter("id", id).getResultList();
 	}
+
 }

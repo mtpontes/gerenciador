@@ -35,7 +35,7 @@
 	</ul>
 	
 	<div>
-		<a href="entrada?acao=EmpresasUsuario">Minhas Empresas</a>
+		<a href="entrada?acao=ListaEmpresasUsuario">Minhas Empresas</a>
 	</div>
 	
 </body>

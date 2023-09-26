@@ -28,25 +28,17 @@ public class Usuario {
 	@Getter
 	private String senha;
 	private static final String secret = System.getenv("SECRET");
-	
 	@OneToMany(mappedBy = "usuario")
 	private List<Empresa> empresas = new ArrayList<>();
 	
-
-	public boolean ehIgual(String login, String senha) {
-		if(!this.login.equals(login)) {
-			return false;
-		}
-		
-		if(!this.senha.equals(senha)) {
-			return false;
-		}
-		return true;
+	public Usuario(String login, String senha) {
+		this.login= login;
+		this.senha = setSenha(senha);
 	}
 	
-	public void setSenha(String senha) {
-        System.err.println("Definindo senha... A variável de ambiente é: " + secret);
-		this.senha = BCrypt.withDefaults().hashToString(4, (secret + senha).toCharArray());
+	public String setSenha(String senha) {
+        System.out.println("Definindo senha... A variável de ambiente é: " + secret);
+		return this.senha = BCrypt.withDefaults().hashToString(4, (secret + senha).toCharArray());
 	}
 	
     public boolean verificarSenha(String senha) {

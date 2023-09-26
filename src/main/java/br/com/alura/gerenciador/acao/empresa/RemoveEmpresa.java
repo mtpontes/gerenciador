@@ -29,7 +29,7 @@ public class RemoveEmpresa extends AcaoComEntityManager{
 		Long id = Long.valueOf(paramId);
 		
 		Empresa empresa = repository.findEmpresaById(id);
-		empresa.setAtivo(false);
+		empresa.removeEmpresa(false);
 		repository.persist(empresa);
 		
 		return "redirect:entrada?acao=ListaEmpresas";

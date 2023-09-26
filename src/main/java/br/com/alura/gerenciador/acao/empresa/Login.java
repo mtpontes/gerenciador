@@ -31,11 +31,12 @@ public class Login extends AcaoComEntityManager{
 		System.out.println("Logando " + login);
 		
 		Usuario usuario = repository.findByLogin(login);
-		
 		if(usuario != null && usuario.verificarSenha(senha)) {
 			System.out.println("Usuario existe");
 			HttpSession sessao = request.getSession();
 			sessao.setAttribute("usuarioLogado", usuario);
+			sessao.setMaxInactiveInterval(3600);
+			System.out.println("Usuario autenticado!");
 			return "redirect:entrada?acao=ListaEmpresas";
 		} else {
 			return "redirect:entrada?acao=LoginForm";

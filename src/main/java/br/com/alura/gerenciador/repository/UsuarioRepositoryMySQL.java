@@ -34,7 +34,6 @@ public class UsuarioRepositoryMySQL implements UsuarioRepository{
 	}
 
 	@Transactional
-	@Override
 	public void update(String login) {
 		em.getTransaction().begin();
 		em.getTransaction().commit();
@@ -44,5 +43,7 @@ public class UsuarioRepositoryMySQL implements UsuarioRepository{
 	public void delete(Long id) {
 		;
 	}
+	
+	
 	
 }

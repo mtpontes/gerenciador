@@ -16,11 +16,11 @@ import main.java.br.com.alura.gerenciador.modelo.Usuario;
 import main.java.br.com.alura.gerenciador.repository.EmpresaRepositoryMySQL;
 
 @NoArgsConstructor
-public class EmpresasUsuario extends AcaoComEntityManager {
+public class ListaEmpresasUsuario extends AcaoComEntityManager {
 
 	private EmpresaRepositoryMySQL repository = new EmpresaRepositoryMySQL(this.em);
 
-	public EmpresasUsuario(EntityManager em) {
+	public ListaEmpresasUsuario(EntityManager em) {
 		super(em);
 	}
 	
@@ -28,12 +28,11 @@ public class EmpresasUsuario extends AcaoComEntityManager {
 	public String executa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("listando empresas do usuário");
 
-		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
 		//HttpSession sessao = request.getSession();
+		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
 		
-		System.out.println("O login e:" + usuario.getLogin() + " e o ID e: " + usuario.getId()); 
-		List<Empresa> lista = repository.findEmpresasDoUsuario(usuario.getId());
-		request.setAttribute("empresas", lista);
+		List<Empresa> listaEmpresas = repository.findEmpresasDoUsuario(usuario.getId());
+		request.setAttribute("empresas", listaEmpresas);
 	
 		return "forward:usuarioEmpresas.jsp";
 	}

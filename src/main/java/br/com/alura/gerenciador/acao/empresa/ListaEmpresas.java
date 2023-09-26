@@ -26,8 +26,8 @@ public class ListaEmpresas extends AcaoComEntityManager{
 	public String executa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("listando empresas");
 		
-		List<Empresa> lista = repository.findEmpresas();
-		request.setAttribute("empresas", lista);
+		List<Empresa> listaEmpresas = repository.findEmpresas();
+		request.setAttribute("empresas", listaEmpresas);
 		
 		return "forward:listaEmpresas.jsp";
 	}
