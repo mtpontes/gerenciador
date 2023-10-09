@@ -1,7 +1,6 @@
 package main.java.br.com.alura.gerenciador.modelo;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,8 +36,12 @@ public class Empresa {
 		this.usuario = usuario;
 	}
 	
-	public void removeEmpresa(Boolean ativo) {
-		this.ativo = false;
+	public void removeOrRestoreEmpresa() {
+		if (this.ativo == true) {
+			this.ativo = false;
+			} else {
+				this.ativo = true;				
+			}
 	}
 	
 	public Empresa alteraDados(String nome, LocalDate dataAbertura) {
@@ -46,6 +49,4 @@ public class Empresa {
 		this.dataAbertura = dataAbertura;
 		return this;
 	}
-	
-	
 }

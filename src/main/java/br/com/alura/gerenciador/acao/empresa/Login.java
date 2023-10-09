@@ -3,11 +3,11 @@ package main.java.br.com.alura.gerenciador.acao.empresa;
 import java.io.IOException;
 
 import javax.persistence.EntityManager;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.NoArgsConstructor;
 import main.java.br.com.alura.gerenciador.acao.AcaoComEntityManager;
 import main.java.br.com.alura.gerenciador.modelo.Usuario;
@@ -25,6 +25,7 @@ public class Login extends AcaoComEntityManager{
 	@Override
 	public String executa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Processando login...");
+		
 		String login = request.getParameter("login");
 		String senha = request.getParameter("senha");
 		
@@ -33,11 +34,13 @@ public class Login extends AcaoComEntityManager{
 		Usuario usuario = repository.findByLogin(login);
 		if(usuario != null && usuario.verificarSenha(senha)) {
 			System.out.println("Usuario existe");
+			
 			HttpSession sessao = request.getSession();
 			sessao.setAttribute("usuarioLogado", usuario);
 			sessao.setMaxInactiveInterval(3600);
+			
 			System.out.println("Usuario autenticado!");
-			return "redirect:entrada?acao=ListaEmpresas";
+			return "foward:entrada?acao=ListaEmpresasUsuario";
 		} else {
 			return "redirect:entrada?acao=LoginForm";
 		}

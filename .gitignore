@@ -19,6 +19,3 @@ log/
 target/
 .idea/
 build/
-
-# Docker
-*.dockerfile

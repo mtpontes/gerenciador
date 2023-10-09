@@ -1,17 +1,13 @@
 package main.java.br.com.alura.gerenciador.acao.empresa;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 import javax.persistence.EntityManager;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.NoArgsConstructor;
 import main.java.br.com.alura.gerenciador.acao.AcaoComEntityManager;
 import main.java.br.com.alura.gerenciador.modelo.Empresa;
@@ -29,16 +25,14 @@ public class AlteraEmpresa extends AcaoComEntityManager {
 	public String executa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String nomeEmpresa = request.getParameter("nome");
-		String paramId = request.getParameter("id");
-		Long id = Long.valueOf(paramId);
-		String paramDataEmpresa = request.getParameter("data");
-		LocalDate date = LocalDate.parse(paramDataEmpresa, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		Long empresaID = getParameterId(request);
+		LocalDate dataEmpresa= getParameterData(request);
 
-		System.out.println("acao altera empresa " + id);
+		System.out.println("acao altera empresa " + empresaID);
 		
-		Empresa empresa = repository.findEmpresaById(id).alteraDados(nomeEmpresa, date);
+		Empresa empresa = repository.findEmpresaById(empresaID).alteraDados(nomeEmpresa, dataEmpresa);
 		repository.update(empresa);
-		return "redirect:entrada?acao=ListaEmpresas";
+		return "redirect:entrada?acao=ListaEmpresasUsuario";
 	
 	}
 }

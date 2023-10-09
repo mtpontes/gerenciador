@@ -1,48 +1,67 @@
-<%@page import="main.java.br.com.alura.gerenciador.util.DateUtil"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.List,main.java.br.com.alura.gerenciador.modelo.Empresa"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
+<%@ taglib uri="jakarta.tags.fmt" prefix="fmt" %>
 <%@ page import="main.java.br.com.alura.gerenciador.util.DateUtil" %>
 
 
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Java Standard Taglib</title>
+	<meta charset="UTF-8">
+	<title>Catalogo de Empresas</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="styles/reset.css">
+	<link rel="stylesheet" href="styles/listaEmpresas.css">
 </head>
 <body>
-	<c:import url="logout-parcial.jsp" />
+	<!-- inclui header.jsp -->	
+	<jsp:include page="header.jsp"></jsp:include>
+	
+	<div class="titulo-lista">
+		<h1 class="titulo-lista-texto">Lista de empresas</h1>
+	</div>
+	
+	<ul class="container-empresas">
 
-	Usuario Logado: ${usuarioLogado.login }
+		<li class="colunas">
+			<div class="colunas-container">
+				<div class="colunas-container-nome">
+					<p class="colunas-container-nome-texto">Nome</p>
+				</div>
+				<div class="colunas-container-data" style="padding: 0 2.5em 0 0;">
+					<p class="colunas-container-data-texto">Data</p>
+				</div>
+			</div>
+		</li>
 	
-	<br>
-	<br>
-	<br>
-
-	<c:if test="${not empty empresa}">
-		Empresa ${ empresa } cadastrada com sucesso!
-	</c:if>
-	
-	Lista de empresas: <br />
-	
-	<ul>
 	    <c:forEach items="${empresas}" var="empresa">
-	        <li>
-	            ${empresa.nome } - ${DateUtil.formatDate(empresa.dataAbertura, "dd/MM/yyyy")}
+	        <li class="lista">
+	        	<div class="lista-container">
+	        		<div class="lista-container-nome">
+	            		<p class="lista-container-nome-texto nome">${empresa.nome }</p>
+	            	</div>
+	            
+	            	<div class="lista-container-data">
+	            		<p class="lista-container-data-texto data">${DateUtil.formatDate(empresa.dataAbertura, "dd/MM/yyyy")}</p>
+	           		</div>
+	            </div>
 	        </li>
 	    </c:forEach>
 	</ul>
 
-	
-	<div>
-		<a href="entrada?acao=ListaEmpresasUsuario">Minhas Empresas</a>
-	</div>
-	
+	<footer class="footer"></footer>
 </body>
 </html>
+
+
+
+
+
+
+
+
 
 
 

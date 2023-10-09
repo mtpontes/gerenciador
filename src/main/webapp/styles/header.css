@@ -1,0 +1,16 @@
+.cabecalho {
+	background-color: var(--cor-secundaria); /* Cor do cabeçalho */
+	padding: 1.5em;
+    display: flex;
+	justify-content: space-between;
+
+	.container{
+		display: flex;
+		gap: 2em;
+	}
+}
+
+.cabecalho-container-user{
+	font-weight: 700;
+	color: var(--cor-branca);
+}

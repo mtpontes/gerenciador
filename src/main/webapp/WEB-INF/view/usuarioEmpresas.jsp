@@ -1,48 +1,62 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.List,main.java.br.com.alura.gerenciador.modelo.Empresa"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
+<%@ taglib uri="jakarta.tags.fmt" prefix="fmt" %>
 <%@ page import="main.java.br.com.alura.gerenciador.util.DateUtil" %>
 
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Java Standard Taglib</title>
+	<meta charset="ISO-8859-1">
+	<title>Minhas Empresas</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="styles/reset.css">
+	<link rel="stylesheet" href="styles/listaEmpresas.css">
+	<script src="resources/js/script.js"></script>
 </head>
 <body>
-	<c:import url="logout-parcial.jsp" />
+	<jsp:include page="header.jsp"></jsp:include>
+	
+	<div class="titulo-lista">
+		<h1 class="titulo-lista-texto">Empresas</h1>
 
-	Usuario Logado: ${usuarioLogado.login }
+		<a class="nova-empresa-link"href="entrada?acao=NovaEmpresaForm">+</a>
+	</div>
 	
-	<br>
-	<br>
-	<br>
-
-	<c:if test="${not empty empresa}">
-		Empresa ${ empresa } cadastrada com sucesso!
-	</c:if>
+	<ul class="container-empresas">
+		
+		<li class="colunas">
+			<div class="colunas-container">
+				<div class="colunas-container-nome">
+					<p class="colunas-container-nome-texto">Nome</p>
+				</div>
+				<div class="colunas-container-data">
+					<p class="colunas-container-data-texto">Data</p>
+				</div>
+			</div>
+		</li>
 	
-	Lista de empresas: <br />
-	
-	<ul>
 		<c:forEach items="${empresas}" var="empresa">
-			
-			<li>
-	            ${empresa.nome } - ${DateUtil.formatDate(empresa.dataAbertura, "dd/MM/yyyy")}
-				<a href="/gerenciador/entrada?acao=MostraEmpresa&id=${empresa.id }">edita</a>
-				<a href="/gerenciador/entrada?acao=RemoveEmpresa&id=${empresa.id }">remove</a>
+			<li class="lista">
+				<div class="lista-container">
+					
+					<div class="lista-container-nome">
+						<p class="lista-container-nome-texto nome">${empresa.nome }</p>
+					</div>
+		
+		       		<div class="lista-container-data">
+		        		<p class="lista-container-data-texto data">${DateUtil.formatDate(empresa.dataAbertura, "dd/MM/yyyy")}</p>
+		        	</div>
+		        	
+		        	<div class="lista-container-edita-e-remove">
+		        		<a class="edita" href="/gerenciador/entrada?acao=MostraEmpresa&id=${empresa.id }">edita</a>
+						<a class="remove-ou-restaura" href="/gerenciador/entrada?acao=RemoveEmpresa&id=${empresa.id }" data-ativo=${empresa.ativo } method='post'></a>
+					</div>
+				</div>
 			</li>
 		</c:forEach>
 	</ul>
-	
-	<div>
-		<a href="entrada?acao=NovaEmpresaForm">Novo</a>
-	</div>
-	
+
 </body>
 </html>
-
-
-

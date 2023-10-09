@@ -1,17 +1,14 @@
 package main.java.br.com.alura.gerenciador.acao.empresa;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 import javax.persistence.EntityManager;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.NoArgsConstructor;
 import main.java.br.com.alura.gerenciador.acao.AcaoComEntityManager;
 import main.java.br.com.alura.gerenciador.modelo.Empresa;
@@ -29,7 +26,7 @@ public class NovaEmpresa extends AcaoComEntityManager{
 	
 	@Override
 	public String executa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Cadastrando nova empresa...");
+		System.out.println("mostrando dados da empresa");
 		
 		String nome = request.getParameter("nome");
 		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
@@ -42,6 +39,5 @@ public class NovaEmpresa extends AcaoComEntityManager{
 		
 		request.setAttribute("empresa", empresa.getNome());
 		return "redirect:entrada?acao=ListaEmpresas";
-		
 	}
 }

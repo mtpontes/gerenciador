@@ -47,13 +47,13 @@ public class EmpresaRepositoryMySQL implements EmpresaRepository {
 		em.getTransaction().commit();
 	}
 
-	public List<Empresa> findEmpresasDoUsuario(Long id) {
+	public List<Empresa> findEmpresasOfUsuarioById(Long id) {
 		return em.createNativeQuery("SELECT * FROM empresas WHERE usuario_id =:id", Empresa.class)
 				.setParameter("id", id).getResultList();
 	}
 
 	@Override
-	public List<Empresa> findEmpresasDoUsuarioByAtivoTrue(Long id) {
+	public List<Empresa> findEmpresasOfUsuarioByIdAndAtivoTrue(Long id) {
 		return em.createNativeQuery("SELECT * FROM empresas WHERE usuario_id =:id AND ativo =1", Empresa.class)
 				.setParameter("id", id)
 				.getResultList();

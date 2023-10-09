@@ -1,26 +1,40 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
+<%@ taglib uri="jakarta.tags.fmt" prefix="fmt" %>
+
 <c:url value="/entrada" var="linkEntradaServlet"/>
 
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<title>Login</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="styles/reset.css">
+	<link rel="stylesheet" href="styles/formLogin.css">
 </head>
 <body>
 
-	<form action="${linkEntradaServlet }" method="post">
-	
-		Login: <input type="text" name="login"  />
-		Senha: <input type="password" name="senha"  />
+	<div class="titulo">
+		<h2 class="titulo-cadastro">Fazer Login</h2>
+	</div>
+
+	<form class="formulario" action="${linkEntradaServlet }" method="post">
+		<div class="form-group">
+			<label class="form-label">Login </label>
+			<input class="form-input" type="text" name="login" placeholder="insira seu login" />
+		</div>
+		
+		<div class="form-group">
+			<label class="form-label">Senha </label>
+			<input class="form-input" type="password" name="senha" placeholder="insira sua senha" />
+		</div>
 		
 		<input type="hidden" name="acao" value="Login">
-	
-		<input type="submit" />
+		<input class="form-submit" type="submit" value="Enviar" />
 	</form>
 	
-	<div>
-		<a href="usuario?acao=NovoUsuarioForm">Criar conta</a>
+	<div class="novo-usuario">
+		<a class="novo-usuario-link" href="usuario?acao=NovoUsuarioForm" >Criar conta</a>
 	</div>
 
 </body>

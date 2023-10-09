@@ -1,0 +1,98 @@
+@import url("base.css");
+
+*{
+    box-sizing: border-box;
+}
+
+body{
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.titulo{
+    
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    background: var(--cor-terciaria);
+    padding: 4em;
+    border-radius: 8px 8px 0 0;
+    border: 1px solid var(--cor-principal);
+
+    .titulo-cadastro{
+        color: var(--cor-principal);
+        font-weight: 700;
+        font-size: 2em;
+    }
+}
+
+.formulario {
+    width: 50%;
+    background: var(--cor-secundaria);
+    padding: 4em;
+    border-radius: 0 0 8px 8px;
+
+    /* border: 1px solid red; */
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.50em;
+    font-weight: bold;
+    color:var(--cor-terciaria);
+
+    /* border:1px solid blue; */
+}
+.form-input {
+    width: 100%;
+    padding: 0.63em;
+    margin-bottom: 0.94em;
+    border: 0.06em;
+    border-radius: 0.31em;
+    background-color: var(--cor-quinternaria);
+    outline-color: var(--cor-quinternaria);
+
+    /* border: 1px solid red; */
+}
+.form-input:focus{
+    outline-width: 0.125em;
+    outline-style: solid;
+}
+
+
+.form-submit {
+    width: 100%;
+    padding: 1em;
+    background-color: var(--cor-terciaria);
+    color: var(--cor-principal);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin:1em 0 1em 0;
+    font-weight: bold;
+    font-size: 1.15em;
+
+    /* border: 3px solid black; */
+}
+.form-submit:hover {
+    background: var(--cor-branca);
+}
+
+.novo-usuario {
+    margin-top: 1.25em;
+
+    /* border: 3px solid red; */
+}
+
+.novo-usuario-link {
+    font-size: 1.2em;
+    text-decoration: none;
+    color: var(--cor-quaternaria);
+    font-weight: bold;
+}
+.novo-usuario-link:hover {
+    text-decoration: underline;
+}

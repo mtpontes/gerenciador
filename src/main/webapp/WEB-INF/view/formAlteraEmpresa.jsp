@@ -1,27 +1,40 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
-
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
+<%@ taglib uri="jakarta.tags.fmt" prefix="fmt" %>
 <c:url value="/entrada" var="linkEntradaServlet"/>
 
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<meta charset="UTF-8">
+	<link rel="stylesheet" href="styles/reset.css">
+	<link rel="stylesheet" href="styles/formAlteraEmpresa.css">
+<title>Editar Empresa</title>
 </head>
 <body>
+	<!-- inclui header.jsp -->
+	<jsp:include page="header.jsp"></jsp:include>
 
-	<c:import url="logout-parcial.jsp" />
-	
+	<h2 class="titulo">ATUALIZAÇÃO DE CADASTRO</h2>
+	<form class="formulario" action="${linkEntradaServlet }" method="post">
+		<div class="container">
+			<div class="container-nome-e-data">
+				<p class="container-nome-e-data-texto">Nome</p>
+				<p class="container-nome-e-data-texto">Data Abertura</p> 
+			</div>
 
-	<form action="${linkEntradaServlet }" method="post">
-	
-		Nome: <input type="text" name="nome" value="${empresa.nome }" />
-		Data Abertura: <input type="text" name="data"  value="<fmt:formatDate value="${empresa.dataAbertura }" pattern="dd/MM/yyyy"/>" />
+			<div class="container-campo">
+				<input class="container-campo-input" type="text" name="nome" value="${empresa.nome }" placeholder="Nome da empresa" style="color: black;" />
+				<input class="container-campo-input" type="text" name="data" placeholder="Exemplo: 01/01/2001" style="color: black;" />
+			</div>
+		</div>
+
+
 		<input type="hidden" name="id" value="${empresa.id }">
 		<input type="hidden" name="acao" value="AlteraEmpresa">
-		<input type="submit" />
+
+		<div class="container-enviar">
+			<input class="formulario-container-enviar" type="submit" value="Enviar" />
+		</div>
 	</form>
 
 </body>

@@ -1,0 +1,102 @@
+@import url(base.css);
+
+@import url(base.css);
+
+.formulario {
+	display: flex;
+    flex-direction: column;
+	margin: 0 auto 3em auto;
+	justify-content: center;
+    max-width: 50%;
+    padding:1.5em;
+    
+    color: var(--cor-texto);
+    background-color: var(--cor-secundaria);
+    
+    border-radius: 0 0 10px 10px;
+
+    /* border: 3px solid black; */
+}
+
+.container-nome-e-data{
+	display: flex;
+	justify-content: space-around;
+	margin-bottom: 1em;
+    
+    /* border: 1px solid red; */
+}
+.container-campo {
+    display: flex;
+    justify-content: space-between;
+
+    /* border: 3px solid green; */
+}
+
+.container-nome-e-data-texto,
+.container-campo-input {
+    font-size: 16px;
+}
+
+.container-campo-input {
+	margin:0em 1em 1em 1em;
+    width: 45%;
+    padding: 0.7em;
+    
+    border: 1px solid #291d16;
+    border-radius: 5px;
+    
+    background-color: var(--cor-terciaria);
+    color: var(--cor-branca);
+}
+
+/* Estilo para o botão de enviar */
+.container-enviar{
+	display: flex;
+	justify-content: center;
+	margin-top: 1em;
+
+    /* border:3px solid yellow; */
+}
+.formulario-container-enviar {
+    display: flex;
+	justify-content: center;
+    width:94%;
+    padding: 10px;
+    
+    border: none;
+    border-radius: 10px;
+    
+    background-color: var(--cor-quaternaria);
+    color:var(--cor-principal);
+    
+    font-size: 16px;
+    font-weight: 700;
+    
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    /* border: 3px solid blue; */
+}
+.formulario-container-enviar:hover {
+    background-color: var(--cor-terciaria);
+}
+
+.titulo{
+	display: flex;
+	margin: 3em auto 0 auto;
+	justify-content: center;
+    max-width: 50%;
+    padding:1em;
+
+    background-color: var(--cor-terciaria);
+
+    border-radius: 10px 10px 0 0;
+    border-bottom: 1px solid #291d16;
+
+    font-weight: 700;
+    font-size: 1.5em;
+    color: var(--cor-principal);
+
+    /* border: 3px solid orange; */
+}
+
