@@ -16,12 +16,32 @@ public class EmpresaRepositoryMySQL implements EmpresaRepository {
 		this.em  = em;
 	}
 	
-	
+	@Override
 	public void persist(Empresa empresa) {
 		em.getTransaction().begin();
 		em.persist(empresa);
 		em.getTransaction().commit();
 	}
+	
+	
+	public void update(Empresa dadosAtualizados) {
+		try {
+			em.getTransaction().begin();
+			
+			Empresa empresaDB = findEmpresaById(dadosAtualizados.getId());
+			if (dadosAtualizados.getAtivo() == empresaDB.getAtivo()) {
+				empresaDB.alteraDados(dadosAtualizados.getNome(), dadosAtualizados.getDataAbertura());
+				em.merge(empresaDB);
+			} else {
+				em.merge(empresaDB.removeOrRestoreEmpresa());
+			}
+			
+			em.getTransaction().commit();
+		} catch (NoResultException e) {
+			em.getTransaction().rollback();
+		}
+	}
+	
 	
 	public List<Empresa> findEmpresas(){
 		return em.createNativeQuery("SELECT * FROM empresas WHERE ativo = 1", Empresa.class).getResultList();
@@ -36,16 +56,6 @@ public class EmpresaRepositoryMySQL implements EmpresaRepository {
 			return null;
 		}
 	}
-	
-	public void update(Empresa empresa) {
-		em.getTransaction().begin();
-		Empresa empresaDB = findEmpresaById(empresa.getId());
-		if (empresaDB != null) {
-			empresaDB.alteraDados(empresa.getNome(), empresa.getDataAbertura());
-			em.merge(empresaDB);
-		}
-		em.getTransaction().commit();
-	}
 
 	public List<Empresa> findEmpresasOfUsuarioById(Long id) {
 		return em.createNativeQuery("SELECT * FROM empresas WHERE usuario_id =:id", Empresa.class)
@@ -58,5 +68,8 @@ public class EmpresaRepositoryMySQL implements EmpresaRepository {
 				.setParameter("id", id)
 				.getResultList();
 	}
+
+
+
 
 }

@@ -33,7 +33,7 @@
 		</div>
 
 		<div class="cabecalho-container-user">
-			<h2 class="usuario-logado">${usuarioLogado.login }</h2>
+			<h2 class="usuario-logado">${usuarioLogado.nome }</h2>
 		</div>
 	</header>
 </body>

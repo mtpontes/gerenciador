@@ -27,7 +27,6 @@ public class ListaEmpresasUsuario extends AcaoComEntityManager {
 	public String executa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("listando empresas do usuário");
 
-//		HttpSession sessao = request.getSession();
 		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
 		
 		List<Empresa> listaEmpresas = repository.findEmpresasOfUsuarioById(usuario.getId());

@@ -50,7 +50,8 @@
 		        	</div>
 		        	
 		        	<div class="lista-container-edita-e-remove">
-		        		<a class="edita" href="/gerenciador/entrada?acao=MostraEmpresa&id=${empresa.id }">edita</a>
+<%-- 		        		<a class="edita" href="/gerenciador/entrada?acao=MostraEmpresa&id=${empresa.id }">edita</a> --%>
+		        		<a class="edita" href="/gerenciador/entrada?acao=MostraEmpresa&nome=${empresa.nome }&id=${empresa.id}">edita</a>
 						<a class="remove-ou-restaura" href="/gerenciador/entrada?acao=RemoveEmpresa&id=${empresa.id }" data-ativo=${empresa.ativo } method='post'></a>
 					</div>
 				</div>

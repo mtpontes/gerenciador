@@ -7,12 +7,11 @@ import main.java.br.com.alura.gerenciador.modelo.Usuario;
 public interface UsuarioRepository {
 
 	@Transactional
-	public abstract void persist(Usuario produto);
+	public abstract void persist(Usuario usuario);
+	
+	@Transactional
+	public abstract void update(Usuario usuario);
 	
 	public abstract Usuario findByLogin(String login);
-
-	@Transactional
-	public abstract void update(String login);
-	
 
 }

@@ -23,17 +23,14 @@ public class AlteraEmpresa extends AcaoComEntityManager {
 	}
 	
 	public String executa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("Alterando empresa...");
 		
-		String nomeEmpresa = request.getParameter("nome");
 		Long empresaID = getParameterId(request);
+		String nomeEmpresa = request.getParameter("nome");
 		LocalDate dataEmpresa= getParameterData(request);
-
-		System.out.println("acao altera empresa " + empresaID);
 		
 		Empresa empresa = repository.findEmpresaById(empresaID).alteraDados(nomeEmpresa, dataEmpresa);
 		repository.update(empresa);
 		return "redirect:entrada?acao=ListaEmpresasUsuario";
-	
 	}
 }
-

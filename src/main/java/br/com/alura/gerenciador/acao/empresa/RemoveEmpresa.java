@@ -16,21 +16,18 @@ import main.java.br.com.alura.gerenciador.repository.EmpresaRepositoryMySQL;
 public class RemoveEmpresa extends AcaoComEntityManager{
 
 	private EmpresaRepositoryMySQL repository = new EmpresaRepositoryMySQL(this.em);
-	
 	public RemoveEmpresa(EntityManager em) {
 		super(em);
 	}
 	
 	@Override
 	public String executa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		System.out.println("acao removendo empresa");
+		
 		Long id = getParameterId(request);
+		Empresa empresa = repository.findEmpresaById(id).removeOrRestoreEmpresa();
 		
-		Empresa empresa = repository.findEmpresaById(id);
-		empresa.removeOrRestoreEmpresa();
 		repository.update(empresa);
-		
 		return "redirect:entrada?acao=ListaEmpresasUsuario";
 	}
 }

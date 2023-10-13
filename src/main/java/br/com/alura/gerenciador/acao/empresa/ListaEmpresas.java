@@ -24,7 +24,7 @@ public class ListaEmpresas extends AcaoComEntityManager{
 		
 	@Override
 	public String executa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("listando empresas");
+		System.out.println("listando empresas...");
 		
 		List<Empresa> listaEmpresas = repository.findEmpresas();
 		request.setAttribute("empresas", listaEmpresas);

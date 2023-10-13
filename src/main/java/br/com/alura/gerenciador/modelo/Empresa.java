@@ -36,12 +36,13 @@ public class Empresa {
 		this.usuario = usuario;
 	}
 	
-	public void removeOrRestoreEmpresa() {
+	public Empresa removeOrRestoreEmpresa() {
 		if (this.ativo == true) {
 			this.ativo = false;
 			} else {
 				this.ativo = true;				
 			}
+		return this;
 	}
 	
 	public Empresa alteraDados(String nome, LocalDate dataAbertura) {

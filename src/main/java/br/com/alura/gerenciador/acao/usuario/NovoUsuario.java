@@ -30,7 +30,7 @@ public class NovoUsuario extends AcaoComEntityManager{
 		System.out.println("USUARIO CADASTRADO");
 
 		request.setAttribute("usuario", usuario.getLogin());
-		return "redirect:entrada?acao=LoginForm";
+		return "redirect:usuario?acao=LoginForm";
 		
 	}
 }

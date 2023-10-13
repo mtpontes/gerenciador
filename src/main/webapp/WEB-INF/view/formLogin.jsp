@@ -1,7 +1,7 @@
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <%@ taglib uri="jakarta.tags.fmt" prefix="fmt" %>
 
-<c:url value="/entrada" var="linkEntradaServlet"/>
+<c:url value="/usuario" var="linkEntradaServlet"/>
 
 <!DOCTYPE html>
 <html>

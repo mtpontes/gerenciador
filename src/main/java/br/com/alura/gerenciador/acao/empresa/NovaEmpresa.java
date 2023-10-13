@@ -30,8 +30,7 @@ public class NovaEmpresa extends AcaoComEntityManager{
 		
 		String nome = request.getParameter("nome");
 		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
-		String dataAbertura = request.getParameter("data");
-		LocalDate date = LocalDate.parse(dataAbertura, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		LocalDate date = getParameterData(request);
 		
 		Empresa empresa = new Empresa(nome, date, usuario);
 		repository.persist(empresa);

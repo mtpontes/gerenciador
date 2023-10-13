@@ -23,13 +23,12 @@
 			</div>
 
 			<div class="container-campo">
-				<input class="container-campo-input" type="text" name="nome" value="${empresa.nome }" placeholder="Nome da empresa" style="color: black;" />
+				<input class="container-campo-input" type="text" name="nome" value="${nome }" placeholder="Nome da empresa" style="color: black;" />
 				<input class="container-campo-input" type="text" name="data" placeholder="Exemplo: 01/01/2001" style="color: black;" />
 			</div>
 		</div>
 
-
-		<input type="hidden" name="id" value="${empresa.id }">
+		<input type="hidden" name="id" value="${id }">
 		<input type="hidden" name="acao" value="AlteraEmpresa">
 
 		<div class="container-enviar">

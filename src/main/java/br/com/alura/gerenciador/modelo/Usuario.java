@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import jakarta.persistence.Transient;
 //import at.favre.lib.crypto.bcrypt.BCrypt;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,14 +28,20 @@ public class Usuario {
 	private String login;
 	@Getter
 	private String senha;
-	private static final String secret = System.getenv("SECRET");
+	@Getter
+	private String nome;
+	
 	@OneToMany(mappedBy = "usuario")
 	private List<Empresa> empresas = new ArrayList<>();
+
+	@Transient
+	private static final String secret = System.getenv("SECRET");
 	
 	public Usuario(String login, String senha) {
 		this.login= login;
 		this.senha = setSenha(senha);
 	}
+
 	
 	public String setSenha(String senha) {
         System.out.println("Definindo senha... A variável de ambiente é: " + secret);
@@ -42,8 +49,6 @@ public class Usuario {
 	}
 	
     public boolean verificarSenha(String senha) {
-//        BCrypt.Result result = BCrypt.verifyer().verify(senha.toCharArray(), this.senha);
-//        return result.verified;
     	System.out.println("Verificando senha...");
     	return BCrypt.verifyer().verify((secret + senha).getBytes(), this.senha.getBytes()).verified;
 
