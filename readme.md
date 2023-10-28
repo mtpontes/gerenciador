@@ -22,13 +22,18 @@ Este projeto foi inicialmente criado como parte do curso 'Java Web: crie aplica�
 <br>
 
 ## Mudanças visuais e funcionais
+
+### Header
+![header](readme/header.png)
+
+
 ### Interface de Login
 
 
 #### Antes:
 
 ![loginOriginal](readme/loginOriginal.png)
-#### Agora:
+#### Depois:
 ![loginNovo](readme/loginNovo.png)
 <br>
 
@@ -45,7 +50,7 @@ Caso o usuário não tenha conta, agora ele pode se cadastrar
 <br>
 Os elementos são adicionados através de um banco fictício. A página inicial permite apenas editar ou remover por completo.
 
-#### Agora
+#### Depois
 ![listaEmpresasNovo](readme/listaEmpresasNovo.png)
 <br>
  
@@ -54,6 +59,8 @@ Os elementos são adicionados através de um banco fictício. A página inicial 
 - O Usuário só pode editar e remover empresas relacionadas consigo
 - O Usuário consegue criar uma nova Empresa
 - As remoções agora não são mais deletes, são exclusões lógicas. Os botões remove/restaura quando clicados enviam uma requisição assíncrona que altera o status da Empresa
+
+
 ## Como Executar
 
 - Importe o projeto Maven
