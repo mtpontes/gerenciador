@@ -18,42 +18,28 @@
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
 	
-	<div class="titulo-lista">
-		<h1 class="titulo-lista-texto">Empresas</h1>
-
-		<a class="nova-empresa-link"href="entrada?acao=NovaEmpresaForm">+</a>
+	<div class="container-titulo">
+		<h1 class="titulo">Minhas Empresas</h1>
+		<a class="nova-empresa"href="entrada?acao=NovaEmpresaForm"><i class="fa-solid fa-circle-plus"></i></a>
 	</div>
 	
 	<ul class="container-empresas">
 		
 		<li class="colunas">
 			<div class="colunas-container">
-				<div class="colunas-container-nome">
-					<p class="colunas-container-nome-texto">Nome</p>
-				</div>
-				<div class="colunas-container-data">
-					<p class="colunas-container-data-texto">Data</p>
-				</div>
+				<p class="coluna-nome">Nome</p>
+				<p class="coluna-data-lista-empresas coluna-data-minhas-empresas" >Data</p>
 			</div>
 		</li>
 	
 		<c:forEach items="${empresas}" var="empresa">
 			<li class="lista">
-				<div class="lista-container">
-					
-					<div class="lista-container-nome">
-						<p class="lista-container-nome-texto nome">${empresa.nome }</p>
-					</div>
-		
-		       		<div class="lista-container-data">
-		        		<p class="lista-container-data-texto data">${DateUtil.formatDate(empresa.dataAbertura, "dd/MM/yyyy")}</p>
-		        	</div>
+				<p class="lista-nome">${empresa.nome }</p>
+        		<p class="lista-data">${DateUtil.formatDate(empresa.dataAbertura, "dd/MM/yyyy")}</p>
 		        	
-		        	<div class="lista-container-edita-e-remove">
-<%-- 		        		<a class="edita" href="/gerenciador/entrada?acao=MostraEmpresa&id=${empresa.id }">edita</a> --%>
-		        		<a class="edita" href="/gerenciador/entrada?acao=MostraEmpresa&nome=${empresa.nome }&id=${empresa.id}">edita</a>
-						<a class="remove-ou-restaura" href="/gerenciador/entrada?acao=RemoveEmpresa&id=${empresa.id }" data-ativo=${empresa.ativo } method='post'></a>
-					</div>
+	        	<div class="container-botoes">
+	        		<a class="edita" id="edita" href="/gerenciador/entrada?acao=MostraEmpresa&nome=${empresa.nome }&id=${empresa.id}">edita</a>
+					<a class="remove-ou-restaura" id="remove-ou-restaura" href="/gerenciador/entrada?acao=RemoveEmpresa&id=${empresa.id }" data-ativo=${empresa.ativo } method='post'></a>
 				</div>
 			</li>
 		</c:forEach>

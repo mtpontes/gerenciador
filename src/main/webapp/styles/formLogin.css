@@ -1,17 +1,11 @@
 @import url("base.css");
 
-*{
-    box-sizing: border-box;
-}
-
 body{
 	display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-
-
 .titulo{
     
     display: flex;
@@ -28,7 +22,6 @@ body{
         font-size: 2em;
     }
 }
-
 .formulario {
     width: 50%;
     background: var(--cor-secundaria);
@@ -38,28 +31,35 @@ body{
     /* border: 1px solid red; */
 }
 
-.form-label {
-    display: block;
-    margin-bottom: 0.50em;
-    font-weight: bold;
-    color:var(--cor-terciaria);
 
-    /* border:1px solid blue; */
-}
-.form-input {
-    width: 100%;
-    padding: 0.63em;
-    margin-bottom: 0.5em;
-    border: 0.06em;
-    border-radius: 0.31em;
-    background-color: var(--cor-quinternaria);
-    outline-color: var(--cor-quinternaria);
+.form-group{
+    margin: 1em 0;
+    
+    /* border: 2px solid white; */
 
-    /* border: 1px solid red; */
-}
-.form-input:focus{
-    outline-width: 0.125em;
-    outline-style: solid;
+    .form-label {
+        display: block;
+        margin-bottom: 0.5em;
+        margin-top:0.5em;
+        font-weight: bold;
+        color:var(--cor-terciaria);
+    
+        /* border:1px solid blue; */
+    }
+    .form-input {
+        width: 100%;
+        padding: 0.63em;
+    
+        margin-bottom: 0.5em;
+        
+        border: 0.06em;
+        border-radius: 0.31em;
+        
+        /* border: 1px solid red; */
+    }
+    .mensagem-erro{
+        color: red;
+    }
 }
 
 
@@ -71,7 +71,7 @@ body{
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin:1em 0 0.5em 0;
+    margin:1em 0 1em 0;
     font-weight: bold;
     font-size: 1.15em;
 
@@ -79,24 +79,23 @@ body{
 }
 .form-submit:hover {
     background: var(--cor-branca);
-}
-.mensagem-erro {
-	color: red;
-	margin-bottom: 1em;
+    
 }
 
+
+/* link cadastro de novo usuário */
 .novo-usuario {
-    margin-top: 1.25em;
-
-    /* border: 3px solid red; */
-}
-
-.novo-usuario-link {
     font-size: 1.2em;
     text-decoration: none;
     color: var(--cor-quaternaria);
     font-weight: bold;
+    
+    margin-top: 1.25em;
+
+    /* border: 3px solid red; */
 }
-.novo-usuario-link:hover {
+.novo-usuario:hover {
     text-decoration: underline;
 }
+
+

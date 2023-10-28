@@ -22,26 +22,17 @@
 <body>
 	<header class="cabecalho">
 		<div class="container">
-			<div class="container-minhas-empresas">
-				<a class="container-minhas-empresas-link" href="entrada?acao=ListaEmpresasUsuario">Minhas Empresas</a>
-			</div>
-
-			<div class="container-outras-empresas">
-				<a class="container-outras-empresas-link" href="entrada?acao=ListaEmpresas">Outras Empresas</a>
-			</div>
+			<a class="container-minhas-empresas-link" href="entrada?acao=ListaEmpresasUsuario">Minhas Empresas</a>
+			<a class="container-outras-empresas-link" href="entrada?acao=ListaEmpresas">Outras Empresas</a>
 		</div>
 
-		<div class="cabecalho-container-user">
-			<i class="fas fa-user" id="icone-usuario"></i>
-		</div>
+		<i class="fas fa-user" id="icone-usuario"></i>
 	</header>
-	
+
 	<div id="modal" class="modal" style="display:none">
-		<div class="user-menu">
+		<div class="usuario">
 			<h2 class="usuario-logado">${usuarioLogado.nome } </h2>
-			<div class="usuario-sair">
-				<a class="logout" href="usuario?acao=Logout"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
-			</div>
+			<a class="botao-logout" href="usuario?acao=Logout"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
 		</div>
 	</div>
 </body>

@@ -11,10 +11,14 @@
     --fonte-principal: Arial, sans-serif;
 }
 
-/* base.css */
+
+*{
+    box-sizing: border-box;
+}
 
 html, body {
     height: 100%;
+    color: var(--cor-branca);
     font-family: var(--fonte-principal);
 }
 
@@ -46,6 +50,20 @@ a:hover {
 
 footer{
 	margin:2em;
+}
+
+span{
+    font-family: var(--fonte-principal);
+    font-weight: 700;
+}
+
+input{
+    background-color: var(--cor-quinternaria);
+}
+input:focus{
+    background-color: var(--cor-branca);
+    outline: 1px solid white;
+    outline-style: solid;
 }
 
 

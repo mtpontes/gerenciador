@@ -7,7 +7,8 @@
 <head>
 <meta charset="UTF-8">
 	<link rel="stylesheet" href="styles/reset.css">
-	<link rel="stylesheet" href="styles/formAlteraEmpresa.css">
+	<link rel="stylesheet" href="styles/formCadastroEmpresas.css">
+	<script src="resources/js/validaCadastroEmpresa.js"></script>
 <title>Editar Empresa</title>
 </head>
 <body>
@@ -15,25 +16,27 @@
 	<jsp:include page="header.jsp"></jsp:include>
 
 	<h2 class="titulo">ATUALIZAÇÃO DE CADASTRO</h2>
-	<form class="formulario" action="${linkEntradaServlet }" method="post">
-		<div class="container">
-			<div class="container-nome-e-data">
-				<p class="container-nome-e-data-texto">Nome</p>
-				<p class="container-nome-e-data-texto">Data Abertura</p> 
-			</div>
+	
+	<form class="formulario" id="formulario" action="${linkEntradaServlet }" method="post">
+			
+		<div class="container-nome-e-data">
+			<p class="texto">Nome</p>
+			<p class="texto">Data Abertura</p> 
+		</div>
 
-			<div class="container-campo">
-				<input class="container-campo-input" type="text" name="nome" value="${nome }" placeholder="Nome da empresa" style="color: black;" />
-				<input class="container-campo-input" type="text" name="data" placeholder="Exemplo: 01/01/2001" style="color: black;" />
-			</div>
+		<div class="container-input">
+			<input class="input-campo" id="nome" name="nome" type="text" value="${nome }" placeholder="Nome da empresa" />
+			<input class="input-campo" id="data" name="data" type="text" placeholder="Exemplo: 01/01/2001"" />
+		</div>
+			
+		<div class="container-erro">
+			<span class="form-label" id="mensagem-erro-login" style="display:none">Nome precisa ser preenchido</span>
+			<span class="form-label" id="mensagem-erro-data" style="display:none">Insira a data no formato dd/MM/aaaa</span>
 		</div>
 
 		<input type="hidden" name="id" value="${id }">
 		<input type="hidden" name="acao" value="AlteraEmpresa">
-
-		<div class="container-enviar">
-			<input class="formulario-container-enviar" type="submit" value="Enviar" />
-		</div>
+		<input class="botao-enviar" type="submit" value="Enviar" />
 	</form>
 
 </body>

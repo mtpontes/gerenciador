@@ -16,37 +16,26 @@
 	<link rel="stylesheet" href="styles/listaEmpresas.css">
 </head>
 <body>
-	<!-- inclui header.jsp -->	
+	<!-- inclui header.jsp -->
 	<jsp:include page="header.jsp"></jsp:include>
 	
-	<div class="titulo-lista">
-		<h1 class="titulo-lista-texto">Lista de empresas</h1>
+	<div class="container-titulo">
+		<h1 class="titulo">Outras Empresas</h1>
 	</div>
 	
 	<ul class="container-empresas">
 
 		<li class="colunas">
 			<div class="colunas-container">
-				<div class="colunas-container-nome">
-					<p class="colunas-container-nome-texto">Nome</p>
-				</div>
-				<div class="colunas-container-data" style="padding: 0 2.5em 0 0;">
-					<p class="colunas-container-data-texto">Data</p>
-				</div>
+				<p class="coluna-nome">Nome</p>
+				<p class="coluna-data-lista-empresas">Data</p>
 			</div>
 		</li>
 	
 	    <c:forEach items="${empresas}" var="empresa">
 	        <li class="lista">
-	        	<div class="lista-container">
-	        		<div class="lista-container-nome">
-	            		<p class="lista-container-nome-texto nome">${empresa.nome }</p>
-	            	</div>
-	            
-	            	<div class="lista-container-data">
-	            		<p class="lista-container-data-texto data">${DateUtil.formatDate(empresa.dataAbertura, "dd/MM/yyyy")}</p>
-	           		</div>
-	            </div>
+           		<p class="lista-nome">${empresa.nome }</p>
+           		<p class="lista-data">${DateUtil.formatDate(empresa.dataAbertura, "dd/MM/yyyy")}</p>
 	        </li>
 	    </c:forEach>
 	</ul>
