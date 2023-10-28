@@ -12,4 +12,7 @@ public class JPAUtil {
 		return FACTORY.createEntityManager();
 	}
 	
+	public static void closeEntityManager() {
+		FACTORY.close();
+	}
 }

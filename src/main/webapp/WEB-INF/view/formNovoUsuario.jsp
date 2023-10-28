@@ -9,6 +9,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="styles/reset.css">
 	<link rel="stylesheet" href="styles/formLogin.css">
+		<script src="resources/js/validaNovoUsuario.js" ></script>
 </head>
 <body>
 
@@ -16,20 +17,34 @@
 		<h2 class="titulo-cadastro">Cadastro de usuário</h2>
 	</div>
 
-	<form class="formulario" action="${linkEntradaServlet }" method="post">
+	<form class="formulario" id="formulario" action="${linkEntradaServlet }" method="post">
+	
+		<div class="form-group">
+			<label class="form-label">Nome</label>
+			<input class="form-input" id="nome" type="text" name="nome" placeholder="Seu nome completo"/>
+			<span class="mensagem-erro" id="nomeErro" style="display: none;">Nome é obrigatório e só é permitido letras, apóstrofo (\') e hífen (-)</span>
+		</div>
 	
 		<div class="form-group">
 			<label class="form-label">Login</label>
-			<input class="form-input" type="text" name="login"/>
+			<input class="form-input" id="login" type="text" name="login" placeholder="Mínimo 3 caracteres"/>
+			<span class="mensagem-erro" id="loginErro" style="display:none">Login precisa ter no mínimo 3 caracteres</span>
 		</div>
 		
 		<div class="form-group">
 			<label class="form-label">Senha</label>
-			<input class="form-input" type="password" name="senha" pattern=".{8,}" title="A senha deve ter pelo menos 8 caracteres." placegolder="mínimo 8 caracteres" />
+			<input class="form-input" id="senha" type="password" name="senha" placeholder="Mínimo 8 caracteres" />
+			<span class="mensagem-erro" id="senhaErro" style="display:none">Senha precisa ter no mínimo 8 caracteres</span>
+		</div>
+		
+		<div class="form-group">
+			<label class="form-label">Confirma senha</label>
+			<input class="form-input" id="confirma" type="password" name="confirma" placeholder="Repita sua senha" />
+			<span class="mensagem-erro" id="confirmaErro" style="display:none">Confirmação deve ser idêntica a senha</span>
 		</div>
 		
 		<input type="hidden" name="acao" value="NovoUsuario">
-		<input class="form-submit" type="submit" value="Avançar" />
+		<input class="form-submit" type="submit" value="Enviar" />
 	</form>
 
 </body>

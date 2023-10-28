@@ -31,6 +31,5 @@ public class NovoUsuario extends AcaoComEntityManager{
 
 		request.setAttribute("usuario", usuario.getLogin());
 		return "redirect:usuario?acao=LoginForm";
-		
 	}
 }

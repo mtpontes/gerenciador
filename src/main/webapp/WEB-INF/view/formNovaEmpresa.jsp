@@ -13,7 +13,9 @@
 
 	<jsp:include page="header.jsp"></jsp:include>
 	<h2 class="titulo">CADASTRO</h2>
+	
 	<form class="formulario" action="${linkEntradaServlet }" method="post">
+	
 		<div class="container">
 			<div class="container-nome-e-data">
 				<p class="container-nome-e-data-texto">Nome</p>

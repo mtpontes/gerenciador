@@ -1,3 +1,5 @@
+@import url("base.css");
+
 .cabecalho {
 	background-color: var(--cor-secundaria); /* Cor do cabeçalho */
 	padding: 1.5em;
@@ -13,4 +15,62 @@
 .cabecalho-container-user{
 	font-weight: 700;
 	color: var(--cor-branca);
+}
+
+
+
+
+/* --- modal --- */
+.modal {
+	color: var(--cor-secundaria);
+
+	display:none;
+	position: absolute;
+	margin-right: 0;
+	right: 0.5%;
+	
+	width: 10em;
+
+	top: 0;
+	padding-top: 4.5em;
+
+	/* border: 2px solid red; */
+}
+
+.user-menu {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	
+	padding: 8px;
+	
+	background-color: var(--cor-quaternaria);
+	
+	border-radius: 10px;
+	/* border: 1px solid red; */
+
+}
+
+.usuario-logado{
+	font-size: 1.5em;
+	font-weight: 700;
+	
+	margin-bottom: 0.5em;
+}
+.usuario-sair{
+	padding:0.5em;
+}
+
+.logout {
+	color: var(--cor-secundaria);
+
+}
+.logout:hover{
+	color: var(--cor-branca);
+	text-decoration: none;
+	background-color: var(--cor-principal);
+	padding: 0.35em 0.7em;
+	border-radius: 10px;
+	outline: none;
 }

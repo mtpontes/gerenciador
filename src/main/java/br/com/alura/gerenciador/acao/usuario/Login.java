@@ -43,6 +43,7 @@ public class Login extends AcaoComEntityManager{
 			System.out.println("Usuario autenticado!");
 			return "foward:entrada?acao=ListaEmpresasUsuario";
 		} else {
+			System.out.println("usuario não existe");
 			return "redirect:usuario?acao=LoginForm";
 		}
 	}

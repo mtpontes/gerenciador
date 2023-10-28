@@ -11,6 +11,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="styles/reset.css">
 	<link rel="stylesheet" href="styles/formLogin.css">
+	<script src="resources/js/validaLogin.js"></script>
 </head>
 <body>
 
@@ -18,15 +19,15 @@
 		<h2 class="titulo-cadastro">Fazer Login</h2>
 	</div>
 
-	<form class="formulario" action="${linkEntradaServlet }" method="post">
+	<form class="formulario" id="formulario" action="${linkEntradaServlet }" method="post">
 		<div class="form-group">
 			<label class="form-label">Login </label>
-			<input class="form-input" type="text" name="login" placeholder="insira seu login" />
+			<input class="form-input" type="text" id="login" name="login" placeholder="insira seu login" />
 		</div>
 		
 		<div class="form-group">
 			<label class="form-label">Senha </label>
-			<input class="form-input" type="password" name="senha" placeholder="insira sua senha" />
+			<input class="form-input" type="password" id="senha" name="senha" pattern=".{8,}" placeholder="insira sua senha" />
 		</div>
 		
 		<input type="hidden" name="acao" value="Login">

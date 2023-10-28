@@ -185,12 +185,11 @@
 
 	border-radius: 50%;
 
-	color: var(--cor-principal);
-	background-color: var(--cor-quaternaria);
+	color: var(--cor-terciaria);
+	background-color: var(--cor-secundaria);
 
 	font-size: 2em;
 
-	border: 2px solid var(--cor-secundaria);
 }
 
 .nova-empresa-link:hover{

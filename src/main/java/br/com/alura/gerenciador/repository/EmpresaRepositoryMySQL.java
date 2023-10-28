@@ -35,8 +35,8 @@ public class EmpresaRepositoryMySQL implements EmpresaRepository {
 			} else {
 				em.merge(empresaDB.removeOrRestoreEmpresa());
 			}
-			
 			em.getTransaction().commit();
+			
 		} catch (NoResultException e) {
 			em.getTransaction().rollback();
 		}
