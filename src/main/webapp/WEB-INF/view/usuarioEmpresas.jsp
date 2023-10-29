@@ -13,7 +13,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="styles/reset.css">
 	<link rel="stylesheet" href="styles/listaEmpresas.css">
-	<script src="resources/js/usuarioEmpresasBotoes.js"></script>
+	<script src="resources/js/botoesUsuarioEmpresas.js"></script>
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>

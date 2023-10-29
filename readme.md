@@ -1,21 +1,3 @@
-<style>
-h1{
-    font-size: 3em;
-}
-
-h2{
-    font-size: 3em;
-}
-
-h3 {
-    margin-top: 3em;
-
-    text-align: center;
-
-    font-size: 1.5em;
-}
-</style>
-
 # Gerenciador de Empresas
 
 Este projeto foi inicialmente criado como parte do curso 'Java Web: crie aplicações com Servlets e MVC' da Alura. A ideia aqui é desenvolver ainda mais essa aplicação colocando em prática minhas habilidades.
