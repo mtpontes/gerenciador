@@ -38,13 +38,6 @@ Este projeto foi inicialmente criado como parte do curso 'Java Web: crie aplica�
 
 ## Mudanças visuais e funcionais
 
-### Header
-
-![header](readme/header.png)
-- Header com links para navegação.
-- Modal com o nome do usuário logado e botão de logout usando ícones Font Awesome.
-
----
 ### Interface de Login
 
 
@@ -52,11 +45,11 @@ Este projeto foi inicialmente criado como parte do curso 'Java Web: crie aplica�
 
 ![loginOriginal](readme/loginOriginal.png)
 #### Depois:
-![loginNovo](readme/loginNovo.png)
+![loginNovo](readme/login.png)
 <br>
 ---
 ### Cadastro de Usuários
-![loginNovo](readme/cadastroUsuario.png)
+![loginNovo](readme/novoUsuario.png)
 <br>
 - Caso o usuário não tenha conta, agora ele pode se cadastrar.
 <br>
@@ -70,11 +63,11 @@ Este projeto foi inicialmente criado como parte do curso 'Java Web: crie aplica�
 Os elementos são adicionados através de um banco fictício. A página inicial permite apenas editar ou remover por completo.
 
 #### Depois
-![listaEmpresasAtual](readme/listaEmpresasAtual.png)
+![listaEmpresasAtual](readme/home.png)
 <br>
  
-![listaEmpresasUsuarioNovo](readme/listaEmpresasUsuario.png)
-![listaEmpresasUsuarioArquivados](readme/listaEmpresasUsuarioArquivados.png)
+![listaEmpresasUsuarioNovo](readme/arquivados.png)
+![listaEmpresasUsuarioArquivados](readme/outrasEmpresas.png)
 - Os objetos Empresa possuem relacionamento com Usuario, permitindo que uma página mostre todas as empresas cadastradas na plataforma e outra página mostre apenas as empresas do Usuário.
 - O Usuário só pode editar e arquivar empresas relacionadas consigo
 - O Usuário consegue criar uma nova Empresa.
@@ -90,9 +83,11 @@ Os elementos são adicionados através de um banco fictício. A página inicial 
 
 ![formularioComErroLogin](readme/cadastroUsuarioErroLogin.png)
 
+- Essas validações existem em todos os formulários
 - O formulário só será enviado quando todos os campos estiverem preenchidos corretamente. 
 - Se o usuário inserir alguma informação que não esteja dentro do padrão que cada campo exige, surgirão mensagens de erro nos campos com problema.
 - O campo 'login' é um atributo unico, não pode ser repetido no banco de dados. Quando o formulário é submetido é disparado um evento que faz uma requisição AJAX para verificar se o valor do campo login já está em uso, se a resposta for 'true' é exibida a mensagem de erro.
+
 
 ### Tratamento das entradas nos formulários  server-side
 

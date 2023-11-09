@@ -12,7 +12,7 @@ body{
     justify-content: center;
     align-items: center;
     width: 40%;
-    padding: 4em;
+    padding: 3em;
     /*height: 10%;*/
     background: var(--cor-terciaria);
     border-radius: 8px 8px 0 0;

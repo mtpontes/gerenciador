@@ -31,7 +31,7 @@
 	<div id="modal" class="modal" style="display:none">
 		<div class="usuario">
 			<h2 class="usuario-logado">${usuarioLogado.nome } </h2>
-			<a class="botao-logout" href="usuario?acao=logout" method='post'><i class="material-symbols-outlined">logout</i>Sair</a>
+			<a class="botao-logout" href="usuario?acao=logout" method='post'>Sair<i class="material-symbols-outlined">logout</i></a>
 		</div>
 	</div>
 </body>
