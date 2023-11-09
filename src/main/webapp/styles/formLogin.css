@@ -10,9 +10,11 @@ body{
     
     display: flex;
     justify-content: center;
-    width: 50%;
-    background: var(--cor-terciaria);
+    align-items: center;
+    width: 40%;
     padding: 4em;
+    /*height: 10%;*/
+    background: var(--cor-terciaria);
     border-radius: 8px 8px 0 0;
     border: 1px solid var(--cor-principal);
 
@@ -23,7 +25,8 @@ body{
     }
 }
 .formulario {
-    width: 50%;
+    width: 40%;
+    
     background: var(--cor-secundaria);
     padding: 4em;
     border-radius: 0 0 8px 8px;

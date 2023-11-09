@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page import="java.util.List,main.java.br.com.alura.gerenciador.modelo.Empresa"%>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <%@ taglib uri="jakarta.tags.fmt" prefix="fmt" %>
@@ -10,29 +10,28 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Catalogo de Empresas</title>
+	<title>Header</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="styles/reset.css">
 	<link rel="stylesheet" href="styles/base.css">
 	<link rel="stylesheet" href="styles/header.css">
-	<!-- Ícones fornecidos por Font Awesome (https://fontawesome.com/) -->
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
 	<script src="resources/js/headerModal.js"></script>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 </head>
 <body>
 	<header class="cabecalho">
 		<div class="container">
-			<a class="container-minhas-empresas-link" href="entrada?acao=ListaEmpresasUsuario">Minhas Empresas</a>
-			<a class="container-outras-empresas-link" href="entrada?acao=ListaEmpresas">Outras Empresas</a>
+			<a class="container-minhas-empresas-link" href="empresa?acao=listaEmpresasUsuario">Minhas Empresas</a>
+			<a class="container-outras-empresas-link" href="empresa?acao=listaEmpresas">Outras Empresas</a>
 		</div>
 
-		<i class="fas fa-user" id="icone-usuario"></i>
+		<i class="material-symbols-outlined" id="icone-usuario">account_circle</i>
 	</header>
 
 	<div id="modal" class="modal" style="display:none">
 		<div class="usuario">
 			<h2 class="usuario-logado">${usuarioLogado.nome } </h2>
-			<a class="botao-logout" href="usuario?acao=Logout"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
+			<a class="botao-logout" href="usuario?acao=logout" method='post'><i class="material-symbols-outlined">logout</i>Sair</a>
 		</div>
 	</div>
 </body>

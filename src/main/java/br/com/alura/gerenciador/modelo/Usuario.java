@@ -3,16 +3,13 @@ package main.java.br.com.alura.gerenciador.modelo;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import jakarta.persistence.Transient;
-//import at.favre.lib.crypto.bcrypt.BCrypt;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,28 +27,28 @@ public class Usuario {
 	private String senha;
 	@Getter
 	private String nome;
-	
 	@OneToMany(mappedBy = "usuario")
 	private List<Empresa> empresas = new ArrayList<>();
-
-	@Transient
-	private static final String secret = System.getenv("SECRET");
 	
 	public Usuario(String login, String senha) {
-		this.login= login;
-		this.senha = setSenha(senha);
+		this.login = login;
+		setSenha(senha);
 	}
-
+	public Usuario(UsuarioDTO dto) {
+		this.nome = dto.nome();
+		this.login = dto.login();
+		setSenha(dto.senha());
+	}
 	
-	public String setSenha(String senha) {
+	public void setSenha(String senha) {
+    	String secret = System.getenv("SECRET");
         System.out.println("Definindo senha... A variável de ambiente é: " + secret);
-		return this.senha = BCrypt.withDefaults().hashToString(4, (secret + senha).toCharArray());
+		this.senha = BCrypt.withDefaults().hashToString(4, (secret + senha).toCharArray());
 	}
 	
     public boolean verificarSenha(String senha) {
+    	String secret = System.getenv("SECRET");
     	System.out.println("Verificando senha...");
     	return BCrypt.verifyer().verify((secret + senha).getBytes(), this.senha.getBytes()).verified;
-
     }
 }
-

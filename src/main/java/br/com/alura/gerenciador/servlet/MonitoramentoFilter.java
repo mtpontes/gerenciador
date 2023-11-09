@@ -24,8 +24,6 @@ public class MonitoramentoFilter implements Filter {
 		chain.doFilter(request, response);
 		
 		long depois = System.currentTimeMillis();
-		System.out.println("Tempo de execu��o da acao " + acao + " -> " + (depois - antes));
-		
+		System.out.println("Tempo de execucao da acao " + acao + " -> " + (depois - antes) + "ms");
 	}
-
 }

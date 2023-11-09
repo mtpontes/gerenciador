@@ -18,6 +18,8 @@
 
 html, body {
     height: 100%;
+    width: 100%;
+    
     color: var(--cor-branca);
     font-family: var(--fonte-principal);
 }
@@ -26,18 +28,15 @@ body {
     font-family: var(--fonte-principal);
     font-size: 14px;
     font-weight: 400;
-    color: var(--cor-branca); 
 
 	background-color: var(--cor-principal); 
 }
 
-/* Estilizando links */
 a {
     text-decoration: none;
     color: var(--cor-branca);
     font-weight: bold;
 }
-
 a:hover {
     text-decoration: underline;
     color: var(--cor-quinternaria);

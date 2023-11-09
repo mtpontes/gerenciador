@@ -2,7 +2,7 @@ package main.java.br.com.alura.gerenciador.repository;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 
 import main.java.br.com.alura.gerenciador.modelo.Empresa;
 

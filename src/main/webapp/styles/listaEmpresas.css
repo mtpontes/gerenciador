@@ -2,9 +2,9 @@
 
 .container-titulo{
 	display: flex;
-	padding: 4em;
+	padding: 2em 1em 2em 1em;
 	margin: 2em auto 0 auto;
-	max-width:80%;
+	max-width:70%;
 	align-items: center;
 	justify-content: space-between;
 
@@ -19,13 +19,6 @@
 	.titulo{
 		font-weight: 700;
 		font-size: 2em;
-	}
-	.nova-empresa{
-		color: var(--cor-secundaria);
-		font-size: 2em;
-	}
-	.nova-empresa:hover{
-		color: white;
 	}
 }
 
@@ -58,9 +51,9 @@
 
 .container-empresas {
 	display: flex;
-	padding: 2.5em;
+	padding: 2em;
 	margin: 0 auto;
-	max-width: 80%;
+	max-width: 70%;
 	flex-direction: column;
 
 	gap: 1em;
@@ -68,11 +61,11 @@
 	background-color: var(--cor-secundaria);
 	border-radius: 0 0 10px 10px;
 
-	/* border: 3px solid white; */
+	/*border: 3px solid white; */
 
 	.lista {
 		display: flex;
-		padding: 1em;
+		padding: 0em 1em 0em 1em;
 	
 		background-color: var(--cor-terciaria);
 		color: var(--cor-principal);
@@ -100,48 +93,5 @@
 			margin: 1em 0 1em 1em;
 			/* border: 3px solid red; */
 		}
-	}
-}
-.container-botoes {
-	display: flex;
-	align-items: center;
-	
-	/*border: 3px solid greenyellow;*/
-	.edita, .remove, .restaura {
-		text-decoration: none;
-		
-		margin-left: 1em;
-		padding: 5px 10px;
-		
-		color: var(--cor-principal);
-		
-		border: 1px solid var(--cor-terciaria);
-		border-radius: 10px;
-		background-color: var(--cor-quaternaria);
-	}
-	.edita{
-		margin-left: 9em;
-	}
-
-	.edita:hover, .remove:hover, .restaura:hover {
-		text-decoration: none;
-	
-		color: var(--cor-principal);
-		background-color: var(--cor-branca);
-	}
-	.remove{
-		padding: 5px 1.1em;
-	}
-	.restaura{
-		text-decoration: none;
-		
-		margin-left: 1em;
-		padding: 5px 10px;
-	
-		color: var(--cor-quaternaria);
-	
-		border: 1px solid var(--cor-terciaria);
-		border-radius: 10px;
-		background-color: var(--cor-secundaria);
 	}
 }

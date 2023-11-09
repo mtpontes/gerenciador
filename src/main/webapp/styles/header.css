@@ -1,17 +1,17 @@
 @import url("base.css");
 
 .cabecalho {
-	background-color: var(--cor-secundaria); /* Cor do cabeçalho */
-	padding: 1.5em;
+	background-color: var(--cor-secundaria);
+	padding: 1em;
     display: flex;
+    align-items: center;
 	justify-content: space-between;
-
+	
 	.container{
 		display: flex;
 		gap: 2em;
 	}
 }
-
 
 
 /* --- modal --- */
@@ -25,27 +25,28 @@
 	
 	top: 0;
 	padding-top: 4.5em;
-
-	/* border: 3px solid yellow; */
+	
+	z-index: 1000;
+	
 }
 
 .usuario{
 	display: flex;
 	flex-direction: column;
-
+	justify-content: center;
+	
 	text-align: center;
+	
 	background-color: var(--cor-quaternaria);
 	
 	padding: 1em;
 	
 	border-radius: 10px;
-
-	/* border: 3px solid purple; */
-
-
+	
 	.usuario-logado{
-
-
+		border-bottom: 2px solid var(--cor-principal);
+		margin-bottom: 1em;
+		
 		font-size: 2em;
 		font-weight: 700;
 
@@ -53,29 +54,29 @@
 		padding: 0.5;
 		margin-bottom: 0.5em;
 		border-bottom: 2px solid var(--cor-principal);
-		/* border: 2px solid red; */
 	}
-	.botao-logout{
-		margin-bottom: 0.5em;
-		/* border: 2px solid red; */
-	}
-}
-  
-.botao-logout {
-	padding: 0.3em 0.8em;
 	
-	color: var(--cor-principal);
+	.botao-logout {
+		width: 40%;
+		margin:auto;
+		
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		
+		padding: 0.1em 1em;
 
-	border: 2px solid transparent;
+		color: var(--cor-principal);
 	
+		
+		text-align: center;
+	}
 }
+
 .botao-logout:hover{
 	text-decoration: none;
 	color: black;
 
 	border-radius: 10px;
-	border: 2px solid var(--cor-principal);
-
-
-	background-color: white;
+	background-color: var(--cor-branca);
 }

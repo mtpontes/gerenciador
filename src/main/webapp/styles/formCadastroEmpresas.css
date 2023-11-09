@@ -57,7 +57,7 @@
 
     /* border: 3px solid green; */
     
-    .input-campo {
+    .form-input {
         display: flex;
         
         width: 100%;
@@ -80,7 +80,8 @@
     /*border: 3px solid red;*/
     
     .container-erro-div{
-		width: 100%;
+		display: flex;
+		width: 50%;
 		
 		/*border: 3px solid white;*/
 	}
@@ -88,7 +89,7 @@
     .form-label {
         color: red;
         word-wrap: break-word;
-        margin: 0.5em 0 0 1em;
+        padding: 0 1em;
         
         width: 100%;
         

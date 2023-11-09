@@ -11,7 +11,8 @@
   </filter>
   <filter-mapping>
 	<filter-name>MF</filter-name>
-	<url-pattern>/entrada</url-pattern>
+	<url-pattern>/empresa</url-pattern>
+	<url-pattern>/usuario</url-pattern>
   </filter-mapping>
   
   <filter>
@@ -20,25 +21,44 @@
   </filter>
   <filter-mapping>
 	<filter-name>AF</filter-name>
-	<url-pattern>/entrada</url-pattern>
+	<url-pattern>/empresa</url-pattern>
+	<url-pattern>/ajax</url-pattern>
   </filter-mapping>
   
-  <filter>
-  	<filter-name>CF</filter-name>
-  	<filter-class>main.java.br.com.alura.gerenciador.servlet.ControladorFilter</filter-class>
-  </filter>
-  <filter-mapping>
-	<filter-name>CF</filter-name>
-	<url-pattern>/entrada</url-pattern>
-  </filter-mapping>
+  <servlet>
+  	<servlet-name>CF</servlet-name>
+  	<servlet-class>main.java.br.com.alura.gerenciador.servlet.ControllerEmpresa</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	<servlet-name>CF</servlet-name>
+	<url-pattern>/empresa</url-pattern>
+  </servlet-mapping>
   
-  <filter>
-  	<filter-name>CU</filter-name>
-  	<filter-class>main.java.br.com.alura.gerenciador.servlet.ControladorUsuario</filter-class>
-  </filter>
-  <filter-mapping>
-	<filter-name>CU</filter-name>
-	<url-pattern>/usuario</url-pattern>
-  </filter-mapping>
+  <servlet>
+    <servlet-name>CU</servlet-name>
+    <servlet-class>main.java.br.com.alura.gerenciador.servlet.ControllerUsuario</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CU</servlet-name>
+    <url-pattern>/usuario</url-pattern>
+  </servlet-mapping>
   
+  <servlet>
+    <servlet-name>AJ</servlet-name>
+    <servlet-class>main.java.br.com.alura.gerenciador.servlet.ControllerAJAX</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AJ</servlet-name>
+    <url-pattern>/ajax</url-pattern>
+  </servlet-mapping>
+  
+  <error-page>
+  	<error-code>404</error-code>
+  	<location>/WEB-INF/view/error/404.html</location>
+  </error-page> 
+  
+  <error-page>
+  	<error-code>500</error-code>
+  	<location>/WEB-INF/view/error/500.html</location>
+  </error-page> 
 </web-app>

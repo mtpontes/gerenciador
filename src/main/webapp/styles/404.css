@@ -1,0 +1,31 @@
+@import url(base.css);
+
+.erro-container {
+	display: flex;
+	flex-direction: column;
+	
+	justify-content: center;
+	align-items: center;
+	
+	padding-top:2em;
+}
+
+.erro-404{
+	display: flex;
+	justify-content: space-between;
+	gap: 1em;
+
+	.titulo{
+		font-size: 5em;
+		font-weight: 700;
+	}
+	.fa-face-frown {
+		font-size: 5em;
+	}
+}
+
+.mensagem-erro {
+	margin-top:2em;
+	
+	font-size: 1.5em;
+}

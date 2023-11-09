@@ -4,12 +4,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="ISO-8859-1">
+	<meta charset="UTF-8">
 	<title>Cadastro de Usuario</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="styles/reset.css">
 	<link rel="stylesheet" href="styles/formLogin.css">
-		<script src="resources/js/validaNovoUsuario.js" ></script>
+	<script src="resources/js/validaNovoUsuario.js" type="module"></script>
 </head>
 <body>
 
@@ -17,12 +17,12 @@
 		<h2 class="titulo-cadastro">Cadastro de usuário</h2>
 	</div>
 
-	<form class="formulario" id="formulario" action="${linkEntradaServlet }" method="post">
+	<form class="formulario" id="formulario" action="${linkUsuarioServlet }" method="post">
 	
 		<div class="form-group">
 			<label class="form-label">Nome</label>
 			<input class="form-input" id="nome" type="text" name="nome" placeholder="Seu nome completo"/>
-			<span class="mensagem-erro" id="nomeErro" style="display: none;">Nome é obrigatório e só é permitido letras, apóstrofo (\') e hífen (-)</span>
+			<span class="mensagem-erro" id="nomeErro" style="display: none;">Nome é obrigatório e só aceita letras, apóstrofo(') e hífen (-)</span>
 		</div>
 	
 		<div class="form-group">
@@ -43,9 +43,10 @@
 			<span class="mensagem-erro" id="confirmaErro" style="display:none">Confirmação deve ser idêntica a senha</span>
 		</div>
 		
-		<input type="hidden" name="acao" value="NovoUsuario">
+		<input type="hidden" name="acao" value="novoUsuario">
 		<input class="form-submit" type="submit" value="Enviar" />
 	</form>
 
+	<footer></footer>
 </body>
 </html>
