@@ -43,29 +43,6 @@ public class ControllerUsuario extends HttpServlet {
 		}
 	}
 	
-	protected void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("login!");
-
-		String login = request.getParameter("login");
-		String senha = request.getParameter("senha");
-		
-		Usuario usuario = repository.findByLogin(login);
-		
-		if (usuario != null && usuario.verificarSenha(senha)) {
-
-			HttpSession sessao = request.getSession();
-			sessao.setAttribute("usuarioLogado", usuario);
-			sessao.setMaxInactiveInterval(3600);
-
-			System.out.println("Usuario autenticado!");
-			RequestDispatcher rd = request.getRequestDispatcher(empresaParamAcao("listaEmpresasUsuario")); 
-			rd.forward(request, response);
-		} else {
-			System.out.println("usuario não existe. Redirecionando para loginForm...");
-			response.sendRedirect(usuarioParamAcao("loginForm"));
-		}
-	}
-	
 	protected void novoUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		System.out.println("novoUsuario!");
 		
@@ -98,16 +75,6 @@ public class ControllerUsuario extends HttpServlet {
 		response.sendRedirect(usuarioParamAcao("loginForm"));
 	}
 	
-	protected void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("logout!");
-		
-		HttpSession sessao = request.getSession();
-		sessao.invalidate();
-		
-		System.out.println("Sessão de usuário invalidada!");
-		response.sendRedirect(usuarioParamAcao("loginForm"));
-	}
-
 	/* ---------------------------------------- doGet ---------------------------------------------------*/
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String paramAcao = request.getParameter("acao");
@@ -132,6 +99,30 @@ public class ControllerUsuario extends HttpServlet {
 				response.sendError(404);
 		}
 	}
+	
+	protected void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("login!");
+
+		String login = request.getParameter("login");
+		String senha = request.getParameter("senha");
+		
+		Usuario usuario = repository.findByLogin(login);
+		
+		if (usuario != null && usuario.verificarSenha(senha)) {
+
+			HttpSession sessao = request.getSession();
+			sessao.setAttribute("usuarioLogado", usuario);
+			sessao.setMaxInactiveInterval(3600);
+
+			System.out.println("Usuario autenticado!");
+			RequestDispatcher rd = request.getRequestDispatcher(empresaParamAcao("listaEmpresasUsuario")); 
+			rd.forward(request, response);
+		} else {
+			System.out.println("usuario não existe. Redirecionando para loginForm...");
+			response.sendRedirect(usuarioParamAcao("loginForm"));
+		}
+	}
+	
 	protected void loginForm(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("formLogin.jsp"));
 		rd.forward(request, response);
@@ -140,6 +131,16 @@ public class ControllerUsuario extends HttpServlet {
 	protected void novoUsuarioForm(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("formNovoUsuario.jsp"));
 		rd.forward(request, response);
+	}
+	
+	protected void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("logout!");
+		
+		HttpSession sessao = request.getSession();
+		sessao.invalidate();
+		
+		System.out.println("Sessão de usuário invalidada!");
+		response.sendRedirect(usuarioParamAcao("loginForm"));
 	}
 	/* --------------------------------------------------------------------------------------------------*/
 	

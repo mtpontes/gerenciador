@@ -54,38 +54,6 @@ public class ControllerEmpresa extends HttpServlet {
 		}
 	}
 	
-	protected void listaEmpresas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("listaEmpresas!");
-		
-		List<Empresa> listaEmpresas = empresaRepository.findEmpresas();
-		request.setAttribute("empresas", listaEmpresas);
-		
-		RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("listaEmpresas.jsp"));
-		rd.forward(request, response);
-	}
-	
-	protected void listaEmpresasUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		System.out.println("listaEmpresasUsuario!");
-
-		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
-		
-		List<Empresa> listaEmpresas = empresaRepository.findEmpresasOfUsuarioById(usuario.getId());
-		request.setAttribute("empresas", listaEmpresas);
-		
-		RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("usuarioEmpresas.jsp"));
-		rd.forward(request, response);
-	}
-	
-	protected void mostraEmpresa(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		System.out.println("mostraEmpresa!");
-		
-		request.setAttribute("nome", request.getParameter("nome"));
-		request.setAttribute("id", request.getParameter("id"));
-		
-		RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("formAlteraEmpresa.jsp"));
-		rd.forward(request, response);
-	}
-	
 	protected void alteraEmpresa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("alteraEmpresa!");
 		
@@ -162,6 +130,38 @@ public class ControllerEmpresa extends HttpServlet {
 		}
 	}
 
+	protected void listaEmpresas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("listaEmpresas!");
+		
+		List<Empresa> listaEmpresas = empresaRepository.findEmpresas();
+		request.setAttribute("empresas", listaEmpresas);
+		
+		RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("listaEmpresas.jsp"));
+		rd.forward(request, response);
+	}
+	
+	protected void listaEmpresasUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		System.out.println("listaEmpresasUsuario!");
+
+		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
+		
+		List<Empresa> listaEmpresas = empresaRepository.findEmpresasOfUsuarioById(usuario.getId());
+		request.setAttribute("empresas", listaEmpresas);
+		
+		RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("usuarioEmpresas.jsp"));
+		rd.forward(request, response);
+	}
+	
+	protected void mostraEmpresa(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		System.out.println("mostraEmpresa!");
+		
+		request.setAttribute("nome", request.getParameter("nome"));
+		request.setAttribute("id", request.getParameter("id"));
+		
+		RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("formAlteraEmpresa.jsp"));
+		rd.forward(request, response);
+	}
+	
 	protected void novaEmpresaForm(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("formNovaEmpresa.jsp"));
 		rd.forward(request, response);
