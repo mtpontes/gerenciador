@@ -12,7 +12,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import main.java.br.com.alura.gerenciador.dto.NovoUsuarioDTO;
 
 @NoArgsConstructor
@@ -22,7 +21,7 @@ public class Usuario {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Getter
 	private Long id;
-	@Getter @Setter
+	@Getter	
 	private String login;
 	@Getter
 	private String senha;

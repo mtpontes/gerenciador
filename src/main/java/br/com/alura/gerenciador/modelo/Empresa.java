@@ -9,10 +9,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @NoArgsConstructor
 @Getter
@@ -22,9 +20,7 @@ public class Empresa {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Setter
 	private String nome;
-	@Setter
 	private LocalDate dataAbertura;
 	private Boolean ativo = true;
 	@ManyToOne @JoinColumn(name = "usuario_id")
