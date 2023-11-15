@@ -1,13 +1,9 @@
 package main.java.br.com.alura.gerenciador.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Set;
-
-import org.json.JSONObject;
 
 import jakarta.persistence.EntityManager;
 import jakarta.servlet.RequestDispatcher;
@@ -15,24 +11,21 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validator;
-import main.java.br.com.alura.gerenciador.modelo.AlteraEmpresaDTO;
-import main.java.br.com.alura.gerenciador.modelo.NovaEmpresaDTO;
 import main.java.br.com.alura.gerenciador.modelo.Empresa;
 import main.java.br.com.alura.gerenciador.modelo.Usuario;
 import main.java.br.com.alura.gerenciador.repository.EmpresaRepository;
 import main.java.br.com.alura.gerenciador.repository.EmpresaRepositoryMySQL;
+import main.java.br.com.alura.gerenciador.service.EmpresaService;
 import main.java.br.com.alura.gerenciador.util.JPAUtil;
 import main.java.br.com.alura.gerenciador.util.ToCamelCaseUtil;
-import main.java.br.com.alura.gerenciador.util.ValidatorUtil;
+import main.java.br.com.alura.gerenciador.validation.FormValidationException;
 
 
 //@WebFilter("/empresa")
 public class ControllerEmpresa extends HttpServlet {
 
 	private EntityManager em = JPAUtil.getEntityManager();
-	private EmpresaRepository empresaRepository = new EmpresaRepositoryMySQL(em);
+	private EmpresaService empresaService = new EmpresaService(em);
 
 	
 	/* ---------------------------------------- doPost ---------------------------------------------------*/
@@ -57,52 +50,35 @@ public class ControllerEmpresa extends HttpServlet {
 	protected void alteraEmpresa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("alteraEmpresa!");
 		
-		Validator validator = ValidatorUtil.getValidator();
-		
 		String nomeEmpresa = request.getParameter("nome");
 		String dataEmString = request.getParameter("data");
 		Long empresaID = getParameterId(request);
-		AlteraEmpresaDTO dto = new AlteraEmpresaDTO(nomeEmpresa, dataEmString);
 		
-		Set<ConstraintViolation<AlteraEmpresaDTO>> violations = validator.validate(dto);
-		
-		if(!violations.isEmpty()) {
-			violations.forEach(msg -> System.out.println(msg.getMessage()));
+		try {
+			empresaService.alteraDadosEmpresa(empresaID, nomeEmpresa, dataEmString);
+			response.sendRedirect(empresaParamAcao("listaEmpresasUsuario"));
+			
+		} catch (FormValidationException e) {
 			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("/error/validationError.html"));
 			rd.forward(request, response);
-			return;
 		}
-		LocalDate dataConvertida = getParameterData(request);
-		
-		Empresa empresa = empresaRepository.findEmpresaById(empresaID).alteraDados(nomeEmpresa, dataConvertida);
-		empresaRepository.update(empresa);
-		
-		response.sendRedirect(empresaParamAcao("listaEmpresasUsuario"));
 	}
 	
 	protected void novaEmpresa(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		System.out.println("novaEmpresa!");
 		
-		Validator validator = ValidatorUtil.getValidator();
-		
-		String dataEmString = request.getParameter("data");
 		String nomeEmpresa = request.getParameter("nome");
+		String dataEmString = request.getParameter("data");
 		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
-		NovaEmpresaDTO dto = new NovaEmpresaDTO(nomeEmpresa, dataEmString, usuario.getId());
-		
-		Set<ConstraintViolation<NovaEmpresaDTO>> violations = validator.validate(dto);
-		
-		if(!violations.isEmpty()) {
-			violations.forEach(msg -> System.out.println(msg.getMessage()));
-			response.sendRedirect(enderecoJSP("/error/validationError.html"));
-			return;
+
+		try {
+			empresaService.cadastraEmpresa(nomeEmpresa, dataEmString, usuario);
+			System.out.println("Empresa cadastrada!");
+			response.sendRedirect(empresaParamAcao("listaEmpresasUsuario"));
+		} catch (FormValidationException e) {
+			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("/error/validationError.html"));
+			rd.forward(request, response);
 		}
-		LocalDate dataConvertida = getParameterData(request);
-		
-		empresaRepository.persist(new Empresa(dto.nome(), dataConvertida, usuario));
-		System.out.println("Empresa cadastrada!");
-		
-		response.sendRedirect(empresaParamAcao("listaEmpresasUsuario"));
 	}
 	
 	/* ---------------------------------------- doGet ---------------------------------------------------*/
@@ -133,7 +109,7 @@ public class ControllerEmpresa extends HttpServlet {
 	protected void listaEmpresas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("listaEmpresas!");
 		
-		List<Empresa> listaEmpresas = empresaRepository.findEmpresas();
+		List<Empresa> listaEmpresas = empresaService.consultaEmpresas();
 		request.setAttribute("empresas", listaEmpresas);
 		
 		RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("listaEmpresas.jsp"));
@@ -145,7 +121,7 @@ public class ControllerEmpresa extends HttpServlet {
 
 		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
 		
-		List<Empresa> listaEmpresas = empresaRepository.findEmpresasOfUsuarioById(usuario.getId());
+		List<Empresa> listaEmpresas = empresaService.consultaEmpresasUsuario(usuario.getId());
 		request.setAttribute("empresas", listaEmpresas);
 		
 		RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("usuarioEmpresas.jsp"));

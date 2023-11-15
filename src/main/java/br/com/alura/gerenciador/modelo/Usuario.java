@@ -13,6 +13,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import main.java.br.com.alura.gerenciador.dto.NovoUsuarioDTO;
 
 @NoArgsConstructor
 @Entity
@@ -34,7 +35,7 @@ public class Usuario {
 		this.login = login;
 		setSenha(senha);
 	}
-	public Usuario(UsuarioDTO dto) {
+	public Usuario(NovoUsuarioDTO dto) {
 		this.nome = dto.nome();
 		this.login = dto.login();
 		setSenha(dto.senha());

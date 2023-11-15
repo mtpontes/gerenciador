@@ -18,8 +18,8 @@ public interface EmpresaRepository {
 	
 	public List<Empresa> findEmpresas();
 
-	public List<Empresa> findEmpresasOfUsuarioById(Long id);
+	public List<Empresa> findEmpresasByUsuarioId(Long id);
 	
-	public List<Empresa> findEmpresasOfUsuarioByIdAndAtivoTrue(Long id);
+	public List<Empresa> findEmpresasByUsuarioIdAndAtivoTrue(Long id);
 	
 }

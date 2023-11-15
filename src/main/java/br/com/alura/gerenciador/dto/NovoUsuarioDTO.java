@@ -1,4 +1,4 @@
-package main.java.br.com.alura.gerenciador.modelo;
+package main.java.br.com.alura.gerenciador.dto;
 
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import main.java.br.com.alura.gerenciador.validation.LoginDisponivelAnnotation;
 
-public record UsuarioDTO(
+public record NovoUsuarioDTO(
 		@NotBlank(message = "VALIDATION ERROR: Nome não pode ser nulo")
 		@Pattern(regexp = "^[A-Za-zÀ-ÖØ-öø-ÿ' _-]+$", message = "VALIDATION ERROR: Nome só permite letras, apóstrofo (\\') e hífen (-)")
 		String nome,

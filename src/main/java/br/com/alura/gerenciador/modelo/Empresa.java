@@ -36,7 +36,6 @@ public class Empresa {
 		this.usuario = usuario;
 	}
 	
-	
 	public Empresa removeOrRestoreEmpresa() {
 		if (this.ativo == true) {
 			this.ativo = false;

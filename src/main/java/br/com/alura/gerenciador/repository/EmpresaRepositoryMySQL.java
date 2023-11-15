@@ -64,7 +64,7 @@ public class EmpresaRepositoryMySQL implements EmpresaRepository {
 		}
 	}
 
-	public List<Empresa> findEmpresasOfUsuarioById(Long id) {
+	public List<Empresa> findEmpresasByUsuarioId(Long id) {
 		try {
 			Query query = em.createNativeQuery("SELECT * FROM empresas WHERE usuario_id =:id", Empresa.class);
 			query.setParameter("id", id);
@@ -76,7 +76,7 @@ public class EmpresaRepositoryMySQL implements EmpresaRepository {
 		}
 	}
 
-	public List<Empresa> findEmpresasOfUsuarioByIdAndAtivoTrue(Long id) {
+	public List<Empresa> findEmpresasByUsuarioIdAndAtivoTrue(Long id) {
 		try {
 			Query query =  em.createNativeQuery("SELECT * FROM empresas WHERE usuario_id =:id AND ativo =1", Empresa.class);
 			query.setParameter("id", id);

@@ -1,7 +1,6 @@
 package main.java.br.com.alura.gerenciador.servlet;
 
 import java.io.IOException;
-import java.util.Set;
 
 import jakarta.persistence.EntityManager;
 import jakarta.servlet.RequestDispatcher;
@@ -10,22 +9,16 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validator;
 import main.java.br.com.alura.gerenciador.modelo.Usuario;
-import main.java.br.com.alura.gerenciador.modelo.UsuarioDTO;
-import main.java.br.com.alura.gerenciador.repository.UsuarioRepository;
-import main.java.br.com.alura.gerenciador.repository.UsuarioRepositoryMySQL;
+import main.java.br.com.alura.gerenciador.service.UsuarioService;
 import main.java.br.com.alura.gerenciador.util.JPAUtil;
 import main.java.br.com.alura.gerenciador.util.ToCamelCaseUtil;
-import main.java.br.com.alura.gerenciador.util.ValidatorUtil;
-
 
 //@WebFilter("/usuario")
 public class ControllerUsuario extends HttpServlet {
 
 	private EntityManager em = JPAUtil.getEntityManager();
-	private UsuarioRepository repository = new UsuarioRepositoryMySQL(em);
+	private UsuarioService usuarioService = new UsuarioService(em);
 	
 	/* ---------------------------------------- doPost ---------------------------------------------------*/
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -46,33 +39,21 @@ public class ControllerUsuario extends HttpServlet {
 	protected void novoUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		System.out.println("novoUsuario!");
 		
-		Validator validator = ValidatorUtil.getValidator();
-		
 		String nome = request.getParameter("nome");
 		String login = request.getParameter("login");
 		String senha = request.getParameter("senha");
 		String confirma = request.getParameter("confirma");
-		UsuarioDTO dto = new UsuarioDTO(nome, login, senha, confirma);
 		
-		//executa as validações
-		Set<ConstraintViolation<UsuarioDTO>> violations = validator.validate(dto);
-		
-		//se houver violations
-		if(!violations.isEmpty()) {
-			for(ConstraintViolation<UsuarioDTO> violation : violations) {
-				//imprime as mensagens de erro das validações
-				System.out.println(violation.getMessage());
-			}
+		try {
+			usuarioService.cadastraUsuario(nome, login, senha, confirma);
+			
+			System.out.println("Usuario cadastrado!");
+			response.sendRedirect(usuarioParamAcao("loginForm"));
+		} catch (Exception e) {
 			//redireciona o usuário para página de validationError
 			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("/error/validationError.html"));
 			rd.forward(request, response);
-			return;
 		}
-		
-		//se passou nas validações, instancia a entidade Usuario e persiste
-		repository.persist(new Usuario(dto));
-		System.out.println("Usuario cadastrado!");
-		response.sendRedirect(usuarioParamAcao("loginForm"));
 	}
 	
 	/* ---------------------------------------- doGet ---------------------------------------------------*/
@@ -106,8 +87,7 @@ public class ControllerUsuario extends HttpServlet {
 		String login = request.getParameter("login");
 		String senha = request.getParameter("senha");
 		
-		Usuario usuario = repository.findByLogin(login);
-		
+		Usuario usuario = usuarioService.getUsuarioPorLogin(login);
 		if (usuario != null && usuario.verificarSenha(senha)) {
 
 			HttpSession sessao = request.getSession();
