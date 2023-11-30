@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.List,main.java.br.com.alura.gerenciador.modelo.Empresa"%>
+<%@ page import="java.util.List, br.com.alura.gerenciador.modelo.Empresa"%>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <%@ taglib uri="jakarta.tags.fmt" prefix="fmt" %>
-<%@ page import="main.java.br.com.alura.gerenciador.util.DateUtil" %>
 
 
 <!DOCTYPE html>
@@ -21,14 +20,14 @@
 <body>
 	<header class="cabecalho">
 		<div class="container">
-			<a class="container-minhas-empresas-link" href="empresa?acao=listaEmpresasUsuario">Minhas Empresas</a>
-			<a class="container-outras-empresas-link" href="empresa?acao=listaEmpresas">Outras Empresas</a>
+			<a class="container-minhas-empresas-link" href="empresa?acao=listaEmpresasUsuario" method="get">Minhas Empresas</a>
+			<a class="container-outras-empresas-link" href="empresa?acao=listaEmpresas" method="get">Outras Empresas</a>
 		</div>
 
 		<i class="material-symbols-outlined" id="icone-usuario">account_circle</i>
 	</header>
 
-	<div id="modal" class="modal" style="display:none">
+	<div class="modal" id="modal" style="display:none">
 		<div class="usuario">
 			<h2 class="usuario-logado">${usuarioLogado.nome } </h2>
 			<a class="botao-logout" href="usuario?acao=logout" method='post'>Sair<i class="material-symbols-outlined">logout</i></a>

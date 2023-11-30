@@ -8,7 +8,7 @@
 	<title>Insert title here</title>
 	<link rel="stylesheet" href="styles/reset.css">
 	<link rel="stylesheet" href="styles/formCadastroEmpresas.css">
-	<script src="resources/js/validaCadastroEmpresa.js" type="module"></script>
+	<script src="resources/js/validation/validaCadastroEmpresa.js" type="module"></script>
 </head>
 <body>
 

@@ -7,7 +7,7 @@
 
   <filter>
   	<filter-name>MF</filter-name>
-  	<filter-class>main.java.br.com.alura.gerenciador.servlet.MonitoramentoFilter</filter-class>
+  	<filter-class>br.com.alura.gerenciador.servlet.MonitoramentoFilter</filter-class>
   </filter>
   <filter-mapping>
 	<filter-name>MF</filter-name>
@@ -17,7 +17,7 @@
   
   <filter>
   	<filter-name>AF</filter-name>
-  	<filter-class>main.java.br.com.alura.gerenciador.servlet.AutorizacaoFilter</filter-class>
+  	<filter-class>br.com.alura.gerenciador.servlet.AutorizacaoFilter</filter-class>
   </filter>
   <filter-mapping>
 	<filter-name>AF</filter-name>
@@ -27,7 +27,7 @@
   
   <servlet>
   	<servlet-name>CF</servlet-name>
-  	<servlet-class>main.java.br.com.alura.gerenciador.servlet.ControllerEmpresa</servlet-class>
+  	<servlet-class>br.com.alura.gerenciador.servlet.ControllerEmpresa</servlet-class>
   </servlet>
   <servlet-mapping>
 	<servlet-name>CF</servlet-name>
@@ -36,7 +36,7 @@
   
   <servlet>
     <servlet-name>CU</servlet-name>
-    <servlet-class>main.java.br.com.alura.gerenciador.servlet.ControllerUsuario</servlet-class>
+    <servlet-class>br.com.alura.gerenciador.servlet.ControllerUsuario</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>CU</servlet-name>
@@ -45,7 +45,7 @@
   
   <servlet>
     <servlet-name>AJ</servlet-name>
-    <servlet-class>main.java.br.com.alura.gerenciador.servlet.ControllerAJAX</servlet-class>
+    <servlet-class>br.com.alura.gerenciador.servlet.ControllerAJAX</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>AJ</servlet-name>

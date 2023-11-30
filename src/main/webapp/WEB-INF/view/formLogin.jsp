@@ -14,7 +14,7 @@
 	<link rel="stylesheet" href="styles/reset.css">
 	<link rel="stylesheet" href="styles/base.css">
 	<link rel="stylesheet" href="styles/formLogin.css">
-	<script src="resources/js/validaLogin.js" type="module"></script>
+	<script src="resources/js/validation/validaLogin.js" type="module"></script>
 </head>
 <body>
 

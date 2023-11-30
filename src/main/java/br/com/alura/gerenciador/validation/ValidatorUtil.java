@@ -1,4 +1,4 @@
-package main.java.br.com.alura.gerenciador.validation;
+package br.com.alura.gerenciador.validation;
 
 import java.util.Set;
 

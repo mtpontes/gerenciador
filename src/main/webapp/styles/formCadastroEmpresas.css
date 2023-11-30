@@ -4,7 +4,10 @@
 	display: flex;
 	margin: 3em auto 0 auto;
 	justify-content: center;
-    max-width: 50%;
+	
+    width: 40%;
+    max-width: 44em;
+    
     padding:1.5em 1em;
 
     background-color: var(--cor-terciaria);
@@ -23,7 +26,10 @@
     flex-direction: column;
 	margin: 0 auto 3em auto;
 	justify-content: center;
-    max-width: 50%;
+	
+	width: 40%;
+    max-width: 66em;
+    
     padding:1.5em;
     
     color: var(--cor-branca);

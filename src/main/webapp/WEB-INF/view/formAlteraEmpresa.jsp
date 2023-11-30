@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 	<link rel="stylesheet" href="styles/reset.css">
 	<link rel="stylesheet" href="styles/formCadastroEmpresas.css">
-	<script src="resources/js/validaCadastroEmpresa.js" type="module"></script>
+	<script src="resources/js/validation/validaCadastroEmpresa.js" type="module"></script>
 <title>Editar Empresa</title>
 </head>
 <body>
@@ -27,8 +27,8 @@
 		</div>
 
 		<div class="container-input">
-			<input class="form-input" id="nome" name="nome" type="text" value="${nome }" placeholder="Nome da empresa" />
-			<input class="form-input" id="data" name="data" type="text" placeholder="Exemplo: 01/01/2001"" />
+			<input class="form-input" id="nome" name="nome" type="text" value="${empresa.base.nome }" placeholder="Nome da empresa" />
+			<input class="form-input" id="data" name="data" type="text" value="${empresa.base.data }" placeholder="Exemplo: 01/01/2001" />
 		</div>
 			
 		<div class="container-erro">
@@ -40,7 +40,7 @@
 			</div>
 		</div>
 
-		<input type="hidden" name="id" value="${id }">
+		<input type="hidden" name="id" value="${empresa.id }">
 		<input type="hidden" name="acao" value="alteraEmpresa">
 		<input class="botao-enviar" type="submit" value="Enviar" />
 	</form>

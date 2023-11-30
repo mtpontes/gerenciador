@@ -21,7 +21,8 @@
 	position: absolute;
 	right: 1%;
 	
-	width: 20%;
+	width: 15%;
+	max-width: 18,5em;
 	
 	top: 0;
 	padding-top: 4.5em;
@@ -67,16 +68,22 @@
 		padding: 0.1em 1em;
 
 		color: var(--cor-principal);
-	
 		
 		text-align: center;
 	}
 }
 
-.botao-logout:hover{
+.botao-logout {
+  /* Estilo padrão */
 	text-decoration: none;
 	color: black;
-
 	border-radius: 10px;
-	background-color: var(--cor-branca);
+	transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.botao-logout:hover {
+	/* Estilo no hover */
+	color: var(--cor-branca);
+	background-color: var(--cor-principal);
+	text-decoration: none;
 }

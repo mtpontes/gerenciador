@@ -1,7 +1,7 @@
-package main.java.br.com.alura.gerenciador.repository;
+package br.com.alura.gerenciador.repository;
 
+import br.com.alura.gerenciador.modelo.Usuario;
 import jakarta.transaction.Transactional;
-import main.java.br.com.alura.gerenciador.modelo.Usuario;
 
 	
 public interface UsuarioRepository {
@@ -15,7 +15,5 @@ public interface UsuarioRepository {
 	public abstract Usuario findByLogin(String login);
 	
 	boolean existsByLogin(String login);
-	
-	boolean existsByID(Long id);
 }
 

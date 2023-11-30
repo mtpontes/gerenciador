@@ -1,7 +1,9 @@
-package main.java.br.com.alura.gerenciador.modelo;
+package br.com.alura.gerenciador.modelo;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
+import br.com.alura.gerenciador.dto.empresa.NovaEmpresaDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,10 +28,10 @@ public class Empresa {
 	@ManyToOne @JoinColumn(name = "usuario_id")
 	private Usuario usuario;
 
-	public Empresa(String nome, LocalDate dataAbertura, Usuario usuario) {
-		this.nome = nome;
-		this.dataAbertura = dataAbertura;
-		this.usuario = usuario;
+	public Empresa(NovaEmpresaDTO dto) {
+		this.nome = dto.base().nome();
+		this.dataAbertura = LocalDate.parse(dto.base().data(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		this.usuario = dto.usuario(); 
 	}
 	
 	public Empresa removeOrRestoreEmpresa() {

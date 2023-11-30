@@ -1,4 +1,4 @@
-package main.java.br.com.alura.gerenciador.validation;
+package br.com.alura.gerenciador.validation.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

@@ -7,8 +7,13 @@
     --cor-quaternaria:#E5E5CB;
     --cor-quinternaria:#e9e9e9CB;
     --cor-branca:#F4F4F4F4;
+    
+    --border-color-primaria: #4D3A2C;
+    --border-color-secundaria: 2px solid #b7ad80;
 
     --fonte-principal: Arial, sans-serif;
+    
+    --branco::#F4F4F4F4;
 }
 
 

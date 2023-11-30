@@ -1,25 +1,27 @@
-package main.java.br.com.alura.gerenciador.servlet;
+package br.com.alura.gerenciador.servlet;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.io.PrintWriter;
 import java.util.List;
 
+import com.google.gson.JsonObject;
+
+import br.com.alura.gerenciador.dto.empresa.AlteraEmpresaDTO;
+import br.com.alura.gerenciador.dto.empresa.EmpresaBaseDTO;
+import br.com.alura.gerenciador.dto.empresa.ListaEmpresasUsuarioDTO;
+import br.com.alura.gerenciador.dto.empresa.NovaEmpresaDTO;
+import br.com.alura.gerenciador.modelo.Usuario;
+import br.com.alura.gerenciador.service.EmpresaService;
+import br.com.alura.gerenciador.util.JPAUtil;
+import br.com.alura.gerenciador.util.ToCamelCaseUtil;
+import br.com.alura.gerenciador.validation.FormValidationException;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceException;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import main.java.br.com.alura.gerenciador.modelo.Empresa;
-import main.java.br.com.alura.gerenciador.modelo.Usuario;
-import main.java.br.com.alura.gerenciador.repository.EmpresaRepository;
-import main.java.br.com.alura.gerenciador.repository.EmpresaRepositoryMySQL;
-import main.java.br.com.alura.gerenciador.service.EmpresaService;
-import main.java.br.com.alura.gerenciador.util.JPAUtil;
-import main.java.br.com.alura.gerenciador.util.ToCamelCaseUtil;
-import main.java.br.com.alura.gerenciador.validation.FormValidationException;
-
 
 //@WebFilter("/empresa")
 public class ControllerEmpresa extends HttpServlet {
@@ -27,9 +29,7 @@ public class ControllerEmpresa extends HttpServlet {
 	private EntityManager em = JPAUtil.getEntityManager();
 	private EmpresaService empresaService = new EmpresaService(em);
 
-	
-	/* ---------------------------------------- doPost ---------------------------------------------------*/
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String paramAcao = request.getParameter("acao");
 		String acao = ToCamelCaseUtil.toCamelCase(paramAcao);
 		
@@ -43,19 +43,20 @@ public class ControllerEmpresa extends HttpServlet {
 				novaEmpresa(request, response);
 				break;
 			default:
-				response.sendError(404);
+				response.sendError(HttpServletResponse.SC_NOT_FOUND);
 		}
 	}
 	
 	protected void alteraEmpresa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("alteraEmpresa!");
 		
-		String nomeEmpresa = request.getParameter("nome");
-		String dataEmString = request.getParameter("data");
-		Long empresaID = getParameterId(request);
-		
+		String nome = request.getParameter("nome");
+		String data = request.getParameter("data");
+		Long idEmpresa = getParameterId(request);
+		AlteraEmpresaDTO dto = new AlteraEmpresaDTO(idEmpresa, new EmpresaBaseDTO(nome, data));
+
 		try {
-			empresaService.alteraDadosEmpresa(empresaID, nomeEmpresa, dataEmString);
+			empresaService.alteraDadosEmpresa(dto);
 			response.sendRedirect(empresaParamAcao("listaEmpresasUsuario"));
 			
 		} catch (FormValidationException e) {
@@ -67,22 +68,24 @@ public class ControllerEmpresa extends HttpServlet {
 	protected void novaEmpresa(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		System.out.println("novaEmpresa!");
 		
-		String nomeEmpresa = request.getParameter("nome");
-		String dataEmString = request.getParameter("data");
+		String nome = request.getParameter("nome");
+		String data = request.getParameter("data");
 		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
+		
+		NovaEmpresaDTO empresaDto = new NovaEmpresaDTO(new EmpresaBaseDTO(nome,  data), usuario);
 
 		try {
-			empresaService.cadastraEmpresa(nomeEmpresa, dataEmString, usuario);
-			System.out.println("Empresa cadastrada!");
+			empresaService.cadastraEmpresa(empresaDto);
 			response.sendRedirect(empresaParamAcao("listaEmpresasUsuario"));
+			
 		} catch (FormValidationException e) {
 			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("/error/validationError.html"));
 			rd.forward(request, response);
 		}
 	}
 	
-	/* ---------------------------------------- doGet ---------------------------------------------------*/
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String paramAcao = request.getParameter("acao");
 		String acao = ToCamelCaseUtil.toCamelCase(paramAcao);
 		
@@ -102,14 +105,14 @@ public class ControllerEmpresa extends HttpServlet {
 				novaEmpresaForm(request, response);
 			break;
 			default:
-				response.sendError(404);
+				response.sendError(HttpServletResponse.SC_NOT_FOUND);
 		}
 	}
 
 	protected void listaEmpresas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("listaEmpresas!");
 		
-		List<Empresa> listaEmpresas = empresaService.consultaEmpresas();
+		List<EmpresaBaseDTO> listaEmpresas = empresaService.consultaEmpresas();
 		request.setAttribute("empresas", listaEmpresas);
 		
 		RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("listaEmpresas.jsp"));
@@ -121,7 +124,7 @@ public class ControllerEmpresa extends HttpServlet {
 
 		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
 		
-		List<Empresa> listaEmpresas = empresaService.consultaEmpresasUsuario(usuario.getId());
+		List<ListaEmpresasUsuarioDTO> listaEmpresas = empresaService.consultaEmpresasUsuario(usuario.getId());
 		request.setAttribute("empresas", listaEmpresas);
 		
 		RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("usuarioEmpresas.jsp"));
@@ -131,9 +134,12 @@ public class ControllerEmpresa extends HttpServlet {
 	protected void mostraEmpresa(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		System.out.println("mostraEmpresa!");
 		
-		request.setAttribute("nome", request.getParameter("nome"));
-		request.setAttribute("id", request.getParameter("id"));
+		String nome = request.getParameter("nome");
+		String data = request.getParameter("data");
+		Long id = getParameterId(request);
+		AlteraEmpresaDTO dto = new AlteraEmpresaDTO(id, new EmpresaBaseDTO(nome, data));
 		
+		request.setAttribute("empresa", dto);
 		RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("formAlteraEmpresa.jsp"));
 		rd.forward(request, response);
 	}
@@ -143,12 +149,47 @@ public class ControllerEmpresa extends HttpServlet {
 		rd.forward(request, response);
 	}
 	
-	//--------------------------------------------------------------------------------------------------------------------------//
+	
+	public void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String paramAcao = request.getParameter("acao");
+		String acao = ToCamelCaseUtil.toCamelCase(paramAcao);
+		
+		System.out.println("Bateu ControllerEmpresa doPut, o valor do parametro é : " + acao);
+		
+		switch (acao) {
+			case "removeEmpresa":
+				removeEmpresa(request, response);
+				break;
+			default:
+				response.sendError(HttpServletResponse.SC_NOT_FOUND);
+		}
+	}
+	
+	protected void removeEmpresa(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		System.out.println("removeEmpresa!");
+		
+		Long id = getParameterId(request);
+		JsonObject json = new JsonObject();
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		
+		try {
+			empresaService.atualizaEmpresa(id);
+			json.addProperty("response", true);
+			
+		} catch(PersistenceException e) {
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			json.addProperty("error", "Ocorreu um erro no servidor");
+		} 
+		
+		try(PrintWriter out = response.getWriter();) {
+			out.print(json.toString());
+			out.flush();
+		}
+	}
+	
 	public Long getParameterId(HttpServletRequest request) {
 		return Long.valueOf(request.getParameter("id"));  
-	}
-	public LocalDate getParameterData(HttpServletRequest request) {
-		return LocalDate.parse(request.getParameter("data"), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 	}
 	public String enderecoJSP(String nomeDoJSP) {
 		return "WEB-INF/view/".concat(nomeDoJSP);
@@ -156,5 +197,4 @@ public class ControllerEmpresa extends HttpServlet {
 	public String empresaParamAcao(String nomeDoMetodo) {
 		return "empresa?acao=".concat(nomeDoMetodo);
 	}
-	
 }

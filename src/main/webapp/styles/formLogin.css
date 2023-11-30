@@ -12,6 +12,8 @@ body{
     justify-content: center;
     align-items: center;
     width: 40%;
+    max-width: 52em;
+    
     padding: 3em;
     /*height: 10%;*/
     background: var(--cor-terciaria);
@@ -24,8 +26,10 @@ body{
         font-size: 2em;
     }
 }
+
 .formulario {
     width: 40%;
+    max-width: 52em;
     
     background: var(--cor-secundaria);
     padding: 4em;

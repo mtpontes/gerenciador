@@ -1,8 +1,8 @@
 @import url("base.css");
 
-
 .container-titulo {
 	width: 70%;
+	max-width: 80em;
 
 	display: flex;
 	margin: 2em auto 0 auto;
@@ -13,12 +13,10 @@
 	padding: 2em 1em 2em 1em;
 	
 	
-	border: 2px solid var(--cor-terciaria);
-	border-bottom: none;
+	border: 2px solid var(--border-color-primaria);
 	border-radius:10px 10px 0 0;
 	
 	background-color: var(--cor-terciaria);
-	
 	
 	.titulo{
 		display: flex;
@@ -37,6 +35,7 @@
 		
 		background-color: var(--cor-secundaria);
 		border-radius: 100%;
+		transition: background-color 0.3s, border 0.3s;
 		
 	}
 	.add:hover {
@@ -48,6 +47,7 @@
 
 .container-empresas {
 	width: 70%;
+	max-width: 80em;
 
 	display: flex;
 	flex-direction: column;
@@ -58,9 +58,10 @@
 	
 	padding: 2em 1em;
 	
-	background-color: #3C2A21;
+	background-color: var(--cor-secundaria);
 	
-	border: 2px solid #4D3A2C;
+	border: 2px solid var(--border-color-primaria);
+	border-top:none;
 	border-radius:0 0 10px 10px;
 	
 	.colunas {
@@ -121,6 +122,8 @@
 			border-radius: 10px;
 			
 			color: var(--cor-branca);
+			transition: background-color 0.3s;
+			cursor: pointer;
 			
 			.texto-arquivados {
 				font: var(--cor-principal);
@@ -179,7 +182,7 @@
 			display: flex;
 			
 			color: var(--cor-principal);
-			
+
 			.editar {
 				text-decoration: none;
 				color: var(--cor-principal);

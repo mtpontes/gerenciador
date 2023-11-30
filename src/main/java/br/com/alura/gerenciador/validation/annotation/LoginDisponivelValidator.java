@@ -1,16 +1,16 @@
-package main.java.br.com.alura.gerenciador.validation;
+package br.com.alura.gerenciador.validation.annotation;
 
+import br.com.alura.gerenciador.repository.UsuarioRepository;
+import br.com.alura.gerenciador.repository.UsuarioRepositoryJPA;
+import br.com.alura.gerenciador.util.JPAUtil;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.NoArgsConstructor;
-import main.java.br.com.alura.gerenciador.repository.UsuarioRepository;
-import main.java.br.com.alura.gerenciador.repository.UsuarioRepositoryMySQL;
-import main.java.br.com.alura.gerenciador.util.JPAUtil;
 
 @NoArgsConstructor
 public class LoginDisponivelValidator implements ConstraintValidator<LoginDisponivelAnnotation, String> {
 
-	private UsuarioRepository repository = new UsuarioRepositoryMySQL(JPAUtil.getEntityManager());
+	private UsuarioRepository repository = new UsuarioRepositoryJPA(JPAUtil.getEntityManager());
 	
 	public LoginDisponivelValidator(UsuarioRepository repository) {
 		this.repository = repository;

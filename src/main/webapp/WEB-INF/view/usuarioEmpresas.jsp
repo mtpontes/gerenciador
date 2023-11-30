@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.List,main.java.br.com.alura.gerenciador.modelo.Empresa"%>
+<%@ page import="java.util.List, br.com.alura.gerenciador.dto.empresa.ListaEmpresasUsuarioDTO"%>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <%@ taglib uri="jakarta.tags.fmt" prefix="fmt" %>
-<%@ page import="main.java.br.com.alura.gerenciador.util.DateUtil" %>
 
 <!DOCTYPE html>
 <html>
@@ -42,21 +41,21 @@
 		</li>
 	
 		<c:forEach items="${empresas}" var="empresa">
-			<li class="lista class-${empresa.id }" data-ativo=${empresa.ativo } data-e=${empresa.ativo }>
+			<li class="lista class-${empresa.id }" data-ativo=${empresa.ativo } data-exibicao=${empresa.ativo }>
 				<div class="lista-nome-data">
-					<p class="lista-nome">${empresa.nome }</p>
-	        		<p class="lista-data">${DateUtil.formatDate(empresa.dataAbertura, "dd/MM/yyyy")}</p>
+					<p class="lista-nome">${empresa.base.nome }</p>
+           			<p class="lista-data">${empresa.base.data }</p>
 				</div>
 				
 				
 	        	<div class="container-edita-arquiva">
-	        		<a class="editar" id="edita" href="/gerenciador/empresa?acao=mostraEmpresa&nome=${empresa.nome }&id=${empresa.id}" method='get'>
+	        		<a class="editar" id="edita" href="/gerenciador/empresa?acao=mostraEmpresa&nome=${empresa.base.nome }&id=${empresa.id}&data=${empresa.base.data}" method='get'>
 	        			<span class="texto-editar">Editar</span>
 	        			<span class="icone-editar material-symbols-outlined">edit</span>
 	        		</a>
 	        		
 	        		
-					<a class="container-arquiva" id="container-arquiva" href="/gerenciador/ajax?acao=removeEmpresa&id=${empresa.id }" method='post' data-ativo=${empresa.ativo }>
+					<a class="container-arquiva" id="container-arquiva" href="/gerenciador/empresa?acao=removeEmpresa&id=${empresa.id }" data-ativo=${empresa.ativo } method='put'>
 						<span class="texto-arquiva">Arquivar</span>
 						<span class="icone-arquiva material-symbols-outlined">archive</span>
 					</a>

@@ -1,5 +1,4 @@
 export function validaCampos(campos){
-	//pega formulario
 	const formulario = document.getElementById('formulario');
 	console.log("executando validaCampos");
 
@@ -14,11 +13,12 @@ export function validaCampos(campos){
     formulario.addEventListener('submit', function(event) {
         //itera sobre os elementos
         campos.forEach(function(campo) {
-            //tira os espaços do elemento atual
+            //tira os espaços do texto do campo atual
             const valor = campo.input.value.trim();
             //"este texto não está de acordo com a expressão regular?"
             if (!campo.regex.test(valor)) {
                 event.preventDefault();
+                console.log("Não passou no teste do regex");
                 //exibe o elemento <span> que por padrão é display:none
                 campo.erro.style.display = 'block';
             }

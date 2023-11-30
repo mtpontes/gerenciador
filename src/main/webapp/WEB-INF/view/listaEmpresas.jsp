@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.List,main.java.br.com.alura.gerenciador.modelo.Empresa"%>
+<%@ page import="java.util.List, br.com.alura.gerenciador.dto.empresa.EmpresaBaseDTO"%>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <%@ taglib uri="jakarta.tags.fmt" prefix="fmt" %>
-<%@ page import="main.java.br.com.alura.gerenciador.util.DateUtil" %>
+<%@ page import="java.time.LocalDate" %>
+
 
 
 <!DOCTYPE html>
@@ -35,7 +36,7 @@
 	    <c:forEach items="${empresas}" var="empresa">
 	        <li class="lista">
            		<p class="lista-nome">${empresa.nome }</p>
-           		<p class="lista-data">${DateUtil.formatDate(empresa.dataAbertura, "dd/MM/yyyy")}</p>
+           		<p class="lista-data">${empresa.data }</p>
 	        </li>
 	    </c:forEach>
 	</ul>

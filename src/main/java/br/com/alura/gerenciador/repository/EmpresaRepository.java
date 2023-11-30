@@ -1,10 +1,9 @@
-package main.java.br.com.alura.gerenciador.repository;
+package br.com.alura.gerenciador.repository;
 
 import java.util.List;
 
+import br.com.alura.gerenciador.modelo.Empresa;
 import jakarta.transaction.Transactional;
-
-import main.java.br.com.alura.gerenciador.modelo.Empresa;
 
 public interface EmpresaRepository {
 	
@@ -19,7 +18,5 @@ public interface EmpresaRepository {
 	public List<Empresa> findEmpresas();
 
 	public List<Empresa> findEmpresasByUsuarioId(Long id);
-	
-	public List<Empresa> findEmpresasByUsuarioIdAndAtivoTrue(Long id);
 	
 }

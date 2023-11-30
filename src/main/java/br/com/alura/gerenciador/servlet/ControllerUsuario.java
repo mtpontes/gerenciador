@@ -1,7 +1,13 @@
-package main.java.br.com.alura.gerenciador.servlet;
+package br.com.alura.gerenciador.servlet;
 
 import java.io.IOException;
 
+import br.com.alura.gerenciador.dto.usuario.NovoUsuarioDTO;
+import br.com.alura.gerenciador.modelo.Usuario;
+import br.com.alura.gerenciador.service.UsuarioService;
+import br.com.alura.gerenciador.util.JPAUtil;
+import br.com.alura.gerenciador.util.ToCamelCaseUtil;
+import br.com.alura.gerenciador.validation.FormValidationException;
 import jakarta.persistence.EntityManager;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -9,10 +15,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import main.java.br.com.alura.gerenciador.modelo.Usuario;
-import main.java.br.com.alura.gerenciador.service.UsuarioService;
-import main.java.br.com.alura.gerenciador.util.JPAUtil;
-import main.java.br.com.alura.gerenciador.util.ToCamelCaseUtil;
 
 //@WebFilter("/usuario")
 public class ControllerUsuario extends HttpServlet {
@@ -20,19 +22,16 @@ public class ControllerUsuario extends HttpServlet {
 	private EntityManager em = JPAUtil.getEntityManager();
 	private UsuarioService usuarioService = new UsuarioService(em);
 	
-	/* ---------------------------------------- doPost ---------------------------------------------------*/
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String paramAcao = request.getParameter("acao");
 		String acao = ToCamelCaseUtil.toCamelCase(paramAcao);
-		
-		System.out.println("Bateu no ControladorUsuario doPost, o valor do parametro é : " + acao);
 
 		switch (acao) {
 			case "novoUsuario":
 				novoUsuario(request, response);
 				break;
 			default:
-				response.sendError(404);
+				response.sendError(HttpServletResponse.SC_NOT_FOUND);
 		}
 	}
 	
@@ -43,32 +42,31 @@ public class ControllerUsuario extends HttpServlet {
 		String login = request.getParameter("login");
 		String senha = request.getParameter("senha");
 		String confirma = request.getParameter("confirma");
+		NovoUsuarioDTO dto = new NovoUsuarioDTO(nome, login, senha, confirma);
 		
 		try {
-			usuarioService.cadastraUsuario(nome, login, senha, confirma);
+			usuarioService.cadastraUsuario(dto);
 			
 			System.out.println("Usuario cadastrado!");
 			response.sendRedirect(usuarioParamAcao("loginForm"));
-		} catch (Exception e) {
-			//redireciona o usuário para página de validationError
+		} catch (FormValidationException e) {
+			//se o usuário conseguir enviar um formulário inválido, redireciona o usuário para página de validationError
 			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("/error/validationError.html"));
 			rd.forward(request, response);
 		}
 	}
+
 	
-	/* ---------------------------------------- doGet ---------------------------------------------------*/
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String paramAcao = request.getParameter("acao");
 		String acao = ToCamelCaseUtil.toCamelCase(paramAcao);
 		
-		System.out.println("Bateu no ControladorUsuario doGet, o valor do parametro é : " + acao);
-		
 		switch (acao) {
-			case "login":
-				login(request, response);
-				break;
 			case "loginForm":
 				loginForm(request, response);
+				break;
+			case "login":
+				login(request, response);
 				break;
 			case "novoUsuarioForm":
 			    novoUsuarioForm(request, response);
@@ -77,8 +75,13 @@ public class ControllerUsuario extends HttpServlet {
 				logout(request, response);
 				break;
 			default:
-				response.sendError(404);
+				response.sendError(HttpServletResponse.SC_NOT_FOUND);
 		}
+	}
+	
+	protected void loginForm(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+		RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("formLogin.jsp"));
+		rd.forward(request, response);
 	}
 	
 	protected void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -87,7 +90,7 @@ public class ControllerUsuario extends HttpServlet {
 		String login = request.getParameter("login");
 		String senha = request.getParameter("senha");
 		
-		Usuario usuario = usuarioService.getUsuarioPorLogin(login);
+		Usuario usuario = usuarioService.buscaUsuarioPorLogin(login);
 		if (usuario != null && usuario.verificarSenha(senha)) {
 
 			HttpSession sessao = request.getSession();
@@ -103,11 +106,6 @@ public class ControllerUsuario extends HttpServlet {
 		}
 	}
 	
-	protected void loginForm(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("formLogin.jsp"));
-		rd.forward(request, response);
-	}
-
 	protected void novoUsuarioForm(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("formNovoUsuario.jsp"));
 		rd.forward(request, response);
@@ -122,7 +120,7 @@ public class ControllerUsuario extends HttpServlet {
 		System.out.println("Sessão de usuário invalidada!");
 		response.sendRedirect(usuarioParamAcao("loginForm"));
 	}
-	/* --------------------------------------------------------------------------------------------------*/
+
 	
 	public String enderecoJSP(String nomeDoJSP) {
 		return "WEB-INF/view/".concat(nomeDoJSP);

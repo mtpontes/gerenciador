@@ -1,22 +1,13 @@
 document.addEventListener("DOMContentLoaded", userModal);
 
 function userModal() {
-	const iconeUsuario = document.getElementById('icone-usuario');
-	const modal = document.getElementById('modal');
+	console.log('executando mostrarModal()');
 	
-	function mostraModal(){
-		modal.style.display = 'block';
-	}
-	
-	function escondeModal(){
-		modal.style.display = 'none';
-	}
+	let iconeUsuario = document.getElementById('icone-usuario');
+	let modal = document.getElementById('modal');
 
-	//quando o mouse passa por cima exibe o modal
-	iconeUsuario.addEventListener('mouseenter', mostraModal);
-	//enquanto o mouse estiver na área do modal mantém exibido
-	modal.addEventListener('mouseenter', mostraModal);
-	//fecha o modal quando o mouse sai da área
-	modal.addEventListener('mouseleave', escondeModal);
+	iconeUsuario.addEventListener('mouseenter', () =>{modal.style.display = 'block'});
+	modal.addEventListener('mouseenter', () =>{modal.style.display = 'block'});
+	modal.addEventListener('mouseleave', () =>{modal.style.display = 'none'});
 }
 

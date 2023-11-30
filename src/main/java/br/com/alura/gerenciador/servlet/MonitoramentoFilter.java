@@ -1,4 +1,4 @@
-package main.java.br.com.alura.gerenciador.servlet;
+package br.com.alura.gerenciador.servlet;
 
 import java.io.IOException;
 
@@ -20,9 +20,7 @@ public class MonitoramentoFilter implements Filter {
 		long antes = System.currentTimeMillis();
 		String acao = request.getParameter("acao");
 		
-		//executa a acao
 		chain.doFilter(request, response);
-		
 		long depois = System.currentTimeMillis();
 		System.out.println("Tempo de execucao da acao " + acao + " -> " + (depois - antes) + "ms");
 	}
