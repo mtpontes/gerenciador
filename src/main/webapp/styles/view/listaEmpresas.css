@@ -1,0 +1,93 @@
+@import url("../base.css");
+
+.container-titulo{
+	display: flex;
+	padding: 2.35em 1em 2.35em 1em;
+	margin: 2.25em auto 0 auto;
+	
+	width:70%;
+	max-width: 80em;
+	
+	align-items: center;
+	justify-content: space-between;
+
+	border: 2px solid var(--border-color-primaria);
+	border-radius:10px 10px 0 0;
+	
+	background-color: var(--cor-terciaria);
+	color: var(--cor-secundaria);
+
+	.titulo{
+		font-weight: 700;
+		font-size: 2em;
+	}
+}
+
+
+.colunas {
+	display: flex;
+	padding: 0.7em;
+	font-weight: 600;
+	justify-content: space-between;
+
+	.coluna-nome, .coluna-data {
+		font-size: 1.25em;
+	}
+}
+.container-empresas {
+	display: flex;
+	padding: 2em 1em;
+	margin: 0 auto;
+	flex-direction: column;
+	
+	padding-bottom:3em;
+	
+	width:70%;
+	max-width: 80em;
+
+	background-color: var(--cor-secundaria);
+	
+	border: 2px solid var(--border-color-primaria);
+	border-top:none;
+	border-radius:0 0 10px 10px;
+
+	.lista {
+		display: flex;
+		
+		width: 100%;
+		
+		font-weight: 600;
+		
+		padding: .85em;
+	
+		background-color: var(--cor-terciaria);
+		color: var(--cor-principal);
+	
+		border-radius: 10px;
+		
+		margin-bottom:1em;
+		
+		.lista-nome {
+			display: flex;
+			align-items: center;
+			flex-grow: 1;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			word-break: break-word;
+			
+			font-weight: bold;
+		}
+		.lista-data {
+			font-weight:bold;
+			
+			margin-left: 1em;
+		}
+	}
+}
+
+.paginacao{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1em;
+}

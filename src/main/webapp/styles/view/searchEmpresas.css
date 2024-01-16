@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+.card {
+	display: flex;
+	flex-direction: column;
+	gap: 0;
+}
+.card-off{
+	display: none;
+}
+
+
+.listagemVazia {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	
+	margin-top: 2em;
+	gap: 0.5em;
+}
+.listagemVazia-titulo {
+	font-size: 2em;
+	font-weight: 700;
+}
+.listagemVazia-subtitulo {
+	font-size: 1.5em;
+}

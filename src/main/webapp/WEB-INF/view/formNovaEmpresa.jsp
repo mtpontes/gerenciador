@@ -7,16 +7,15 @@
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
 	<link rel="stylesheet" href="styles/reset.css">
-	<link rel="stylesheet" href="styles/formCadastroEmpresas.css">
-	<script src="resources/js/validation/validaCadastroEmpresa.js" type="module"></script>
+	<link rel="stylesheet" href="styles/view/formCadastroEmpresas.css">
+	
+	<script src="js/validation/validaCadastroEmpresa.js" type="module"></script>
 </head>
 <body>
-
-	<jsp:include page="header.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/modules/header.jsp"></jsp:include>
 	<h2 class="titulo">CADASTRO</h2>
 	
 	<form class="formulario" id="formulario" action="${linkEmpresaServlet }" method="post">
-	
 		<div class="container-nome-e-data">
 			<p class="texto">Nome</p>
 			<p class="texto">Data Abertura</p> 
@@ -41,5 +40,5 @@
 	</form>
 	
 	<footer></footer>
-	</body>
-	</html>
+</body>
+</html>

@@ -43,15 +43,6 @@
     <url-pattern>/usuario</url-pattern>
   </servlet-mapping>
   
-  <servlet>
-    <servlet-name>AJ</servlet-name>
-    <servlet-class>br.com.alura.gerenciador.servlet.ControllerAJAX</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AJ</servlet-name>
-    <url-pattern>/ajax</url-pattern>
-  </servlet-mapping>
-  
   <error-page>
   	<error-code>404</error-code>
   	<location>/WEB-INF/view/error/404.html</location>

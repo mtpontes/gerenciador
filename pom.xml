@@ -75,21 +75,15 @@
 		</dependency>
 		
 		<dependency>
-		    <groupId>com.google.code.gson</groupId>
-		    <artifactId>gson</artifactId>
-		    <version>2.10.1</version>
-		</dependency>
-		
-		<dependency>
-		    <groupId>org.json</groupId>
-		    <artifactId>json</artifactId>
-		    <version>20231013</version>
-		</dependency>
-		
-		<dependency>
 		    <groupId>jakarta.validation</groupId>
 		    <artifactId>jakarta.validation-api</artifactId>
 		    <version>3.0.2</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>com.google.code.gson</groupId>
+		    <artifactId>gson</artifactId>
+		    <version>2.10.1</version>
 		</dependency>
 		
 		<dependency>
@@ -131,6 +125,14 @@
     		<artifactId>expressly</artifactId>
     		<version>5.0.0</version>
 		</dependency>
+		
+		<dependency>
+		    <groupId>com.h2database</groupId>
+		    <artifactId>h2</artifactId>
+		    <version>2.2.224</version>
+		    <scope>test</scope>
+		</dependency>
+
   	</dependencies>
   
 	<build>
@@ -153,9 +155,6 @@
 					</excludes>
         		</configuration>
       		</plugin>
-      		
-
-			
     	</plugins>
 	</build>
 </project>

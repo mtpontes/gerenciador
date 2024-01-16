@@ -1,0 +1,50 @@
+@charset "UTF-8";
+
+
+.paginacao {
+	display: flex;
+	margin-top: 1em;
+	
+	justify-content: center;
+	align-items:center
+}
+
+.paginacao-off {
+	display: none;
+}
+/* elemento pai dos indices e ellipses */
+.colecao-paginas {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+
+/* indices de páginas */
+.index-page {
+	border-radius : 100%;
+	padding: 0.75em;
+}
+.current-index {
+	background-color: var(--cor-terciaria);
+	color: var(--cor-principal);
+}
+
+.end.index, .start.index {
+	padding: 0.75em;
+}
+
+
+/* ellipse  */
+.ellipse-off {
+	display: none;
+}
+
+
+/* alternador de páginas */
+.chevron-off {
+	display: none;
+}
+.pagina.seguinte, .pagina.anterior {
+	text-decoration: none;
+}

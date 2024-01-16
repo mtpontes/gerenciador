@@ -26,10 +26,8 @@ public class UsuarioRepositoryJPA implements UsuarioRepository{
 			transaction.commit();
 			
 		} catch (PersistenceException e) {
-			
 			transaction.rollback();
 			System.out.println("Erro ao cadastrar Usuario - " + e.getMessage());
-			e.printStackTrace();
 		}
 	}
 	
@@ -42,10 +40,8 @@ public class UsuarioRepositoryJPA implements UsuarioRepository{
 			transaction.commit();
 			
 		} catch (PersistenceException e) {
-			
 			transaction.rollback();
 			System.out.println("Erro ao fazer update em Usuario - " + e.getMessage());
-			e.printStackTrace();
 		}
 	}
 	
@@ -57,7 +53,6 @@ public class UsuarioRepositoryJPA implements UsuarioRepository{
 			
 		} catch (NoResultException e) {
 			System.out.println("Nenhum resultado foi encontrado na consulta por login");
-			e.printStackTrace();
 			return null;
 			
 		} catch(PersistenceException e) {

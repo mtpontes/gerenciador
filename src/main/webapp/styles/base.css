@@ -5,7 +5,7 @@
     --cor-secundaria:#3C2A21;
     --cor-terciaria:#D5CEA3;
     --cor-quaternaria:#E5E5CB;
-    --cor-quinternaria:#e9e9e9CB;
+    --cor-quinternaria:#e9e9e9;
     --cor-branca:#F4F4F4F4;
     
     --border-color-primaria: #4D3A2C;
@@ -21,24 +21,21 @@
     box-sizing: border-box;
 }
 
-html, body {
+html, body  {
     height: 100%;
     width: 100%;
     
     color: var(--cor-branca);
     font-family: var(--fonte-principal);
+    font-size: 14px;
 }
 
 body {
-    font-family: var(--fonte-principal);
-    font-size: 14px;
-    font-weight: 400;
-
 	background-color: var(--cor-principal); 
 }
 
 a {
-    text-decoration: none;
+	text-decoration: none;
     color: var(--cor-branca);
     font-weight: bold;
 }
@@ -53,7 +50,7 @@ a:hover {
 }
 
 footer{
-	margin:2em;
+	padding: 3em;
 }
 
 span{
@@ -69,5 +66,3 @@ input:focus{
     outline: 1px solid white;
     outline-style: solid;
 }
-
-

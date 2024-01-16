@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <%@ taglib uri="jakarta.tags.fmt" prefix="fmt" %>
-
 <c:url value="/usuario" var="linkUsuarioServlet"/>
 
 <!DOCTYPE html>
@@ -13,16 +12,16 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="styles/reset.css">
 	<link rel="stylesheet" href="styles/base.css">
-	<link rel="stylesheet" href="styles/formLogin.css">
-	<script src="resources/js/validation/validaLogin.js" type="module"></script>
+	<link rel="stylesheet" href="styles/view/formLogin.css">
+	
+	<script src="js/validation/validaLogin.js" type="module"></script>
 </head>
 <body>
-
 	<div class="titulo">
 		<h2 class="titulo-cadastro">Fazer Login</h2>
 	</div>
 
-	<form class="formulario" id="formulario" action="${linkUsuarioServlet }" method="get">
+	<form class="formulario" id="formulario" action="${linkUsuarioServlet }" method="post">
 		<div class="form-group">
 			<label class="form-label">Login </label>
 			<input class="form-input" type="text" id="login" name="login" placeholder="insira seu login" />
@@ -40,7 +39,6 @@
 	</form>
 	
 	<a class="novo-usuario" href="usuario?acao=novoUsuarioForm" >Criar conta</a>
-	
 	<footer></footer>
 </body>
 </html>

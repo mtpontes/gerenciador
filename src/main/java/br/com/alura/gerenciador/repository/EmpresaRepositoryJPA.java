@@ -22,18 +22,10 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 	@Transactional
 	public void persist(Empresa empresa) {
 		EntityTransaction transaction = em.getTransaction();
-		try {
-			transaction.begin();
-			em.persist(empresa);
-			transaction.commit();
-			
-		} catch (PersistenceException e) {
-			transaction.rollback();
-			System.out.println("Ocorreu um erro ao persistir a entidade Empresa - " + e.getMessage());
-			e.printStackTrace();
-		}
+		transaction.begin();
+		em.persist(empresa);
+		transaction.commit();
 	}
-	
 	@Transactional
 	public void update(Empresa empresa) {
 		EntityTransaction transaction = em.getTransaction();
@@ -44,7 +36,6 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 			
 		} catch (PersistenceException e) {
 			transaction.rollback();
-			System.out.println("Erro ao atualizar a entidade Empresa - " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -55,26 +46,39 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 			query.setParameter("id", id);
 			return (Empresa) query.getSingleResult();
 		} catch (NoResultException e) {
-			e.printStackTrace();
-			System.out.println("Nenhum resultado foi encontrado na consulta - " + e.getMessage());
 			return null;
 		}
 	}
 
+	
+	
+	@Deprecated
 	public List<Empresa> findEmpresas(){
 		try {
 			Query query = em.createQuery("SELECT e FROM Empresa e WHERE e.ativo = 1", Empresa.class);
-
-			System.out.println("VOU RETORNAR A LISTA");
 			return query.getResultList();
 			
 		} catch (PersistenceException e) {
 			e.printStackTrace();
-			System.out.println("Erro ao consultar uma lista de Empresas - " + e.getMessage());
 			return null;
 		}
 	}
-
+	public List<Empresa> findEmpresasPaged(Integer start, Integer end){
+		try {
+			Query query = em.createQuery("SELECT e FROM Empresa e WHERE e.ativo = 1", Empresa.class);
+			query.setFirstResult(start);
+			query.setMaxResults(end);
+			return query.getResultList();
+			
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	
+	
+	@Deprecated
 	public List<Empresa> findEmpresasByUsuarioId(Long id) {
 		try {
 			Query query = em.createQuery("SELECT e FROM Empresa e WHERE e.usuario.id =:id", Empresa.class);
@@ -82,14 +86,92 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 			return query.getResultList();
 			
 		} catch (NoResultException e) {
-			System.out.println("Nenhum resultado foi encontrado na consulta - " + e.getMessage() );
 			e.printStackTrace();
 			return null;
 			
 		} catch(PersistenceException e) {
-			System.out.println("Erro ao consultar uma lista de Empresas - " + e.getMessage());
 			e.printStackTrace();
 			return null;
+		}
+	}
+	public List<Empresa> findEmpresasPagedByUsuarioIdAndAtivo(Long id, Integer start, Integer end, Boolean ativo) {
+		try {
+			Query query = em.createQuery("SELECT e FROM Empresa e WHERE e.ativo = :ativo AND e.usuario.id =:id", Empresa.class);
+			query.setFirstResult(start);
+			query.setMaxResults(end);
+			query.setParameter("id", id);
+			query.setParameter("ativo", ativo);
+			return query.getResultList();
+			
+		} catch (NoResultException e) {
+			e.printStackTrace();
+			return null;
+			
+		} catch(PersistenceException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	
+	@Deprecated
+	public List<Empresa> searchEmpresasByNameLike(String nomeEmpresa){
+		try {
+			Query query = em.createQuery("SELECT e FROM Empresa e WHERE e.ativo = 1 AND e.nome LIKE :nomeEmpresa", Empresa.class)
+					.setParameter("nomeEmpresa", "%" + nomeEmpresa + "%");
+			return query.getResultList();
+			
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	public List<Empresa> searchEmpresasPagedByNameLike(String nomeEmpresa, Integer start, Integer end){
+		try {
+			Query query = em.createQuery("SELECT e FROM Empresa e WHERE e.ativo = 1 AND e.nome LIKE :nomeEmpresa", Empresa.class)
+					.setParameter("nomeEmpresa", "%" + nomeEmpresa + "%");
+			query.setFirstResult(start);
+			query.setMaxResults(end);
+			return query.getResultList();
+			
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	
+	
+	public Long countEmpresasByAtivoTrue() {
+		try {
+			Query query = em.createQuery("SELECT COUNT(e) FROM Empresa e WHERE e.ativo = 1");
+			return (Long) query.getSingleResult();
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+			return 0L;
+		}
+	}
+	
+	public Long countEmpresasUsuarioByAtivo(Long id, Boolean ativo) {
+		try {
+			Query query = em.createQuery("SELECT COUNT(e) FROM Empresa e WHERE e.ativo = :ativo AND e.usuario.id = :id")
+					.setParameter("id", id)
+					.setParameter("ativo", ativo);
+			return (Long) query.getSingleResult();
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+			return 0L;
+		}
+	}
+	
+	public Long countEmpresasByParamSearch(String nomeEmpresa) {
+		try {
+			Query query = em.createQuery("SELECT COUNT(e) FROM Empresa e WHERE e.ativo =1 AND e.nome LIKE :nomeEmpresa")
+					.setParameter("nomeEmpresa", "%" + nomeEmpresa + "%");
+			return (Long) query.getSingleResult();
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+			return 0L;
 		}
 	}
 }

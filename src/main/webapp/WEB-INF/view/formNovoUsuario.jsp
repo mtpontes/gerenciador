@@ -8,17 +8,16 @@
 	<title>Cadastro de Usuario</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="styles/reset.css">
-	<link rel="stylesheet" href="styles/formLogin.css">
-	<script src="resources/js/validation/validaNovoUsuario.js" type="module"></script>
+	<link rel="stylesheet" href="styles/view/formLogin.css">
+	
+	<script src="js/validation/validaNovoUsuario.js" type="module"></script>
 </head>
 <body>
-
 	<div class="titulo">
 		<h2 class="titulo-cadastro">Cadastro de usuário</h2>
 	</div>
 
 	<form class="formulario" id="formulario" action="${linkUsuarioServlet }" method="post">
-	
 		<div class="form-group">
 			<label class="form-label">Nome</label>
 			<input class="form-input" id="nome" type="text" name="nome" placeholder="Seu nome completo"/>
@@ -39,7 +38,7 @@
 		
 		<div class="form-group">
 			<label class="form-label">Confirma senha</label>
-			<input class="form-input" id="confirma" type="password" name="confirma" placeholder="Repita sua senha" />
+			<input class="form-input" id="confirma" type="password" name="confirma" placeholder="Confirme sua senha" />
 			<span class="mensagem-erro" id="confirmaErro" style="display:none">Confirmação deve ser idêntica a senha</span>
 		</div>
 		

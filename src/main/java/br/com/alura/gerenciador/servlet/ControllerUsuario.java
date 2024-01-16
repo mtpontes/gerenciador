@@ -2,13 +2,16 @@ package br.com.alura.gerenciador.servlet;
 
 import java.io.IOException;
 
+import com.google.gson.JsonObject;
+
 import br.com.alura.gerenciador.dto.usuario.NovoUsuarioDTO;
 import br.com.alura.gerenciador.modelo.Usuario;
 import br.com.alura.gerenciador.service.UsuarioService;
+import br.com.alura.gerenciador.util.ControllerUtil;
 import br.com.alura.gerenciador.util.JPAUtil;
-import br.com.alura.gerenciador.util.ToCamelCaseUtil;
 import br.com.alura.gerenciador.validation.FormValidationException;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceException;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -23,10 +26,15 @@ public class ControllerUsuario extends HttpServlet {
 	private UsuarioService usuarioService = new UsuarioService(em);
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String paramAcao = request.getParameter("acao");
-		String acao = ToCamelCaseUtil.toCamelCase(paramAcao);
+		String acao = request.getParameter("acao");
 
 		switch (acao) {
+			case "login":
+				login(request, response);
+				break;
+			case "verificaLogin":
+				verificaLogin(request, response);
+				break;
 			case "novoUsuario":
 				novoUsuario(request, response);
 				break;
@@ -34,6 +42,47 @@ public class ControllerUsuario extends HttpServlet {
 				response.sendError(HttpServletResponse.SC_NOT_FOUND);
 		}
 	}
+	
+	protected void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("login!");
+
+		String login = request.getParameter("login");
+		String senha = request.getParameter("senha");
+		
+		Usuario usuario = usuarioService.buscaUsuarioPorLogin(login);
+		if (usuario != null && usuario.verificarSenha(senha)) {
+
+			HttpSession sessao = request.getSession();
+			sessao.setAttribute("usuarioLogado", usuario);
+			sessao.setMaxInactiveInterval(3600);
+
+			response.sendRedirect(empresaParamAcao("listaEmpresasUsuario"));
+		} else {
+			response.sendRedirect(usuarioParamAcao("loginForm"));
+		}
+	}
+	
+    protected void verificaLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        System.out.println("verificaLogin!");
+        JsonObject jsonRequest = getBodyJsonRequest(request);
+
+        String login = jsonRequest.get("login").getAsString();
+        JsonObject respostaJson = new JsonObject();
+        try {
+            if (usuarioService.verificaSeLoginExiste(login)) {
+                respostaJson.addProperty("response", true);
+            } else {
+                respostaJson.addProperty("response", false);
+            }
+        } catch (PersistenceException e) {
+        	response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            respostaJson.addProperty("error", "Ocorreu um erro ao buscar o usuário");
+        }
+
+	    response.setContentType("application/json");
+	    response.setCharacterEncoding("UTF-8");
+	    response.getWriter().print(respostaJson.toString());
+    }
 	
 	protected void novoUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		System.out.println("novoUsuario!");
@@ -46,8 +95,6 @@ public class ControllerUsuario extends HttpServlet {
 		
 		try {
 			usuarioService.cadastraUsuario(dto);
-			
-			System.out.println("Usuario cadastrado!");
 			response.sendRedirect(usuarioParamAcao("loginForm"));
 		} catch (FormValidationException e) {
 			//se o usuário conseguir enviar um formulário inválido, redireciona o usuário para página de validationError
@@ -58,15 +105,11 @@ public class ControllerUsuario extends HttpServlet {
 
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String paramAcao = request.getParameter("acao");
-		String acao = ToCamelCaseUtil.toCamelCase(paramAcao);
+		String acao = request.getParameter("acao");
 		
 		switch (acao) {
 			case "loginForm":
 				loginForm(request, response);
-				break;
-			case "login":
-				login(request, response);
 				break;
 			case "novoUsuarioForm":
 			    novoUsuarioForm(request, response);
@@ -84,28 +127,6 @@ public class ControllerUsuario extends HttpServlet {
 		rd.forward(request, response);
 	}
 	
-	protected void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("login!");
-
-		String login = request.getParameter("login");
-		String senha = request.getParameter("senha");
-		
-		Usuario usuario = usuarioService.buscaUsuarioPorLogin(login);
-		if (usuario != null && usuario.verificarSenha(senha)) {
-
-			HttpSession sessao = request.getSession();
-			sessao.setAttribute("usuarioLogado", usuario);
-			sessao.setMaxInactiveInterval(3600);
-
-			System.out.println("Usuario autenticado!");
-			RequestDispatcher rd = request.getRequestDispatcher(empresaParamAcao("listaEmpresasUsuario")); 
-			rd.forward(request, response);
-		} else {
-			System.out.println("usuario não existe. Redirecionando para loginForm...");
-			response.sendRedirect(usuarioParamAcao("loginForm"));
-		}
-	}
-	
 	protected void novoUsuarioForm(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("formNovoUsuario.jsp"));
 		rd.forward(request, response);
@@ -117,18 +138,20 @@ public class ControllerUsuario extends HttpServlet {
 		HttpSession sessao = request.getSession();
 		sessao.invalidate();
 		
-		System.out.println("Sessão de usuário invalidada!");
 		response.sendRedirect(usuarioParamAcao("loginForm"));
 	}
 
-	
-	public String enderecoJSP(String nomeDoJSP) {
-		return "WEB-INF/view/".concat(nomeDoJSP);
+	//metodos auxiliares
+	private JsonObject getBodyJsonRequest(HttpServletRequest request) throws IOException {
+		return ControllerUtil.converteCorpoRequisicaoParaJsonObject(request);
 	}
-	public String usuarioParamAcao(String nomeDoMetodo) {
-		return "usuario?acao=".concat(nomeDoMetodo);
+	private String enderecoJSP(String nomeJSP) {
+		return ControllerUtil.enderecoJSP(nomeJSP);
 	}
-	public String empresaParamAcao(String nomeDoMetodo) {
-		return "empresa?acao=".concat(nomeDoMetodo);
+	private String usuarioParamAcao(String nomeDoMetodo) {
+		return ControllerUtil.usuarioParamAcao(nomeDoMetodo);
+	}
+	private String empresaParamAcao(String nomeDoMetodo) {
+		return ControllerUtil.empresaParamAcao(nomeDoMetodo);
 	}
 }

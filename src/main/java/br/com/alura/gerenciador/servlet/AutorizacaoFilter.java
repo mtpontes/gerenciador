@@ -31,14 +31,10 @@ public class AutorizacaoFilter implements Filter {
 				"novoUsuario", 
 				"verificaLogin");
 		
-		String headerRequisicao = request.getHeader("X-Requested-With");
-		boolean ehUmRequestAJAX = "XMLHttpRequest".equals(headerRequisicao);
-		
 		boolean usuarioNaoEstaLogado = (sessao.getAttribute("usuarioLogado") == null);
 		boolean ehUmaAcaoProtegida = !acoesLiberadas.contains(paramAcao);
 		
 		if(ehUmaAcaoProtegida && usuarioNaoEstaLogado) {
-			System.out.println("AUTORIZAÇÃO FILTER REDIRECIONANDO PARA loginForm");
 			response.sendRedirect("usuario?acao=loginForm");
 			return;
 		}

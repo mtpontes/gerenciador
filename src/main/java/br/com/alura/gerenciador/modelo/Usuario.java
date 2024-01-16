@@ -38,13 +38,11 @@ public class Usuario {
 	
 	private void setSenha(String senha) {
     	String secret = System.getenv("SECRET");
-        System.out.println("Definindo senha... A variável de ambiente é: " + secret);
 		this.senha = BCrypt.withDefaults().hashToString(4, (secret + senha).toCharArray());
 	}
 	
     public boolean verificarSenha(String senha) {
     	String secret = System.getenv("SECRET");
-    	System.out.println("Verificando senha...");
     	return BCrypt.verifyer().verify((secret + senha).getBytes(), this.senha.getBytes()).verified;
     }
 }
