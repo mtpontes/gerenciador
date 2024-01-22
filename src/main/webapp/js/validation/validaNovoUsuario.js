@@ -47,16 +47,11 @@ function validaCamposComRequest(campos, url, formulario){
 
 function validaCampos(campos, respostaRequisicao) {
     let houveErro = false;
+    let valorCampoSenha = campos[2].input.value;
 
 	const validacoesParticulares = {
-		login:(campo) => {
-			validaLogin(campo, respostaRequisicao);
-			validaCamposComRegex(campo);
-		},
-		confirma: (campo) => {
-			validaConfirma(campo, campos[2].input.value);
-			validaCamposComRegex(campo);
-		}
+		login:(campo) =>  validaLogin(campo, respostaRequisicao) || validaCamposComRegex(campo),
+		confirma: (campo) =>  validaConfirma(campo, valorCampoSenha) || validaCamposComRegex(campo)
 	}
 	
     campos.forEach(campo => {
@@ -120,7 +115,9 @@ function submeteFormulario(formulario, houveErro){
 	if(houveErro){
 		console.log('O formulário não passou na validação!')
 		return;
+		
+	} else {
+		console.log('Submetendo formulario...');
+		formulario.submit();
 	}
-	console.log('Submetendo formulario...'), 
-	formulario.submit();
 }
