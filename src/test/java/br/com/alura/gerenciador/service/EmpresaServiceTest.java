@@ -98,7 +98,7 @@ class EmpresaServiceTest {
 	@DisplayName("Deveria alterar dados de Empresa")
 	void alteraDadosEmpresaTest01() {
 	    //arrange
-	    AlteraEmpresaDTO dto = new AlteraEmpresaDTO(ID_VALIDO, new EmpresaBaseDTO(NOME_VALIDO, DATA_VALIDA), usuario);
+	    AlteraEmpresaDTO dto = new AlteraEmpresaDTO(ID_VALIDO, new EmpresaBaseDTO(NOME_VALIDO, DATA_VALIDA));
 	    Empresa empresa = new Empresa(new NovaEmpresaDTO(new EmpresaBaseDTO(NOME_VALIDO, DATA_VALIDA), usuario));
 
 	    BDDMockito.given(em.createQuery(Mockito.anyString(), eq(Empresa.class))).willReturn(typedQuery);
@@ -107,7 +107,7 @@ class EmpresaServiceTest {
 	    BDDMockito.given(em.getTransaction()).willReturn((transaction));
 
 	    //act
-	    empresaService.alteraDadosEmpresa(dto);
+	    empresaService.alteraDadosEmpresa(dto, usuario);
 
 	    //assert
 	    BDDMockito.then(em).should().merge(empresaCaptor.capture());
@@ -124,12 +124,12 @@ class EmpresaServiceTest {
 	@DisplayName("Nao deveria alterar dados de Empresa quando os campos 'nome' e 'data' estiverem errados")
 	void alteraDadosEmpresaTest02() {
 	    //arrange
-	    AlteraEmpresaDTO dto = new AlteraEmpresaDTO(ID_INVALIDO, new EmpresaBaseDTO(NOME_INVALIDO, DATA_INVALIDA), usuario);
+	    AlteraEmpresaDTO dto = new AlteraEmpresaDTO(ID_INVALIDO, new EmpresaBaseDTO(NOME_INVALIDO, DATA_INVALIDA));
 
 	    //act and Assert
 	    BDDMockito.then(em).shouldHaveNoInteractions();
 	    BDDMockito.then(transaction).shouldHaveNoInteractions();
-	    Assertions.assertThrows(FormValidationException.class, () -> empresaService.alteraDadosEmpresa(dto));
+	    Assertions.assertThrows(FormValidationException.class, () -> empresaService.alteraDadosEmpresa(dto, usuario));
 	}
 	@Test
 	@DisplayName("Nao deveria alterar dados de Empresa quando os usuarios forem diferentes")
@@ -137,7 +137,7 @@ class EmpresaServiceTest {
 		//arrange
 	    AlteraEmpresaDTO dto = new AlteraEmpresaDTO(
 	    		ID_VALIDO, 
-	    		new EmpresaBaseDTO(NOME_VALIDO, DATA_VALIDA), usuario
+	    		new EmpresaBaseDTO(NOME_VALIDO, DATA_VALIDA)
 	    		);
 	    
 	    Empresa empresa = new Empresa(
@@ -151,7 +151,7 @@ class EmpresaServiceTest {
 	    BDDMockito.given(typedQuery.getSingleResult()).willReturn(empresa);
 
 		//assert
-		Assertions.assertThrows(FormValidationException.class, () -> empresaService.alteraDadosEmpresa(dto));
+		Assertions.assertThrows(FormValidationException.class, () -> empresaService.alteraDadosEmpresa(dto, usuario));
 	}
 
 	@Test

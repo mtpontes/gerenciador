@@ -1,6 +1,5 @@
 package br.com.alura.gerenciador.servlet;
 
-import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -193,7 +192,7 @@ class ControllerEmpresaTest {
     	var empresasArray = resposta.get("empresas").getAsJsonArray();
     	Assertions.assertTrue(empresasArray.isJsonArray() && empresasArray.size() == 2);
     	
-    	assertTrue(resposta.has("acao") && resposta.has("empresas") && resposta.has("pagination"));
+    	Assertions.assertTrue(resposta.has("acao") && resposta.has("empresas") && resposta.has("pagination"));
     }
     
     @Test
@@ -423,14 +422,13 @@ class ControllerEmpresaTest {
         controller.doPut(request, response);
 
         //act
-        verify(empresaService).alteraDadosEmpresa(empresaDtoCaptor.capture());
+        verify(empresaService).alteraDadosEmpresa(empresaDtoCaptor.capture(), any());
         AlteraEmpresaDTO capturado = empresaDtoCaptor.getValue();
 
         //assert
         Assertions.assertEquals("EmpresaX", capturado.getNome());
         Assertions.assertEquals("2022-01-01", capturado.getData());
         Assertions.assertEquals(1L, capturado.getId());
-        Assertions.assertNotNull(capturado.getUsuario());
         
         verify(out).print(anyString());
     }
@@ -447,7 +445,7 @@ class ControllerEmpresaTest {
     	BDDMockito.given(session.getAttribute("usuarioLogado")).willReturn(usuario);
     	BDDMockito.given(response.getWriter()).willReturn(out);
     	
-    	BDDMockito.willThrow(new FormValidationException("")).given(empresaService).alteraDadosEmpresa(any());;
+    	BDDMockito.willThrow(new FormValidationException("")).given(empresaService).alteraDadosEmpresa(any(), any());;
     	
     	//act
     	controller.doPut(request, response);

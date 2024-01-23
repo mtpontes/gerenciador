@@ -63,11 +63,11 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 			return null;
 		}
 	}
-	public List<Empresa> findEmpresasPaged(Integer start, Integer end){
+	public List<Empresa> findEmpresasPaged(Integer start, Integer max){
 		try {
 			Query query = em.createQuery("SELECT e FROM Empresa e WHERE e.ativo = 1", Empresa.class);
 			query.setFirstResult(start);
-			query.setMaxResults(end);
+			query.setMaxResults(max);
 			return query.getResultList();
 			
 		} catch (PersistenceException e) {
