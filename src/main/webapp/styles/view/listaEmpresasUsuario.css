@@ -190,13 +190,12 @@
 
 .container-edita-arquiva{
 	display: flex;
-	gap: 1em;
 	width: (14x14px);
-	margin-left: 5em;
+	margin-left: 3.8em;
 	
 	color: var(--cor-principal);
 	
-	justify-content: space-around;
+	justify-content: space-between;
 
 	.botao-editar {
 		display: flex;
@@ -210,7 +209,9 @@
 	}
 	.botao-arquivar {
 		display: flex;
+		width: 8em;
 		align-items: center;
+		justify-content: flex-end;
 		
 		text-decoration: none;
 		color: var(--cor-principal);
