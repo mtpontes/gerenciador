@@ -4,6 +4,7 @@ import { alteraDadosPaginacao, atualizaParamAcaoUrl } from "../../modules/pagina
 import { logicaPaginacao } from "../../modules/pagination/pagination.js";
 import { atualizaEstiloArquivados } from "./botoes.js";
 import { eventoClickElementoEditar, eventoSubmitElementoFormLista } from "./editarEmpresa.js";
+import { atualizaIconeBotaoArquivar } from "./botoes.js";
 import { API_CONFIG } from "../../util/api-config.js";
 
 document.addEventListener('DOMContentLoaded', eventoSubmitElementoFormLista(document.querySelectorAll('.lista')));
@@ -12,8 +13,7 @@ document.addEventListener('DOMContentLoaded', eventArchiveUnarquive(document.que
 document.addEventListener('DOMContentLoaded', clickEventPaginationtIndex);
 document.addEventListener('DOMContentLoaded', alternaEmpresasAtivo);
 document.addEventListener('DOMContentLoaded', atualizaEstiloArquivados);
-
-
+document.addEventListener('DOMContentLoaded', atualizaIconeBotaoArquivar);
 
 //atualiza o conteúdo do card e o controlador de paginação
 function atualizaPagina(result){
@@ -42,6 +42,7 @@ function alternaEmpresasAtivo(){
 		const result = await getRequest(relativeURL, params);
 		atualizaPagina(result);
 		atualizaEstiloArquivados();
+//		atualizaIconeBotaoArquivar();
 	});
 }
 

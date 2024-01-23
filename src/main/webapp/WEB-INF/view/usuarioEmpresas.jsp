@@ -43,7 +43,7 @@
 		</li>
 	
 		<c:forEach items="${empresas}" var="empresa">
-		<form class="lista" id="${empresa.id}" data-empresaId="${empresa.id}">
+		<form class="lista" id="${empresa.id}" data-empresaId="${empresa.id}" data-ativo="${empresa.ativo}">
 			<div class="lista-nome-data">
 				<p class="lista-nome" id="lista-nome">${empresa.nome}</p>
         		<p class="lista-data" id="lista-data">${empresa.data}</p>

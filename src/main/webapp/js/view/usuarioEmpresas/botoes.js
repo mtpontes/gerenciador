@@ -26,3 +26,20 @@ export function atualizaEstiloArquivados() {
         arquivados.style.backgroundColor = state ? colors.corTerciaria : colors.corSecundaria;
     });
 }
+
+export function atualizaIconeBotaoArquivar() {
+	console.log('atualizaIconeBotaoArquivar rodou!');
+	const state = getState();
+	const botaoArquivarCollection = document.querySelectorAll('.botao-arquivar');
+
+	botaoArquivarCollection.forEach(botao => {
+		const textoBotaoArquivar = botao.querySelector('.texto-arquiva');
+		const iconeBotaoArquivar = botao.querySelector('.icone-arquiva');
+
+		console.log(iconeBotaoArquivar);
+		
+		textoBotaoArquivar.textContent = state ? 'Desarquivar' : 'Arquivar';
+		iconeBotaoArquivar.textContent = state ? 'unarchive' : 'archive';
+	});
+	
+}
