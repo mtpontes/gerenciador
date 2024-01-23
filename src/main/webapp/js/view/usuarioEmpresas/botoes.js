@@ -1,4 +1,5 @@
 import { cssColors } from "../../util/variaveisCSS.js";
+import { putRequest } from "../../util/ajax.js";
 
 function getState(){
 	const acao = new URL(window.location.href).searchParams.get('acao');
@@ -28,18 +29,39 @@ export function atualizaEstiloArquivados() {
 }
 
 export function atualizaIconeBotaoArquivar() {
-	console.log('atualizaIconeBotaoArquivar rodou!');
 	const state = getState();
 	const botaoArquivarCollection = document.querySelectorAll('.botao-arquivar');
 
 	botaoArquivarCollection.forEach(botao => {
 		const textoBotaoArquivar = botao.querySelector('.texto-arquiva');
 		const iconeBotaoArquivar = botao.querySelector('.icone-arquiva');
-
-		console.log(iconeBotaoArquivar);
 		
 		textoBotaoArquivar.textContent = state ? 'Desarquivar' : 'Arquivar';
 		iconeBotaoArquivar.textContent = state ? 'unarchive' : 'archive';
 	});
-	
+}
+
+export function eventArchiveUnarquive(collection){
+	collection.forEach(button => {
+		button.addEventListener('click', async (event) => {
+			event.preventDefault();
+			//captura o pai do elemento pai de button (.lista)
+			const elementoLiLista = (button.parentNode).parentNode;
+			//captura o pai do elemento .lista (.container-empresas)
+			const containerEmpresas = elementoLiLista.parentNode;
+			
+			const relativeURL = API_CONFIG.getUrlRelativaComParamAcao(API_CONFIG.EMPRESA.PARAM_ACAO.ARQUIVA);
+			const empresaId = button.dataset.empresaid;
+			let requestBody = {
+				empresaId: empresaId
+			};
+			const response =  await putRequest(relativeURL, requestBody);
+			
+			//se a requisição der certo
+			if(response.ok){
+				//remove o elemento atual que representa o objeto Empresa (.lista)
+				containerEmpresas.removeChild(elementoLiLista);
+			}		
+		});
+	});
 }

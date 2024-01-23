@@ -1,11 +1,15 @@
-import { getRequest, putRequest } from "../../util/ajax.js";
+import { API_CONFIG } from "../../util/api-config.js";
+import { getRequest } from "../../util/ajax.js";
+
 import { criaColecaoNovosElementosLi } from "./criaColecaoNovosElementosLi.js";
+import { eventArchiveUnarquive } from "./botoes.js";
+import { eventoClickElementoEditar, eventoSubmitElementoFormLista } from "./editarEmpresa.js";
+
 import { alteraDadosPaginacao, atualizaParamAcaoUrl } from "../../modules/pagination/paginationConfigs.js";
 import { logicaPaginacao } from "../../modules/pagination/pagination.js";
+
 import { atualizaEstiloArquivados } from "./botoes.js";
-import { eventoClickElementoEditar, eventoSubmitElementoFormLista } from "./editarEmpresa.js";
 import { atualizaIconeBotaoArquivar } from "./botoes.js";
-import { API_CONFIG } from "../../util/api-config.js";
 
 document.addEventListener('DOMContentLoaded', eventoSubmitElementoFormLista(document.querySelectorAll('.lista')));
 document.addEventListener('DOMContentLoaded', eventoClickElementoEditar(document.querySelectorAll('.botao-editar')));
@@ -42,32 +46,6 @@ function alternaEmpresasAtivo(){
 		const result = await getRequest(relativeURL, params);
 		atualizaPagina(result);
 		atualizaEstiloArquivados();
-//		atualizaIconeBotaoArquivar();
-	});
-}
-
-function eventArchiveUnarquive(collection){
-	collection.forEach(button => {
-		button.addEventListener('click', async (event) => {
-			event.preventDefault();
-			//captura o pai do elemento pai de button (.lista)
-			const elementoLiLista = (button.parentNode).parentNode;
-			//captura o pai do elemento .lista (.container-empresas)
-			const containerEmpresas = elementoLiLista.parentNode;
-			
-			const relativeURL = API_CONFIG.getUrlRelativaComParamAcao(API_CONFIG.EMPRESA.PARAM_ACAO.ARQUIVA);
-			const empresaId = button.dataset.empresaid;
-			let requestBody = {
-				empresaId: empresaId
-			};
-			const response =  await putRequest(relativeURL, requestBody);
-			
-			//se a requisição der certo
-			if(response.ok){
-				//remove o elemento atual que representa o objeto Empresa (.lista)
-				containerEmpresas.removeChild(elementoLiLista);
-			}		
-		});
 	});
 }
 

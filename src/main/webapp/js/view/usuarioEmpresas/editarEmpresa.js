@@ -7,11 +7,11 @@ const INPUT_NOME_SELECTOR = '.entrada-nome';
 const INPUT_DATA_SELECTOR = '.entrada-data';
 
 export function eventoClickElementoEditar(collection){
-	collection.forEach(botao => {
-		botao.addEventListener('click', (event) => {
+	collection.forEach(button => {
+		button.addEventListener('click', (event) => {
 			event.preventDefault();
 			//através do botão 'editar', captura o elemento pai <form>
-			const elementoForm = (botao.parentNode).parentNode;
+			const elementoForm = (button.parentNode).parentNode;
 			//exibe os <inputs> e oculta os elementos <p>
 			alteraExibicaoDosElementosPEInput(elementoForm);
 			//deixa o elemento input .entrada-nome em foco
@@ -24,7 +24,7 @@ export function eventoSubmitElementoFormLista(collection){
 	collection.forEach(form => {
 		form.addEventListener('submit', async (event) => {
 			event.preventDefault();
-
+	
 			const relativeURL = API_CONFIG.EMPRESA.URL_RELATIVA;
 			const paramAcao = API_CONFIG.getParamAcao(API_CONFIG.EMPRESA.PARAM_ACAO.ATUALIZA);
 			const relativeURLWithParamAcao = relativeURL + paramAcao;

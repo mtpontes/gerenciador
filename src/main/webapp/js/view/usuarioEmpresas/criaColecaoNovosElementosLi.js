@@ -7,7 +7,6 @@ export function criaColecaoNovosElementosLi(empresas) {
 	    novoFormulario.id = empresa.id;
 	    novoFormulario.dataset.ativo = empresa.ativo;
 	    
-	    
 		//div .lista-nome-data
 	    const divNomeData = document.createElement('div');
 	    divNomeData.classList.add('lista-nome-data');
@@ -66,7 +65,6 @@ export function criaColecaoNovosElementosLi(empresas) {
 	    const spanIconeArquiva = document.createElement('span');
 	    spanIconeArquiva.classList.add('icone-arquiva', 'material-symbols-outlined');
 	    const valor = (empresa.ativo == false) ? 'unarchive' : 'archive';
-	    console.log(empresa.ativo, valor);
 	    spanIconeArquiva.textContent = valor;
 	
 	    linkArquivar.appendChild(spanTextoArquiva);
@@ -97,3 +95,4 @@ export function criaColecaoNovosElementosLi(empresas) {
 	});
 	return colecaoNovosLi;	
 }
+

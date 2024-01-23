@@ -94,11 +94,11 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 			return null;
 		}
 	}
-	public List<Empresa> findEmpresasPagedByUsuarioIdAndAtivo(Long id, Integer start, Integer end, Boolean ativo) {
+	public List<Empresa> findEmpresasPagedByUsuarioIdAndAtivo(Long id, Integer start, Integer max, Boolean ativo) {
 		try {
 			Query query = em.createQuery("SELECT e FROM Empresa e WHERE e.ativo = :ativo AND e.usuario.id =:id", Empresa.class);
 			query.setFirstResult(start);
-			query.setMaxResults(end);
+			query.setMaxResults(max);
 			query.setParameter("id", id);
 			query.setParameter("ativo", ativo);
 			return query.getResultList();
@@ -126,12 +126,12 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 			return null;
 		}
 	}
-	public List<Empresa> searchEmpresasPagedByNameLike(String nomeEmpresa, Integer start, Integer end){
+	public List<Empresa> searchEmpresasPagedByNameLike(String nomeEmpresa, Integer start, Integer max){
 		try {
 			Query query = em.createQuery("SELECT e FROM Empresa e WHERE e.ativo = 1 AND e.nome LIKE :nomeEmpresa", Empresa.class)
 					.setParameter("nomeEmpresa", "%" + nomeEmpresa + "%");
 			query.setFirstResult(start);
-			query.setMaxResults(end);
+			query.setMaxResults(max);
 			return query.getResultList();
 			
 		} catch (PersistenceException e) {
