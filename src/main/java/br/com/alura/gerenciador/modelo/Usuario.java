@@ -5,6 +5,7 @@ import java.util.List;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import br.com.alura.gerenciador.dto.usuario.NovoUsuarioDTO;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,7 +22,8 @@ public class Usuario {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Getter
 	private Long id;
-	@Getter	
+	@Getter
+	@Column(unique = true)
 	private String login;
 	@Getter
 	private String senha;
