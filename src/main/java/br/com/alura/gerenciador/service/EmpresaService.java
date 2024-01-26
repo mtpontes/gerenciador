@@ -58,7 +58,7 @@ public class EmpresaService {
 	public List<EmpresaBaseDTO> pesquisaEmpresas(String nomeDaEmpresa) {
 		return repository.searchEmpresasByNameLike(nomeDaEmpresa).stream().map(EmpresaBaseDTO::new).toList();
 	}
-	public List<EmpresaBaseDTO> searchEmpresasByNamePaged(String nomeEmpresa, Integer start, Integer end) {
+	public List<EmpresaBaseDTO> getEmpresasByNamePaged(String nomeEmpresa, Integer start, Integer end) {
 		if(nomeEmpresa == null || nomeEmpresa.trim().isEmpty()) {
 			return null;
 		}
@@ -70,7 +70,7 @@ public class EmpresaService {
 	public List<EmpresaBaseDTO> consultaEmpresas() {
 		return repository.findEmpresas().stream().map(EmpresaBaseDTO::new).toList();
 	}
-	public List<EmpresaBaseDTO> queryEmpresasPaged(Integer start, Integer end){
+	public List<EmpresaBaseDTO> getEmpresasPaged(Integer start, Integer end){
 		return repository.findAllPaged(start, end).stream().map(EmpresaBaseDTO::new).toList();
 	}
 	
@@ -79,18 +79,18 @@ public class EmpresaService {
 	public List<ListaEmpresasUsuarioDTO> consultaEmpresasUsuario(Long id) {
 		return repository.findEmpresasByUsuarioId(id).stream().map(ListaEmpresasUsuarioDTO::new).toList();
 	}
-	public List<ListaEmpresasUsuarioDTO> queryPagedEmpresasUsuario(Long id, Integer start, Integer end, Boolean ativo) {
+	public List<ListaEmpresasUsuarioDTO> getEmpresasUsuarioPaged(Long id, Integer start, Integer end, Boolean ativo) {
 		return repository.findByUsuarioIdAndAtivoPaged(id, start, end, ativo).stream().map(ListaEmpresasUsuarioDTO::new).toList();
 	}
 	
 	
-	public Long countEmpresas() {
+	public Long getCountEmpresas() {
 		return repository.countByAtivoTrue();
 	}
-	public Long countEmpresasAtivoUsuario(Long id, Boolean ativo) {
+	public Long getCountEmpresasUsuarioAtivo(Long id, Boolean ativo) {
 		return repository.countByUsuarioAndAtivo(id, ativo);
 	}
-	public Long countSearchEmpresas(String nomeEmpresa) {
+	public Long getCountEmpresasSearch(String nomeEmpresa) {
 		if(nomeEmpresa == null || nomeEmpresa.trim().isEmpty()) {
 			return 0L;
 		}

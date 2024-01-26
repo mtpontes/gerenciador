@@ -177,7 +177,7 @@ class ControllerEmpresaTest {
     	BDDMockito.given(request.getParameter("page")).willReturn("1");
     	BDDMockito.given(request.getParameter("size")).willReturn("5");
     	
-    	BDDMockito.given(empresaService.searchEmpresasByNamePaged(anyString(), anyInt(), anyInt())).willReturn(listaEmpresas);
+    	BDDMockito.given(empresaService.getEmpresasByNamePaged(anyString(), anyInt(), anyInt())).willReturn(listaEmpresas);
     	BDDMockito.given(response.getWriter()).willReturn(out);
     	
     	
@@ -222,7 +222,7 @@ class ControllerEmpresaTest {
     	
     	BDDMockito.given(request.getParameter(PARAM_ACAO)).willReturn("listaEmpresas");
     	BDDMockito.given(request.getContentType()).willReturn("application/json");
-    	BDDMockito.given(empresaService.queryEmpresasPaged(anyInt(), anyInt())).willReturn(listaEmpresas);
+    	BDDMockito.given(empresaService.getEmpresasPaged(anyInt(), anyInt())).willReturn(listaEmpresas);
     	BDDMockito.given(response.getWriter()).willReturn(out);
     	
     	
@@ -281,7 +281,7 @@ class ControllerEmpresaTest {
     	Assertions.assertTrue(resposta.has("pagination"));
     	Assertions.assertTrue(resposta.has("acao"));
     	
-    	BDDMockito.verify(empresaService).countEmpresasAtivoUsuario(anyLong(), booleanCaptor.capture());
+    	BDDMockito.verify(empresaService).getCountEmpresasUsuarioAtivo(anyLong(), booleanCaptor.capture());
     	Assertions.assertTrue(booleanCaptor.getValue());
     }
     @Test
@@ -299,7 +299,7 @@ class ControllerEmpresaTest {
     	controller.doGet(request, response);
     	
     	//assert
-    	BDDMockito.verify(empresaService).countEmpresasAtivoUsuario(anyLong(), booleanCaptor.capture());
+    	BDDMockito.verify(empresaService).getCountEmpresasUsuarioAtivo(anyLong(), booleanCaptor.capture());
     	Assertions.assertFalse(booleanCaptor.getValue());
     }
     @Test

@@ -97,8 +97,8 @@ public class ControllerEmpresa extends HttpServlet {
 		String requestType = (request.getContentType() == null) ? "" : request.getContentType();
 		String nomeEmpresa = request.getParameter("nomeEmpresa");
 		
-		Pagination pg = criaPagination(request, empresaService.countSearchEmpresas(nomeEmpresa));
-		List<EmpresaBaseDTO> listaEmpresas = empresaService.searchEmpresasByNamePaged(
+		Pagination pg = criaPagination(request, empresaService.getCountEmpresasSearch(nomeEmpresa));
+		List<EmpresaBaseDTO> listaEmpresas = empresaService.getEmpresasByNamePaged(
 				nomeEmpresa, 
 				pg.getStartIndex(), 
 				pg.getPageSize()
@@ -126,8 +126,8 @@ public class ControllerEmpresa extends HttpServlet {
 		System.out.println("listaEmpresas!");
 		String requestType = (request.getContentType() == null) ? "" : request.getContentType();
 
-		Pagination pg = criaPagination(request, empresaService.countEmpresas());
-		List<EmpresaBaseDTO> listaEmpresas = empresaService.queryEmpresasPaged(pg.getStartIndex(), pg.getPageSize());
+		Pagination pg = criaPagination(request, empresaService.getCountEmpresas());
+		List<EmpresaBaseDTO> listaEmpresas = empresaService.getEmpresasPaged(pg.getStartIndex(), pg.getPageSize());
 		if(requestType.equals("application/json")) {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
@@ -166,10 +166,10 @@ public class ControllerEmpresa extends HttpServlet {
 		}
 		
 		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
-		Pagination pg = criaPagination(request, (empresaService.countEmpresasAtivoUsuario(usuario.getId(), switcher)));
+		Pagination pg = criaPagination(request, (empresaService.getCountEmpresasUsuarioAtivo(usuario.getId(), switcher)));
 		
 		List<ListaEmpresasUsuarioDTO> listaEmpresas = empresaService
-				.queryPagedEmpresasUsuario(usuario.getId(),
+				.getEmpresasUsuarioPaged(usuario.getId(),
 						pg.getStartIndex(),
 						pg.getPageSize(),
 						switcher);
