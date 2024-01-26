@@ -1,5 +1,6 @@
-package br.com.alura.gerenciador.dto.empresa;
+package br.com.alura.gerenciador.dto.empresa.response;
 
+import br.com.alura.gerenciador.dto.empresa.EmpresaBaseDTO;
 import br.com.alura.gerenciador.modelo.Empresa;
 import br.com.alura.gerenciador.util.LocalDateUtil;
 
@@ -7,8 +8,6 @@ public record ListaEmpresasUsuarioDTO(
 		Long id, 
 		EmpresaBaseDTO base,
 		Boolean ativo) {
-
-	
 	
 	public ListaEmpresasUsuarioDTO(EmpresaBaseDTO dto) {
 		this(null, new EmpresaBaseDTO(dto.getNome(), (dto.data())), null);
@@ -16,6 +15,7 @@ public record ListaEmpresasUsuarioDTO(
 	public ListaEmpresasUsuarioDTO(Empresa empresa) {
 		this(empresa.getId(), new EmpresaBaseDTO(empresa.getNome(), LocalDateUtil.formatLocalDateToString(empresa.getDataAbertura())), empresa.getAtivo());
 	}
+	
 
 	public Long getId() {
 		return this.id;

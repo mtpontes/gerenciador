@@ -40,7 +40,7 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 		}
 	}
 	
-	public Empresa findEmpresaById(Long id) {
+	public Empresa findById(Long id) {
 		try {
 			Query query = em.createQuery("SELECT e FROM Empresa e WHERE e.id =:id", Empresa.class);
 			query.setParameter("id", id);
@@ -63,7 +63,7 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 			return null;
 		}
 	}
-	public List<Empresa> findEmpresasPaged(Integer start, Integer max){
+	public List<Empresa> findAllPaged(Integer start, Integer max){
 		try {
 			Query query = em.createQuery("SELECT e FROM Empresa e WHERE e.ativo = 1", Empresa.class);
 			query.setFirstResult(start);
@@ -94,7 +94,7 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 			return null;
 		}
 	}
-	public List<Empresa> findEmpresasPagedByUsuarioIdAndAtivo(Long id, Integer start, Integer max, Boolean ativo) {
+	public List<Empresa> findByUsuarioIdAndAtivoPaged(Long id, Integer start, Integer max, Boolean ativo) {
 		try {
 			Query query = em.createQuery("SELECT e FROM Empresa e WHERE e.ativo = :ativo AND e.usuario.id =:id", Empresa.class);
 			query.setFirstResult(start);
@@ -126,7 +126,7 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 			return null;
 		}
 	}
-	public List<Empresa> searchEmpresasPagedByNameLike(String nomeEmpresa, Integer start, Integer max){
+	public List<Empresa> searchByNameLikePaged(String nomeEmpresa, Integer start, Integer max){
 		try {
 			Query query = em.createQuery("SELECT e FROM Empresa e WHERE e.ativo = 1 AND e.nome LIKE :nomeEmpresa", Empresa.class)
 					.setParameter("nomeEmpresa", "%" + nomeEmpresa + "%");
@@ -142,7 +142,7 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 	
 	
 	
-	public Long countEmpresasByAtivoTrue() {
+	public Long countByAtivoTrue() {
 		try {
 			Query query = em.createQuery("SELECT COUNT(e) FROM Empresa e WHERE e.ativo = 1");
 			return (Long) query.getSingleResult();
@@ -152,7 +152,7 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 		}
 	}
 	
-	public Long countEmpresasUsuarioByAtivo(Long id, Boolean ativo) {
+	public Long countByUsuarioAndAtivo(Long id, Boolean ativo) {
 		try {
 			Query query = em.createQuery("SELECT COUNT(e) FROM Empresa e WHERE e.ativo = :ativo AND e.usuario.id = :id")
 					.setParameter("id", id)
@@ -164,7 +164,7 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 		}
 	}
 	
-	public Long countEmpresasByParamSearch(String nomeEmpresa) {
+	public Long countByParamSearch(String nomeEmpresa) {
 		try {
 			Query query = em.createQuery("SELECT COUNT(e) FROM Empresa e WHERE e.ativo =1 AND e.nome LIKE :nomeEmpresa")
 					.setParameter("nomeEmpresa", "%" + nomeEmpresa + "%");

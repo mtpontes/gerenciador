@@ -1,4 +1,4 @@
-package br.com.alura.gerenciador.dto.empresa.paginated;
+package br.com.alura.gerenciador.dto.empresa.response.paginated;
 
 import java.util.List;
 

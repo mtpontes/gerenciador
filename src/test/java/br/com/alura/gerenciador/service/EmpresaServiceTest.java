@@ -17,10 +17,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import br.com.alura.gerenciador.dto.empresa.AlteraEmpresaDTO;
 import br.com.alura.gerenciador.dto.empresa.EmpresaBaseDTO;
-import br.com.alura.gerenciador.dto.empresa.ListaEmpresasUsuarioDTO;
-import br.com.alura.gerenciador.dto.empresa.NovaEmpresaDTO;
+import br.com.alura.gerenciador.dto.empresa.request.AlteraEmpresaDTO;
+import br.com.alura.gerenciador.dto.empresa.request.NovaEmpresaDTO;
+import br.com.alura.gerenciador.dto.empresa.response.ListaEmpresasUsuarioDTO;
 import br.com.alura.gerenciador.modelo.Empresa;
 import br.com.alura.gerenciador.modelo.Usuario;
 import br.com.alura.gerenciador.repository.EmpresaRepository;

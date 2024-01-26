@@ -6,12 +6,12 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import br.com.alura.gerenciador.dto.empresa.AlteraEmpresaDTO;
 import br.com.alura.gerenciador.dto.empresa.EmpresaBaseDTO;
-import br.com.alura.gerenciador.dto.empresa.ListaEmpresasUsuarioDTO;
-import br.com.alura.gerenciador.dto.empresa.NovaEmpresaDTO;
-import br.com.alura.gerenciador.dto.empresa.paginated.EmpresaBaseWrapperDTO;
-import br.com.alura.gerenciador.dto.empresa.paginated.ListaEmpresasUsuarioWrapperDTO;
+import br.com.alura.gerenciador.dto.empresa.request.AlteraEmpresaDTO;
+import br.com.alura.gerenciador.dto.empresa.request.NovaEmpresaDTO;
+import br.com.alura.gerenciador.dto.empresa.response.ListaEmpresasUsuarioDTO;
+import br.com.alura.gerenciador.dto.empresa.response.paginated.EmpresaBaseWrapperDTO;
+import br.com.alura.gerenciador.dto.empresa.response.paginated.ListaEmpresasUsuarioWrapperDTO;
 import br.com.alura.gerenciador.modelo.Usuario;
 import br.com.alura.gerenciador.pagination.Pagination;
 import br.com.alura.gerenciador.pagination.PaginationBuilder;

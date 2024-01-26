@@ -29,8 +29,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import br.com.alura.gerenciador.dto.empresa.AlteraEmpresaDTO;
 import br.com.alura.gerenciador.dto.empresa.EmpresaBaseDTO;
+import br.com.alura.gerenciador.dto.empresa.request.AlteraEmpresaDTO;
 import br.com.alura.gerenciador.modelo.Empresa;
 import br.com.alura.gerenciador.modelo.Usuario;
 import br.com.alura.gerenciador.service.EmpresaService;
@@ -426,9 +426,9 @@ class ControllerEmpresaTest {
         AlteraEmpresaDTO capturado = empresaDtoCaptor.getValue();
 
         //assert
-        Assertions.assertEquals("EmpresaX", capturado.getNome());
-        Assertions.assertEquals("2022-01-01", capturado.getData());
-        Assertions.assertEquals(1L, capturado.getId());
+        Assertions.assertEquals("EmpresaX", capturado.base().nome());
+        Assertions.assertEquals("2022-01-01", capturado.base().data());
+        Assertions.assertEquals(1L, capturado.id());
         
         verify(out).print(anyString());
     }

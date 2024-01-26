@@ -60,9 +60,9 @@ public class EmpresaRepositoryJPATest {
 	
 	
 	@Test
-	void findEmpresaByIdTest01() {
+	void findByIdTest01() {
 		//act
-		Empresa empresaDb = rp.findEmpresaById(1l);
+		Empresa empresaDb = rp.findById(1l);
 		//assert
 		Assertions.assertNotNull(empresaDb);
 		Assertions.assertNotNull(empresaDb.getId());
@@ -72,9 +72,9 @@ public class EmpresaRepositoryJPATest {
 	}
 	
 	@Test
-	void findEmpresaByIdTest02() {
+	void findByIdTest02() {
 		//act
-		Empresa empresaDb = rp.findEmpresaById(USUARIO_ID_INVALIDO);
+		Empresa empresaDb = rp.findById(USUARIO_ID_INVALIDO);
 		//assert 
 		Assertions.assertNull(empresaDb);
 	}
@@ -92,9 +92,9 @@ public class EmpresaRepositoryJPATest {
 	}
 	
 	@Test
-	void findEmpresasPaged() {
+	void findAllPagedTest() {
 		//act
-		List<Empresa> listaEmpresas = rp.findEmpresasPaged(INDEX_START, MAX_RESULTS);
+		List<Empresa> listaEmpresas = rp.findAllPaged(INDEX_START, MAX_RESULTS);
 		//arrange
 		Assertions.assertEquals(empresasTest.get(0).getNome(), listaEmpresas.get(0).getNome());
 		Assertions.assertEquals(empresasTest.get(0).getDataAbertura(), listaEmpresas.get(0).getDataAbertura());
@@ -120,9 +120,9 @@ public class EmpresaRepositoryJPATest {
 		Assertions.assertTrue(listaEmpresas.isEmpty());
 	}
 	@Test
-	void findEmpresasPagedByUsuarioIdAndAtivo() {
+	void findByUsuarioIdAndAtivoPagedTest() {
 		//act
-		List<Empresa> listaEmpresas = rp.findEmpresasPagedByUsuarioIdAndAtivo(USUARIO_ID_VALIDO, INDEX_START, MAX_RESULTS, ATIVO_TRUE);
+		List<Empresa> listaEmpresas = rp.findByUsuarioIdAndAtivoPaged(USUARIO_ID_VALIDO, INDEX_START, MAX_RESULTS, ATIVO_TRUE);
 		//assert
 		Assertions.assertEquals(listaEmpresas.size(), MAX_RESULTS);
 		listaEmpresas.forEach(empresa -> {
@@ -132,40 +132,40 @@ public class EmpresaRepositoryJPATest {
 	}
 	
 	@Test
-	void searchEmpresasByNameLike() {
+	void searchEmpresasByNameLikeTest() {
 		//act
 		List<Empresa> empresas = rp.searchEmpresasByNameLike("Empresa");
 		//assert
 		Assertions.assertEquals(empresas.size(), QUANTIDADE_REGISTROS_TRUE);
 	}
 	@Test
-	void searchEmpresasPagedByNameLike() {
+	void searchByNameLikePagedTest() {
 		//act
-		List<Empresa> empresas = rp.searchEmpresasPagedByNameLike("Empresa", INDEX_START, MAX_RESULTS);
+		List<Empresa> empresas = rp.searchByNameLikePaged("Empresa", INDEX_START, MAX_RESULTS);
 		//assert
 		Assertions.assertEquals(empresas.size(), MAX_RESULTS);
 	}
 	
 	@Test
-	public void countEmpresasByAtivoTrue() {
+	public void countByAtivoTrueTest() {
 		//act
-		Long quantidadeRegistros = rp.countEmpresasByAtivoTrue();
+		Long quantidadeRegistros = rp.countByAtivoTrue();
 		//assert
 		Assertions.assertEquals(quantidadeRegistros, QUANTIDADE_REGISTROS_TRUE);
 	}
 	@Test
-	public void countEmpresasUsuarioByAtivo() {
+	public void countByUsuarioAndAtivoTest() {
 		//act
-		Long quantidadeRegistrosTrue = rp.countEmpresasUsuarioByAtivo(USUARIO_ID_VALIDO, ATIVO_TRUE);
-		Long quantidadeRegistrosFalse = rp.countEmpresasUsuarioByAtivo(USUARIO_ID_VALIDO, ATIVO_FALSE);
+		Long quantidadeRegistrosTrue = rp.countByUsuarioAndAtivo(USUARIO_ID_VALIDO, ATIVO_TRUE);
+		Long quantidadeRegistrosFalse = rp.countByUsuarioAndAtivo(USUARIO_ID_VALIDO, ATIVO_FALSE);
 		//assert
 		Assertions.assertEquals(quantidadeRegistrosTrue, QUANTIDADE_REGISTROS_TRUE);
 		Assertions.assertEquals(quantidadeRegistrosFalse, QUANTIDADE_REGISTROS_FALSE);
 	}
 	@Test
-	public void countEmpresasByParamSearch() {
+	public void countByParamSearchTest() {
 		//act
-		Long quantidadeRegistros = rp.countEmpresasByParamSearch("Empresa");
+		Long quantidadeRegistros = rp.countByParamSearch("Empresa");
 		//assert
 		Assertions.assertEquals(quantidadeRegistros, QUANTIDADE_REGISTROS_TRUE);
 	}
