@@ -58,11 +58,11 @@ public class EmpresaService {
 	public List<EmpresaBaseDTO> pesquisaEmpresas(String nomeDaEmpresa) {
 		return repository.searchEmpresasByNameLike(nomeDaEmpresa).stream().map(EmpresaBaseDTO::new).toList();
 	}
-	public List<EmpresaBaseDTO> getEmpresasByNamePaged(String nomeEmpresa, Integer start, Integer end) {
+	public List<EmpresaBaseDTO> getEmpresasByNamePaged(String nomeEmpresa, Integer start, Integer max) {
 		if(nomeEmpresa == null || nomeEmpresa.trim().isEmpty()) {
 			return null;
 		}
-		return repository.findByNameLikePaged(nomeEmpresa, start, end).stream().map(EmpresaBaseDTO::new).toList();
+		return repository.findByNameLikePaged(nomeEmpresa, start, max).stream().map(EmpresaBaseDTO::new).toList();
 	}
 	
 	
@@ -70,8 +70,8 @@ public class EmpresaService {
 	public List<EmpresaBaseDTO> consultaEmpresas() {
 		return repository.findEmpresas().stream().map(EmpresaBaseDTO::new).toList();
 	}
-	public List<EmpresaBaseDTO> getEmpresasPaged(Integer start, Integer end){
-		return repository.findAllPaged(start, end).stream().map(EmpresaBaseDTO::new).toList();
+	public List<EmpresaBaseDTO> getEmpresasPaged(Integer start, Integer max){
+		return repository.findAllPaged(start, max).stream().map(EmpresaBaseDTO::new).toList();
 	}
 	
 	
@@ -79,8 +79,8 @@ public class EmpresaService {
 	public List<ListaEmpresasUsuarioDTO> consultaEmpresasUsuario(Long id) {
 		return repository.findEmpresasByUsuarioId(id).stream().map(ListaEmpresasUsuarioDTO::new).toList();
 	}
-	public List<ListaEmpresasUsuarioDTO> getEmpresasUsuarioPaged(Long id, Integer start, Integer end, Boolean ativo) {
-		return repository.findByUsuarioIdAndAtivoPaged(id, start, end, ativo).stream().map(ListaEmpresasUsuarioDTO::new).toList();
+	public List<ListaEmpresasUsuarioDTO> getEmpresasUsuarioPaged(Long id, Integer start, Integer max, Boolean ativo) {
+		return repository.findByUsuarioIdAndAtivoPaged(id, start, max, ativo).stream().map(ListaEmpresasUsuarioDTO::new).toList();
 	}
 	
 	

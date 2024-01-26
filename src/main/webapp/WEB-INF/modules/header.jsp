@@ -17,6 +17,12 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"/>
 	
 	<script src="js/modules/header/header.js" type="module"></script>
+	
+	
+	
+	<link rel="stylesheet" href="styles/modules/searchBar.css">
+	<script src="js/modules/searchBar/searchBar.js" type="module"></script>
+	<script src="js/modules/header/header.js" type="module"></script>
 </head>
 <header>
 	<section class="cabecalho" id="cabecalho">
