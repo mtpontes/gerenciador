@@ -24,7 +24,7 @@ public interface EmpresaRepository {
 
 	@Deprecated
 	public List<Empresa> searchEmpresasByNameLike(String nomeEmpresa);
-	public List<Empresa> searchByNameLikePaged(String nomeEmpresa, Integer start, Integer end);
+	public List<Empresa> findByNameLikePaged(String nomeEmpresa, Integer start, Integer end);
 	
 	public Long countByAtivoTrue();
 	public Long countByUsuarioAndAtivo(Long userId, Boolean empresaAtivo);

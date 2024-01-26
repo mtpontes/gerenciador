@@ -126,7 +126,7 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 			return null;
 		}
 	}
-	public List<Empresa> searchByNameLikePaged(String nomeEmpresa, Integer start, Integer max){
+	public List<Empresa> findByNameLikePaged(String nomeEmpresa, Integer start, Integer max){
 		try {
 			Query query = em.createQuery("SELECT e FROM Empresa e WHERE e.ativo = 1 AND e.nome LIKE :nomeEmpresa", Empresa.class)
 					.setParameter("nomeEmpresa", "%" + nomeEmpresa + "%");

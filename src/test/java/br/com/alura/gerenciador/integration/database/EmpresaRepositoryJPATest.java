@@ -139,9 +139,9 @@ public class EmpresaRepositoryJPATest {
 		Assertions.assertEquals(empresas.size(), QUANTIDADE_REGISTROS_TRUE);
 	}
 	@Test
-	void searchByNameLikePagedTest() {
+	void findByNameLikePagedTest() {
 		//act
-		List<Empresa> empresas = rp.searchByNameLikePaged("Empresa", INDEX_START, MAX_RESULTS);
+		List<Empresa> empresas = rp.findByNameLikePaged("Empresa", INDEX_START, MAX_RESULTS);
 		//assert
 		Assertions.assertEquals(empresas.size(), MAX_RESULTS);
 	}

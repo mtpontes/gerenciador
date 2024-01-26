@@ -98,7 +98,7 @@ public class ControllerEmpresa extends HttpServlet {
 		String nomeEmpresa = request.getParameter("nomeEmpresa");
 		
 		Pagination pg = criaPagination(request, empresaService.countSearchEmpresas(nomeEmpresa));
-		List<EmpresaBaseDTO> listaEmpresas = empresaService.searchEmpresasPaged(
+		List<EmpresaBaseDTO> listaEmpresas = empresaService.searchEmpresasByNamePaged(
 				nomeEmpresa, 
 				pg.getStartIndex(), 
 				pg.getPageSize()

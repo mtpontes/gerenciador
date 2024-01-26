@@ -58,11 +58,11 @@ public class EmpresaService {
 	public List<EmpresaBaseDTO> pesquisaEmpresas(String nomeDaEmpresa) {
 		return repository.searchEmpresasByNameLike(nomeDaEmpresa).stream().map(EmpresaBaseDTO::new).toList();
 	}
-	public List<EmpresaBaseDTO> searchEmpresasPaged(String nomeEmpresa, Integer start, Integer end) {
+	public List<EmpresaBaseDTO> searchEmpresasByNamePaged(String nomeEmpresa, Integer start, Integer end) {
 		if(nomeEmpresa == null || nomeEmpresa.trim().isEmpty()) {
 			return null;
 		}
-		return repository.searchByNameLikePaged(nomeEmpresa, start, end).stream().map(EmpresaBaseDTO::new).toList();
+		return repository.findByNameLikePaged(nomeEmpresa, start, end).stream().map(EmpresaBaseDTO::new).toList();
 	}
 	
 	

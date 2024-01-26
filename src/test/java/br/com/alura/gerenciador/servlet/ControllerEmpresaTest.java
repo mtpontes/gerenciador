@@ -177,7 +177,7 @@ class ControllerEmpresaTest {
     	BDDMockito.given(request.getParameter("page")).willReturn("1");
     	BDDMockito.given(request.getParameter("size")).willReturn("5");
     	
-    	BDDMockito.given(empresaService.searchEmpresasPaged(anyString(), anyInt(), anyInt())).willReturn(listaEmpresas);
+    	BDDMockito.given(empresaService.searchEmpresasByNamePaged(anyString(), anyInt(), anyInt())).willReturn(listaEmpresas);
     	BDDMockito.given(response.getWriter()).willReturn(out);
     	
     	
