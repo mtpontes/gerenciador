@@ -1,4 +1,4 @@
-import { ElementFactory } from "../../modules/elementFactory/ElementFactory";
+import { ElementFactory } from "../../modules/elementFactory/ElementFactory.js";
 
 /**
  * Classe que cria um novo elemento HTML representando uma empresa.
