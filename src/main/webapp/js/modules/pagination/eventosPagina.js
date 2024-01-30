@@ -1,7 +1,10 @@
 import { atualizaControlePaginacao } from "./pagination.js"
-
 document.addEventListener('DOMContentLoaded', clickEvent);
 document.addEventListener('DOMContentLoaded', atualizaControlePaginacao);
+
+export function clickEventIndexCollection(){
+	clickEvent();
+}
 
 //adiciona um evento de click aos indices das páginas
 function clickEvent(){

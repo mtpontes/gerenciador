@@ -1,11 +1,12 @@
-export function criaColecaoNovosElementosLi(empresas) {
-	const colecaoNovosLi  = [];
-	empresas.forEach(empresa => {
+
+
+export const elementFactory = {
+	createElement(empresa) {
 		//form .lista
-	    const novoFormulario = document.createElement('form');
-	    novoFormulario.classList.add('lista');
-	    novoFormulario.id = empresa.id;
-	    novoFormulario.dataset.ativo = empresa.ativo;
+	    const novoForm = document.createElement('form');
+	    novoForm.classList.add('lista');
+	    novoForm.id = empresa.id;
+	    novoForm.dataset.ativo = empresa.ativo;
 	    
 		//div .lista-nome-data
 	    const divNomeData = document.createElement('div');
@@ -47,7 +48,7 @@ export function criaColecaoNovosElementosLi(empresas) {
 	    const spanIconeEditar = document.createElement('span');
 	    spanIconeEditar.classList.add('icone-editar', 'material-symbols-outlined');
 	    spanIconeEditar.textContent = 'edit';
-
+	
 	    linkEditar.appendChild(spanTextoEditar);
 	    linkEditar.appendChild(spanIconeEditar);
 		
@@ -87,12 +88,11 @@ export function criaColecaoNovosElementosLi(empresas) {
 	    divEditaArquiva.appendChild(linkEditar);
 	    divEditaArquiva.appendChild(linkArquivar);
 	
-	    novoFormulario.appendChild(divNomeData);
-	    novoFormulario.appendChild(divEditaArquiva);
-	    novoFormulario.appendChild(botaoEnviar);
-	
-		colecaoNovosLi.push(novoFormulario);
-	});
-	return colecaoNovosLi;	
+	    novoForm.appendChild(divNomeData);
+	    novoForm.appendChild(divEditaArquiva);
+	    novoForm.appendChild(botaoEnviar);
+		
+		return novoForm;	
+	}
 }
 

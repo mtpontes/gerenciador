@@ -1,26 +1,29 @@
 import { getRequest } from "../../util/ajax.js";
-import { alteraDadosPaginacao, atualizaParamAcaoUrl } from "../../modules/pagination/paginationConfigs.js"
+import { alteraDadosPaginacao, clickEventPaginationtIndex, atualizaElementos } from "../../modules/pagination/paginationConfigs.js"
 import { logicaPaginacao } from "../../modules/pagination/pagination.js";
+import { clickEventIndexCollection } from "../../modules/pagination/eventosPagina.js";
 import { API_CONFIG } from "../../util/api-config.js";
+import { elementFactory } from "../searchEmpresas/elementFactory.js";
 
 document.addEventListener("DOMContentLoaded", alteraRequisicao);
-document.addEventListener("DOMContentLoaded", clickEventPaginationtIndex);
+document.addEventListener("DOMContentLoaded", paginationEvent);
 document.addEventListener("DOMContentLoaded", mostraMensagemFalhaPesquisa);
 
 //atualiza o conteúdo do card e o controlador de paginação
 function atualizaPagina(result){
 	//interno
 	mostraMensagemFalhaPesquisaRequest(result)
-	atualizaElementos(result.empresas);
+	paginationEventUpdate();
 	
 	//import
-	atualizaParamAcaoUrl(result.acao);
+	atualizaElementos(result);
+	clickEventIndexCollection();
 	alteraDadosPaginacao(result.pagination);
 	
 	logicaPaginacao();
 }
 
-//substitui a requisição form HTML padrão por uma requisição AJAX
+//substitui a requisição form HTML padrão da searchBar por uma requisição AJAX
 async function alteraRequisicao(){
 	const formulario = document.getElementById('form-search');
 	formulario.addEventListener('submit', async (event) => {
@@ -37,47 +40,22 @@ async function alteraRequisicao(){
 		atualizaPagina(result);
 	});
 }
-
-function clickEventPaginationtIndex(){
+function paginationEvent(){
+	let params = {nomeEmpresa: getParamNomeEmpresaFromURL()};
+	const paginationEvent = clickEventPaginationtIndex(params, null, elementFactory);
+	paginationEvent.addEventClick();
+}
+function paginationEventUpdate() {
 	const indexCollection = document.querySelectorAll('.index');
-	indexCollection.forEach((element) => {
-		element.addEventListener('click', async (event) => {
-			event.preventDefault();
-			
-			const nomeEmpresa = getParamNomeEmpresaFromURL();
-			const urlRelativa = API_CONFIG.EMPRESA.URL_RELATIVA;
-			const urlParams = {
-				acao: element.dataset.acao,
-				page: element.dataset.page,
-				size: element.dataset.size,
-				nomeEmpresa: nomeEmpresa
-			}
-			
-			const result = await getRequest(urlRelativa, urlParams);
-			//atualiza os elementos .lista
-			atualizaElementos(result.empresas);
-		});
+	
+	indexCollection.forEach(index => {
+		const indexClone = index.cloneNode(true);
+		index.parentNode.replaceChild(indexClone, index);
 	});
+	paginationEvent();
 }
 
-function atualizaElementos(empresas){
-	const containerEmpresas = document.querySelector('.container-empresas');
-	
-	//cria novos elementos .lista
-	const novosElementosLista = criaColecaoNovosElementosLi(empresas);
-	
-	//remove todos os elementos .lista
-	const colecaoLista = document.querySelectorAll('.lista');
-	colecaoLista.forEach(filho => containerEmpresas.removeChild(filho));
-	
-    //captura um elemento que será usado como ponto de referencia para inserção dos novos elementos .lista
-	const controladorPaginacaoReference = containerEmpresas.querySelector('.paginacao');
-	
-	//insere todos os elementos .lista atualizados
-	novosElementosLista.forEach(element => containerEmpresas.insertBefore(element, controladorPaginacaoReference));
-}
 
-//mostra a mensagem de falha na pesquisa se nenhum elemento .lista for inserido
 function mostraMensagemFalhaPesquisa(){
 	const colecaoLista = Array.from(document.querySelectorAll('.lista'));
 	const mensagem = document.querySelector('.listagemVazia');
@@ -109,34 +87,6 @@ function mostraMensagemFalhaPesquisaRequest(result){
 		card.classList.add('card-off');
 		mensagem.style.display = 'flex';
 	}
-}
-
-function criaColecaoNovosElementosLi(empresas){
-	const colacaoNovosLi = [];
-	
-	if(empresas){
-		empresas.forEach(empresa => {
-	    const novoLi = document.createElement('li');
-	    novoLi.classList.add('lista');
-	    novoLi.id = empresa.id;
-	    
-	    const paragrafoNome = document.createElement('p');
-	    paragrafoNome.classList.add('lista-nome');
-	    paragrafoNome.id = 'lista-nome';
-	    paragrafoNome.textContent = empresa.nome;
-	
-	    const paragrafoData = document.createElement('p');
-	    paragrafoData.classList.add('lista-data');
-	    paragrafoData.id = 'lista-data';
-	    paragrafoData.textContent = empresa.data;
-	    
-	    novoLi.appendChild(paragrafoNome);
-	    novoLi.appendChild(paragrafoData);
-    
-    	colacaoNovosLi.push(novoLi);
-		});
-	}
-	return colacaoNovosLi;
 }
 
 function getParamNomeEmpresaFromURL() {
