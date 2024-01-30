@@ -1,5 +1,5 @@
 import { API_CONFIG } from "../../util/api-config.js";
-import { getRequest } from "../../util/ajax.js";
+import { getRequest } from "../../util/ajaxUtil.js";
 
 import { UsuarioEmpresasElementFactory } from "./UsuarioEmpresasElementFactory.js";
 import { eventArchiveUnarquive } from "./botoes.js";
@@ -12,7 +12,6 @@ import { atualizaEstiloArquivados } from "./botoes.js";
 import { atualizaIconeBotaoArquivar } from "./botoes.js";
 
 import { EventManagerUtil } from "../../util/EventManagerUtil.js";
-import { ElementFactory } from "../../modules/elementFactory/ElementFactory.js";
 
 document.addEventListener('DOMContentLoaded', eventoSubmitElementoFormLista(document.querySelectorAll('.lista')));
 document.addEventListener('DOMContentLoaded', eventoClickElementoEditar(document.querySelectorAll('.botao-editar')));
@@ -22,45 +21,57 @@ document.addEventListener('DOMContentLoaded', alternaEmpresasAtivo);
 document.addEventListener('DOMContentLoaded', atualizaEstiloArquivados);
 document.addEventListener('DOMContentLoaded', atualizaIconeBotaoArquivar);
 
-// Atualiza o conteúdo do card e o controlador de paginação
-function atualizaPagina(result){
-	atualizaElementos(result.empresas);
-	atualizaParamAcaoUrl(result.acao);
-	alteraDadosPaginacao(result.pagination);
-	logicaPaginacao();
+/**
+ * Atualiza o conteúdo do card e o controlador de paginação.
+ *
+ * @param {Object} result - Objeto contendo informações após uma chamada à API.
+ * @param {Object} eventManager - Instância do controlador de eventos.
+ * @param {Object} elementFactory - Instância da fábrica de elementos.
+ */
+function atualizaPagina(result, eventManager, elementFactory) {
+    atualizaElementos(result, eventManager, elementFactory);
+    atualizaParamAcaoUrl(result.acao);
+    alteraDadosPaginacao(result.pagination);
+    logicaPaginacao();
 }
 
+
 /**
- * Faz chamadas por registros de `Empresa` `ativo==true` e `ativo==false`.
+ * Realiza chamadas para registros de `Empresa` com `ativo==true` e `ativo==false`.
  *
  * @description Esta função é vinculada a um evento de clique no botão '.arquivados'.
  *              Ela alterna entre a exibição de empresas ativas e inativas, modificando
  *              o parâmetro 'acao' da URL e realizando chamadas à API correspondentes.
  *              Após a chamada, atualiza a página e aplica estilos ao botão '.arquivados'.
  */
-function alternaEmpresasAtivo(){
-	const botaoArquivados = document.querySelector('.arquivados');
-	botaoArquivados.addEventListener('click', async () => {
-		const relativeURL = API_CONFIG.EMPRESA.URL_RELATIVA;
-		
-		// Recupera os pâmetros da URL atual
-		const searchParams = new URLSearchParams(window.location.search);
-		
-		// Alterna o valor do parâmetro `acao` da URL
-		const ativadas = API_CONFIG.EMPRESA.PARAM_ACAO.LISTA_EMPRESAS_USUARIO;
-		const desativadas = API_CONFIG.EMPRESA.PARAM_ACAO.LISTA_EMPRESAS_DESATIVADAS_USUARIO;
-		(searchParams.get('acao') === desativadas) 
-			? searchParams.set('acao', ativadas) 
-			: searchParams.set('acao', desativadas);
-		
-		// Transforma searchParams em um objeto literal, cada parametro vira chave:valor no objeto
-		const params = Object.fromEntries(searchParams.entries());
+function alternaEmpresasAtivo() {
+    const botaoArquivados = document.querySelector('.arquivados');
+    botaoArquivados.addEventListener('click', async () => {
+        const relativeURL = API_CONFIG.EMPRESA.URL_RELATIVA;
 
-		const result = await getRequest(relativeURL, params);
-		atualizaPagina(result);
-		atualizaEstiloArquivados();
-	});
+        // Recupera os parâmetros da URL atual
+        const searchParams = new URLSearchParams(window.location.search);
+
+        // Alterna o valor do parâmetro `acao` da URL
+        const ativadas = API_CONFIG.EMPRESA.PARAM_ACAO.LISTA_EMPRESAS_USUARIO;
+        const desativadas = API_CONFIG.EMPRESA.PARAM_ACAO.LISTA_EMPRESAS_DESATIVADAS_USUARIO;
+        (searchParams.get('acao') === desativadas) 
+            ? searchParams.set('acao', ativadas) 
+            : searchParams.set('acao', desativadas);
+
+        // Transforma searchParams em um objeto literal, cada parâmetro vira chave:valor no objeto
+        const params = Object.fromEntries(searchParams.entries());
+
+        const result = await getRequest(relativeURL, params);
+
+        const eventManager = criaEventManager();
+        const elementFactory = new UsuarioEmpresasElementFactory();
+
+        atualizaPagina(result, eventManager, elementFactory);
+        atualizaEstiloArquivados();
+    });
 }
+
 
 /**
  * Controla a lógica de paginação ao clicar em índices de página.
@@ -69,15 +80,20 @@ function alternaEmpresasAtivo(){
  * - Chama a função de paginação ao clicar nos índices de página.
  */
 function paginationEvent(){
-    const atribuidorEventFunctions = new EventManagerUtil();
-    
+    const atribuidorEventFunctions = criaEventManager();
     const elementFactory = new UsuarioEmpresasElementFactory();
-    
-    atribuidorEventFunctions
-    	.associateTargetAndEvent('.lista', eventoSubmitElementoFormLista)
-    	.associateTargetAndEvent('.botao-editar', eventoClickElementoEditar)
-    	.associateTargetAndEvent('.botao-arquivar', eventArchiveUnarquive);
 
     clickEventPaginationtIndex(null, atribuidorEventFunctions, elementFactory).addEventClick();
+}
+
+function criaEventManager(){
+    const atribuidorEventFunctions = new EventManagerUtil();
+
+	atribuidorEventFunctions
+		.associateTargetAndEvent('.lista', eventoSubmitElementoFormLista)
+		.associateTargetAndEvent('.botao-editar', eventoClickElementoEditar)
+		.associateTargetAndEvent('.botao-arquivar', eventArchiveUnarquive);
+		
+	return atribuidorEventFunctions;
 }
 

@@ -1,4 +1,4 @@
-import { getRequest } from "../../util/ajax.js";
+import { getRequest } from "../../util/ajaxUtil.js";
 import { alteraDadosPaginacao, clickEventPaginationtIndex, atualizaElementos } from "../../modules/pagination/paginationConfigs.js"
 import { logicaPaginacao } from "../../modules/pagination/pagination.js";
 import { clickEventIndexCollection } from "../../modules/pagination/eventosPagina.js";

@@ -1,5 +1,5 @@
 import { validaCampos } from './validaCampos.js';
-import { usuarioRegexPatterns } from '../util/regexPatterns.js';
+import { usuarioRegexPatterns } from './regex/usuarioRegexPatterns.js';
 
 document.addEventListener('DOMContentLoaded', validaLogin);
 

@@ -1,5 +1,5 @@
 import { validaCampos } from './validaCampos.js';
-import { empresaRegexPatterns } from '../util/regexPatterns.js';
+import { empresaRegexPatterns } from './regex/empresaRegexPatterns.js';
 
 document.addEventListener('DOMContentLoaded', valida);
 

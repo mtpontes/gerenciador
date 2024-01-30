@@ -1,5 +1,6 @@
+import { API_CONFIG } from "../../util/api-config.js";
 import { cssColors } from "../../util/variaveisCSS.js";
-import { putRequest } from "../../util/ajax.js";
+import { putRequest } from "../../util/ajaxUtil.js";
 
 /**
  * Obtém o estado atual da página com base no parâmetro de "acao" da URL.
