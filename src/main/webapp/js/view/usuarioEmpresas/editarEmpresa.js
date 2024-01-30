@@ -92,11 +92,19 @@ function alteraExibicaoDosElementosPEInput(elementoForm){
 	}
 }
 
-// Captura o texto atual dos elementos <p> e introduz no campo <input>
+/**
+ * Atualiza os campos de entrada (<input>) com o texto atual dos elementos de parágrafo (<p>).
+ * Copia o texto dos elementos <p> correspondentes para os campos <input> correspondentes.
+ *
+ * @param {Object} elementos - Um objeto contendo referências para elementos HTML.
+ *                            Deve ter propriedades 'p' (para parágrafos) e 'input' (para campos de entrada).
+ */
 function atualizaElementosInput(elementos){
-	elementos.input.nome.value = elementos.p.nome.textContent;
-	elementos.input.data.value = elementos.p.data.textContent;
+    // Atribui o texto dos elementos <p> aos campos de entrada correspondentes
+    elementos.input.nome.value = elementos.p.nome.textContent;
+    elementos.input.data.value = elementos.p.data.textContent;
 }
+
 
 /**
  * Atualiza os elementos de parágrafo (<p>) com os valores dos campos de input em caso de sucesso na requisição AJAX.

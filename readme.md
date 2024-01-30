@@ -2,15 +2,16 @@
 
 A base desse projeto foi criada no curso [Java Web: crie aplicações com Servlets e MVC](https://cursos.alura.com.br/formacao-java-web) da [Alura](https://github.com/alura-cursos), a versão base se encontra na branch versao-original-alura.
 
-Esse é meu primeiro projeto web, nele tive a primeira vez de muitas coisas, por isso preferi por não usar frameworks, para conseguir resolver tudo da maneira mais crua. Esse projeto surgiu como um treinamento para praticar CSS e alguns conceitos de backend. A medida que fui desenvolvendo surgiram novas ideias e acabou tomando outra proporção. Com ele aumentei meu entendimento de testes automatizados, boas práticas, CSS e principalmente JS. JS era uma linguagem completamente desconhecida para mim, foi criando esse projeto que aprendi a programar em JS para o front do zero.
+Esse é meu primeiro projeto web, nele tive a primeira vez de muitas coisas, por isso, preferi por não usar frameworks, para conseguir resolver tudo da maneira mais crua. Esse projeto surgiu como um treinamento para praticar CSS e alguns conceitos de backend. A medida que fui desenvolvendo surgiram novas ideias e acabou tomando outra proporção. Com ele aumentei meu entendimento de testes automatizados, boas práticas, CSS e principalmente JS. JS era uma linguagem completamente desconhecida para mim, foi criando esse projeto que aprendi a programar em JS para o front do zero.
 
 ## Tecnologias utilizadas
 
 - Java 17
 - Maven
 - Jakarta Servlet
-- Jakarta Validation
 - JSP
+- Jakarta Validation
+- Expressões Regulares
 - Bcrypt
 - JPA / Hibernate
 - MySQL / H2 (test)
