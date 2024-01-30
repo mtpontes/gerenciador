@@ -2,11 +2,12 @@ import { atualizaControlePaginacao } from "./pagination.js"
 document.addEventListener('DOMContentLoaded', clickEvent);
 document.addEventListener('DOMContentLoaded', atualizaControlePaginacao);
 
+// Exporta a função para reatribuir o evento quando ele é removido.
 export function clickEventIndexCollection(){
 	clickEvent();
 }
 
-//adiciona um evento de click aos indices das páginas
+// Adiciona um evento de click aos indices das páginas
 function clickEvent(){
 	const fatherElement = document.querySelector('.paginacao');
 	const indexCollection = document.querySelectorAll('.index');
@@ -18,14 +19,14 @@ function clickEvent(){
 	}));
 }
 
-//altera o valor do atributo currentpage no elemento <div class="paginacao">
-//esse atributo é lido por várias outras funções, por isso precisa estar sempre atualizado
+// Altera o valor do atributo `currentpage` no elemento <div class="paginacao">
+// Asse atributo precisa estar sempre atualizado
 function alteraCurrentPage(clickedElement, fatherElement) {
     const pageElementClicked = clickedElement.dataset.page;
     fatherElement.dataset.currentpage = pageElementClicked;
 }
 
-//atualiza a URL na barra de navegação do browser e o histórico de navegação
+// Atualiza a URL na barra de navegação do browser e o histórico de navegação
 function atualizaUrl(){
 	let currentPage = document.querySelector('.paginacao').dataset.currentpage;
 	const urlAtual = new URL(window.location.href);

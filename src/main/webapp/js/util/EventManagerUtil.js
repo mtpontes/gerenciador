@@ -1,6 +1,5 @@
-
 // Atribui funções de evento a elementos
-export class EventManager {
+export class EventManagerUtil {
 	constructor(){
 		this.associatesCollection = [];
 	}

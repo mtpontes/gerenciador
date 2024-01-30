@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', alternaEmpresasAtivo);
 document.addEventListener('DOMContentLoaded', atualizaEstiloArquivados);
 document.addEventListener('DOMContentLoaded', atualizaIconeBotaoArquivar);
 
-//atualiza o conteúdo do card e o controlador de paginação
+// Atualiza o conteúdo do card e o controlador de paginação
 function atualizaPagina(result){
 	atualizaElementos(result.empresas);
 	atualizaParamAcaoUrl(result.acao);
@@ -29,20 +29,30 @@ function atualizaPagina(result){
 	logicaPaginacao();
 }
 
+/**
+ * Faz chamadas por registros de `Empresa` `ativo==true` e `ativo==false`.
+ *
+ * @description Esta função é vinculada a um evento de clique no botão '.arquivados'.
+ *              Ela alterna entre a exibição de empresas ativas e inativas, modificando
+ *              o parâmetro 'acao' da URL e realizando chamadas à API correspondentes.
+ *              Após a chamada, atualiza a página e aplica estilos ao botão '.arquivados'.
+ */
 function alternaEmpresasAtivo(){
 	const botaoArquivados = document.querySelector('.arquivados');
 	botaoArquivados.addEventListener('click', async () => {
 		const relativeURL = API_CONFIG.EMPRESA.URL_RELATIVA;
 		
-		//recupera os pâmetros da URL atual
+		// Recupera os pâmetros da URL atual
 		const searchParams = new URLSearchParams(window.location.search);
 		
-		//alterna o valor do parâmetro 'acao' da URL
+		// Alterna o valor do parâmetro `acao` da URL
 		const ativadas = API_CONFIG.EMPRESA.PARAM_ACAO.LISTA_EMPRESAS_USUARIO;
 		const desativadas = API_CONFIG.EMPRESA.PARAM_ACAO.LISTA_EMPRESAS_DESATIVADAS_USUARIO;
-		(searchParams.get('acao') === desativadas) ? searchParams.set('acao', ativadas) : searchParams.set('acao', desativadas);
+		(searchParams.get('acao') === desativadas) 
+			? searchParams.set('acao', ativadas) 
+			: searchParams.set('acao', desativadas);
 		
-		//transforma searchParams em um objeto literal, cada parametro vira chave:valor no objeto
+		// Transforma searchParams em um objeto literal, cada parametro vira chave:valor no objeto
 		const params = Object.fromEntries(searchParams.entries());
 
 		const result = await getRequest(relativeURL, params);
@@ -51,14 +61,20 @@ function alternaEmpresasAtivo(){
 	});
 }
 
+/**
+ * Controla a lógica de paginação ao clicar em índices de página.
+ * - Cria um novo EventManager para gerenciar eventos na página.
+ * - Adiciona objetos de evento ao EventManager para os elementos específicos.
+ * - Chama a função de paginação ao clicar nos índices de página.
+ */
 function paginationEvent(){
-    const adicionador = new EventManager();
+    const atribuidorEventFunctions = new EventManager();
     
-    adicionador
-    	.criaObjeto('.lista', eventoSubmitElementoFormLista)
-    	.criaObjeto('.botao-editar', eventoClickElementoEditar)
-    	.criaObjeto('.botao-arquivar', eventArchiveUnarquive);
+    atribuidorEventFunctions
+    	.associateTargetAndEvent('.lista', eventoSubmitElementoFormLista)
+    	.associateTargetAndEvent('.botao-editar', eventoClickElementoEditar)
+    	.associateTargetAndEvent('.botao-arquivar', eventArchiveUnarquive);
 
-    clickEventPaginationtIndex(null, adicionador, elementFactory).addEventClick();
+    clickEventPaginationtIndex(null, atribuidorEventFunctions, elementFactory).addEventClick();
 }
 

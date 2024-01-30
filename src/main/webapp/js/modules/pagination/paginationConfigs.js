@@ -2,14 +2,14 @@ import { API_CONFIG } from "../../util/api-config.js";
 import { getRequest } from "../../util/ajax.js";
 import { EventManager } from "../../util/eventManagerUtil.js";
 
-//altera as propriedades dataset de .pagination
+// Altera as propriedades dataset de .pagination
 export function alteraDadosPaginacao(pagination){
 	const paginacao = document.querySelector('.paginacao');
 	paginacao.dataset.currentpage = pagination.pageNumber;
 	paginacao.dataset.totalpages = pagination.totalPages;
 	paginacao.dataset.pagesize = pagination.pageSize;
 }
-//atualiza o parâmetro 'acao' da URL
+// Atualiza o parâmetro 'acao' da URL
 export function atualizaParamAcaoUrl(acao){
 	const urlAtual = new URL(window.location.href);
 	urlAtual.searchParams.set('acao', acao);
@@ -52,21 +52,21 @@ export const clickEventPaginationtIndex = (params = null, adicionador = null, el
 }
 /**
  * Atualiza os elementos na seção de empresas no DOM.
- * - Cria novos elementos da lista usando um elementoFactory.
+ * - Cria novos elementos da lista usando um elementFactory.
  * - Remove todos os elementos existente da lista.
  * - Captura um elemento de referência para inserção dos novos elementos.
  * - Insere os novos elementos antes do ponto de referência.
  * - Atribui eventos aos elementos atualizados usando um eventManager.
  *
- * @param {Object} empresas - Dados das empresas a serem exibidos.
+ * @param {Object} result - Dados das empresas a serem exibidos.
  * @param {EventManager} eventManager - Gerenciador de eventos para associar eventos aos elementos.
  * @param {Object} elementFactory - Fábrica de elementos para criar novos elementos da lista.
  */
-export function atualizaElementos(empresas, eventManager, elementFactory) {
+export function atualizaElementos(result, eventManager, elementFactory) {
 	const containerEmpresas = document.querySelector('.container-empresas');
 	
 	//cria os novos elementos .lista
-	const novosElementosLista = criaColecaoNovosElementosLi(empresas, elementFactory);
+	const novosElementosLista = criaColecaoNovosElementosLi(result, elementFactory);
 	
 	//remove todos os elementos .lista
 	const colecaoLista = document.querySelectorAll('.lista');
@@ -82,6 +82,12 @@ export function atualizaElementos(empresas, eventManager, elementFactory) {
         eventManager.assignEventsToTarget(containerEmpresas);
     }
 }
+/**
+ * Atualiza os elementos na seção de empresas no DOM.
+ * - Cria novos elementos da lista usando um elementFactory.
+ * @param {Object} result - Dados das empresas a serem exibidos.
+ * @param {Object} elementFactory - Fábrica de elementos para criar novos elementos da lista.
+ */
 function criaColecaoNovosElementosLi(result, elementFactory){
 	const empresas = (result.empresas) ? result.empresas : result;
 	const colecaoNovosLi = [];
