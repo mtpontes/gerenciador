@@ -1,7 +1,7 @@
 import { API_CONFIG } from "../../util/api-config.js";
 import { getRequest } from "../../util/ajax.js";
 
-import { elementFactory } from "./elementFactory.js";
+import { UsuarioEmpresasElementFactory } from "./UsuarioEmpresasElementFactory.js";
 import { eventArchiveUnarquive } from "./botoes.js";
 import { eventoClickElementoEditar, eventoSubmitElementoFormLista } from "./editarEmpresa.js";
 
@@ -11,7 +11,8 @@ import { logicaPaginacao } from "../../modules/pagination/pagination.js";
 import { atualizaEstiloArquivados } from "./botoes.js";
 import { atualizaIconeBotaoArquivar } from "./botoes.js";
 
-import { EventManager } from "../../util/eventManagerUtil.js";
+import { EventManagerUtil } from "../../util/EventManagerUtil.js";
+import { ElementFactory } from "../../modules/elementFactory/ElementFactory.js";
 
 document.addEventListener('DOMContentLoaded', eventoSubmitElementoFormLista(document.querySelectorAll('.lista')));
 document.addEventListener('DOMContentLoaded', eventoClickElementoEditar(document.querySelectorAll('.botao-editar')));
@@ -68,7 +69,9 @@ function alternaEmpresasAtivo(){
  * - Chama a função de paginação ao clicar nos índices de página.
  */
 function paginationEvent(){
-    const atribuidorEventFunctions = new EventManager();
+    const atribuidorEventFunctions = new EventManagerUtil();
+    
+    const elementFactory = new UsuarioEmpresasElementFactory();
     
     atribuidorEventFunctions
     	.associateTargetAndEvent('.lista', eventoSubmitElementoFormLista)

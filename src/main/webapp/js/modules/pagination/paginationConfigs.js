@@ -1,6 +1,6 @@
 import { API_CONFIG } from "../../util/api-config.js";
 import { getRequest } from "../../util/ajax.js";
-import { EventManager } from "../../util/eventManagerUtil.js";
+import { EventManagerUtil } from "../../util/EventManagerUtil.js";
 
 // Altera as propriedades dataset de .pagination
 export function alteraDadosPaginacao(pagination){
@@ -59,7 +59,7 @@ export const clickEventPaginationtIndex = (params = null, adicionador = null, el
  * - Atribui eventos aos elementos atualizados usando um eventManager.
  *
  * @param {Object} result - Dados das empresas a serem exibidos.
- * @param {EventManager} eventManager - Gerenciador de eventos para associar eventos aos elementos.
+ * @param {EventManagerUtil} eventManager - Gerenciador de eventos para associar eventos aos elementos.
  * @param {Object} elementFactory - Fábrica de elementos para criar novos elementos da lista.
  */
 export function atualizaElementos(result, eventManager, elementFactory) {
@@ -78,7 +78,7 @@ export function atualizaElementos(result, eventManager, elementFactory) {
 	//insere todos os elementos os novos elementos .lista
 	novosElementosLista.forEach(element => containerEmpresas.insertBefore(element, referencePoint));
 
-    if (eventManager instanceof EventManager) {
+    if (eventManager instanceof EventManagerUtil) {
         eventManager.assignEventsToTarget(containerEmpresas);
     }
 }
