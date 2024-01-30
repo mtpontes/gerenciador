@@ -104,7 +104,7 @@ public class ControllerEmpresa extends HttpServlet {
 				pg.getPageSize()
 				);
 		
-		EmpresaBaseWrapperDTO wrapper = new EmpresaBaseWrapperDTO(listaEmpresas, pg, "search");
+		EmpresaBaseWrapperDTO wrapper = new EmpresaBaseWrapperDTO(listaEmpresas, pg);
 		if (requestType.equals("application/json")) {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
