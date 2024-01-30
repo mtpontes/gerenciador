@@ -1,20 +1,30 @@
 import { API_CONFIG } from "../../util/api-config.js";
-import { getRequest } from "../../util/ajax.js";
+import { getRequest } from "../../util/ajaxUtil.js";
 import { EventManagerUtil } from "../../util/EventManagerUtil.js";
 
-// Altera as propriedades dataset de .pagination
+/**
+ * Altera as propriedades dataset do elemento .paginacao com base nas informações de paginação fornecidas.
+ * 
+ * @param {Object} pagination - Objeto contendo informações sobre a paginação (pageNumber, totalPages, pageSize).
+ */
 export function alteraDadosPaginacao(pagination){
-	const paginacao = document.querySelector('.paginacao');
-	paginacao.dataset.currentpage = pagination.pageNumber;
-	paginacao.dataset.totalpages = pagination.totalPages;
-	paginacao.dataset.pagesize = pagination.pageSize;
+    const paginacao = document.querySelector('.paginacao');
+    paginacao.dataset.currentpage = pagination.pageNumber;
+    paginacao.dataset.totalpages = pagination.totalPages;
+    paginacao.dataset.pagesize = pagination.pageSize;
 }
-// Atualiza o parâmetro 'acao' da URL
+
+/**
+ * Atualiza o parâmetro 'acao' da URL na barra de navegação do browser e o histórico de navegação.
+ * 
+ * @param {string} acao - Ação a ser adicionada como parâmetro à URL.
+ */
 export function atualizaParamAcaoUrl(acao){
-	const urlAtual = new URL(window.location.href);
-	urlAtual.searchParams.set('acao', acao);
-	history.pushState(null, '', urlAtual.href);
+    const urlAtual = new URL(window.location.href);
+    urlAtual.searchParams.set('acao', acao);
+    history.pushState(null, '', urlAtual.href);
 }
+
 
 
 /**
@@ -65,17 +75,17 @@ export const clickEventPaginationtIndex = (params = null, adicionador = null, el
 export function atualizaElementos(result, eventManager, elementFactory) {
 	const containerEmpresas = document.querySelector('.container-empresas');
 	
-	//cria os novos elementos .lista
+	// Cria os novos elementos .lista
 	const novosElementosLista = criaColecaoNovosElementosLi(result, elementFactory);
 	
-	//remove todos os elementos .lista
+	// Remove todos os elementos .lista
 	const colecaoLista = document.querySelectorAll('.lista');
 	colecaoLista.forEach(filho => containerEmpresas.removeChild(filho));
 	
-    //captura um elemento que será usado como ponto de referencia para inserção dos novos elementos .lista
+    // Captura um elemento que será usado como ponto de referencia para inserção dos novos elementos .lista
 	const referencePoint = containerEmpresas.querySelector('.paginacao');
 	
-	//insere todos os elementos os novos elementos .lista
+	// Insere todos os elementos os novos elementos .lista
 	novosElementosLista.forEach(element => containerEmpresas.insertBefore(element, referencePoint));
 
     if (eventManager instanceof EventManagerUtil) {

@@ -1,4 +1,4 @@
-import { putRequest } from "../../util/ajax.js";
+import { putRequest } from "../../util/ajaxUtil.js";
 import { API_CONFIG } from "../../util/api-config.js";
 
 const P_NOME_SELECTOR = '.lista-nome';

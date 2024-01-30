@@ -1,5 +1,5 @@
-import { postRequest } from "../util/ajax.js";
-import { usuarioRegexPatterns } from '../util/regexPatterns.js';
+import { postRequest } from "../util/ajaxUtil.js";
+import { usuarioRegexPatterns } from './regex/usuarioRegexPatterns.js';
 
 document.addEventListener("DOMContentLoaded", validaComRequest);
 
