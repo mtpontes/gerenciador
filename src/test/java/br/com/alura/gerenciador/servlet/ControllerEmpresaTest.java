@@ -1,6 +1,5 @@
 package br.com.alura.gerenciador.servlet;
 
-import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -30,8 +29,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import br.com.alura.gerenciador.dto.empresa.AlteraEmpresaDTO;
 import br.com.alura.gerenciador.dto.empresa.EmpresaBaseDTO;
+import br.com.alura.gerenciador.dto.empresa.request.AlteraEmpresaDTO;
 import br.com.alura.gerenciador.modelo.Empresa;
 import br.com.alura.gerenciador.modelo.Usuario;
 import br.com.alura.gerenciador.service.EmpresaService;
@@ -178,7 +177,7 @@ class ControllerEmpresaTest {
     	BDDMockito.given(request.getParameter("page")).willReturn("1");
     	BDDMockito.given(request.getParameter("size")).willReturn("5");
     	
-    	BDDMockito.given(empresaService.searchEmpresasPaged(anyString(), anyInt(), anyInt())).willReturn(listaEmpresas);
+    	BDDMockito.given(empresaService.getEmpresasByNamePaged(anyString(), anyInt(), anyInt())).willReturn(listaEmpresas);
     	BDDMockito.given(response.getWriter()).willReturn(out);
     	
     	
@@ -193,7 +192,7 @@ class ControllerEmpresaTest {
     	var empresasArray = resposta.get("empresas").getAsJsonArray();
     	Assertions.assertTrue(empresasArray.isJsonArray() && empresasArray.size() == 2);
     	
-    	assertTrue(resposta.has("acao") && resposta.has("empresas") && resposta.has("pagination"));
+    	Assertions.assertTrue(resposta.has("acao") && resposta.has("empresas") && resposta.has("pagination"));
     }
     
     @Test
@@ -223,7 +222,7 @@ class ControllerEmpresaTest {
     	
     	BDDMockito.given(request.getParameter(PARAM_ACAO)).willReturn("listaEmpresas");
     	BDDMockito.given(request.getContentType()).willReturn("application/json");
-    	BDDMockito.given(empresaService.queryEmpresasPaged(anyInt(), anyInt())).willReturn(listaEmpresas);
+    	BDDMockito.given(empresaService.getEmpresasPaged(anyInt(), anyInt())).willReturn(listaEmpresas);
     	BDDMockito.given(response.getWriter()).willReturn(out);
     	
     	
@@ -282,7 +281,7 @@ class ControllerEmpresaTest {
     	Assertions.assertTrue(resposta.has("pagination"));
     	Assertions.assertTrue(resposta.has("acao"));
     	
-    	BDDMockito.verify(empresaService).countEmpresasAtivoUsuario(anyLong(), booleanCaptor.capture());
+    	BDDMockito.verify(empresaService).getCountEmpresasUsuarioAtivo(anyLong(), booleanCaptor.capture());
     	Assertions.assertTrue(booleanCaptor.getValue());
     }
     @Test
@@ -300,7 +299,7 @@ class ControllerEmpresaTest {
     	controller.doGet(request, response);
     	
     	//assert
-    	BDDMockito.verify(empresaService).countEmpresasAtivoUsuario(anyLong(), booleanCaptor.capture());
+    	BDDMockito.verify(empresaService).getCountEmpresasUsuarioAtivo(anyLong(), booleanCaptor.capture());
     	Assertions.assertFalse(booleanCaptor.getValue());
     }
     @Test
@@ -423,14 +422,13 @@ class ControllerEmpresaTest {
         controller.doPut(request, response);
 
         //act
-        verify(empresaService).alteraDadosEmpresa(empresaDtoCaptor.capture());
+        verify(empresaService).alteraDadosEmpresa(empresaDtoCaptor.capture(), any());
         AlteraEmpresaDTO capturado = empresaDtoCaptor.getValue();
 
         //assert
-        Assertions.assertEquals("EmpresaX", capturado.getNome());
-        Assertions.assertEquals("2022-01-01", capturado.getData());
-        Assertions.assertEquals(1L, capturado.getId());
-        Assertions.assertNotNull(capturado.getUsuario());
+        Assertions.assertEquals("EmpresaX", capturado.base().nome());
+        Assertions.assertEquals("2022-01-01", capturado.base().data());
+        Assertions.assertEquals(1L, capturado.id());
         
         verify(out).print(anyString());
     }
@@ -447,7 +445,7 @@ class ControllerEmpresaTest {
     	BDDMockito.given(session.getAttribute("usuarioLogado")).willReturn(usuario);
     	BDDMockito.given(response.getWriter()).willReturn(out);
     	
-    	BDDMockito.willThrow(new FormValidationException("")).given(empresaService).alteraDadosEmpresa(any());;
+    	BDDMockito.willThrow(new FormValidationException("")).given(empresaService).alteraDadosEmpresa(any(), any());;
     	
     	//act
     	controller.doPut(request, response);

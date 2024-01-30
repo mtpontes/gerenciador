@@ -131,7 +131,6 @@ function atualizaDatasetsPageESizes(element, increment){
 
 
 
-
 function getParamAcaoFromURL(){
 	return new URLSearchParams(window.location.search).get('acao');
 }

@@ -6,12 +6,12 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import br.com.alura.gerenciador.dto.empresa.AlteraEmpresaDTO;
 import br.com.alura.gerenciador.dto.empresa.EmpresaBaseDTO;
-import br.com.alura.gerenciador.dto.empresa.ListaEmpresasUsuarioDTO;
-import br.com.alura.gerenciador.dto.empresa.NovaEmpresaDTO;
-import br.com.alura.gerenciador.dto.empresa.paginated.EmpresaBaseWrapperDTO;
-import br.com.alura.gerenciador.dto.empresa.paginated.ListaEmpresasUsuarioWrapperDTO;
+import br.com.alura.gerenciador.dto.empresa.request.AlteraEmpresaDTO;
+import br.com.alura.gerenciador.dto.empresa.request.NovaEmpresaDTO;
+import br.com.alura.gerenciador.dto.empresa.response.ListaEmpresasUsuarioDTO;
+import br.com.alura.gerenciador.dto.empresa.response.paginated.EmpresaBaseWrapperDTO;
+import br.com.alura.gerenciador.dto.empresa.response.paginated.ListaEmpresasUsuarioWrapperDTO;
 import br.com.alura.gerenciador.modelo.Usuario;
 import br.com.alura.gerenciador.pagination.Pagination;
 import br.com.alura.gerenciador.pagination.PaginationBuilder;
@@ -97,14 +97,14 @@ public class ControllerEmpresa extends HttpServlet {
 		String requestType = (request.getContentType() == null) ? "" : request.getContentType();
 		String nomeEmpresa = request.getParameter("nomeEmpresa");
 		
-		Pagination pg = criaPagination(request, empresaService.countSearchEmpresas(nomeEmpresa));
-		List<EmpresaBaseDTO> listaEmpresas = empresaService.searchEmpresasPaged(
+		Pagination pg = criaPagination(request, empresaService.getCountEmpresasSearch(nomeEmpresa));
+		List<EmpresaBaseDTO> listaEmpresas = empresaService.getEmpresasByNamePaged(
 				nomeEmpresa, 
 				pg.getStartIndex(), 
 				pg.getPageSize()
 				);
 		
-		EmpresaBaseWrapperDTO wrapper = new EmpresaBaseWrapperDTO(listaEmpresas, pg, "search");
+		EmpresaBaseWrapperDTO wrapper = new EmpresaBaseWrapperDTO(listaEmpresas, pg);
 		if (requestType.equals("application/json")) {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
@@ -126,8 +126,8 @@ public class ControllerEmpresa extends HttpServlet {
 		System.out.println("listaEmpresas!");
 		String requestType = (request.getContentType() == null) ? "" : request.getContentType();
 
-		Pagination pg = criaPagination(request, empresaService.countEmpresas());
-		List<EmpresaBaseDTO> listaEmpresas = empresaService.queryEmpresasPaged(pg.getStartIndex(), pg.getPageSize());
+		Pagination pg = criaPagination(request, empresaService.getCountEmpresas());
+		List<EmpresaBaseDTO> listaEmpresas = empresaService.getEmpresasPaged(pg.getStartIndex(), pg.getPageSize());
 		if(requestType.equals("application/json")) {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
@@ -166,10 +166,10 @@ public class ControllerEmpresa extends HttpServlet {
 		}
 		
 		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
-		Pagination pg = criaPagination(request, (empresaService.countEmpresasAtivoUsuario(usuario.getId(), switcher)));
+		Pagination pg = criaPagination(request, (empresaService.getCountEmpresasUsuarioAtivo(usuario.getId(), switcher)));
 		
 		List<ListaEmpresasUsuarioDTO> listaEmpresas = empresaService
-				.queryPagedEmpresasUsuario(usuario.getId(),
+				.getEmpresasUsuarioPaged(usuario.getId(),
 						pg.getStartIndex(),
 						pg.getPageSize(),
 						switcher);

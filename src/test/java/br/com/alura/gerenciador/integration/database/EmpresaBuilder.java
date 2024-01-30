@@ -1,7 +1,7 @@
 package br.com.alura.gerenciador.integration.database;
 
 import br.com.alura.gerenciador.dto.empresa.EmpresaBaseDTO;
-import br.com.alura.gerenciador.dto.empresa.NovaEmpresaDTO;
+import br.com.alura.gerenciador.dto.empresa.request.NovaEmpresaDTO;
 import br.com.alura.gerenciador.modelo.Empresa;
 import br.com.alura.gerenciador.modelo.Usuario;
 

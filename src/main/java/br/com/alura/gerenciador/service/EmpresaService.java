@@ -2,18 +2,18 @@ package br.com.alura.gerenciador.service;
 
 import java.util.List;
 
-import br.com.alura.gerenciador.dto.empresa.AlteraEmpresaDTO;
 import br.com.alura.gerenciador.dto.empresa.EmpresaBaseDTO;
-import br.com.alura.gerenciador.dto.empresa.ListaEmpresasUsuarioDTO;
-import br.com.alura.gerenciador.dto.empresa.NovaEmpresaDTO;
+import br.com.alura.gerenciador.dto.empresa.request.AlteraEmpresaDTO;
+import br.com.alura.gerenciador.dto.empresa.request.NovaEmpresaDTO;
+import br.com.alura.gerenciador.dto.empresa.response.ListaEmpresasUsuarioDTO;
 import br.com.alura.gerenciador.modelo.Empresa;
+import br.com.alura.gerenciador.modelo.Usuario;
 import br.com.alura.gerenciador.repository.EmpresaRepository;
 import br.com.alura.gerenciador.repository.EmpresaRepositoryJPA;
 import br.com.alura.gerenciador.util.LocalDateUtil;
 import br.com.alura.gerenciador.validation.FormValidationException;
 import br.com.alura.gerenciador.validation.ValidatorUtil;
 import jakarta.persistence.EntityManager;
-import br.com.alura.gerenciador.modelo.Usuario;
 
 public class EmpresaService {
 
@@ -32,17 +32,17 @@ public class EmpresaService {
 	public void alteraDadosEmpresa(AlteraEmpresaDTO dto, Usuario usuario) {
 		ValidatorUtil.valida(dto);
 		
-		Empresa empresa = repository.findEmpresaById(dto.id());
+		Empresa empresa = repository.findById(dto.id());
 		if(empresa.getUsuario().getId() != usuario.getId()) {
 			throw new FormValidationException("Usuario sem autorização para alterar empresa");
 		}
 		
-		empresa.alteraDados(dto.getNome(), LocalDateUtil.formatStringToLocalDate(dto.getData()));
+		empresa.alteraDados(dto.base().nome(), LocalDateUtil.formatStringToLocalDate(dto.base().data()));
 		repository.update(empresa);
 	}
 	
 	public void arquivaEmpresa(Long empresaId, Long usuarioId) {
-		Empresa empresa = repository.findEmpresaById(empresaId);
+		Empresa empresa = repository.findById(empresaId);
 				
 		if(empresa != null && empresa.getUsuario().getId().equals(usuarioId)) {
 			empresa = empresa.removeOrRestoreEmpresa();
@@ -58,11 +58,11 @@ public class EmpresaService {
 	public List<EmpresaBaseDTO> pesquisaEmpresas(String nomeDaEmpresa) {
 		return repository.searchEmpresasByNameLike(nomeDaEmpresa).stream().map(EmpresaBaseDTO::new).toList();
 	}
-	public List<EmpresaBaseDTO> searchEmpresasPaged(String nomeEmpresa, Integer start, Integer end) {
+	public List<EmpresaBaseDTO> getEmpresasByNamePaged(String nomeEmpresa, Integer start, Integer max) {
 		if(nomeEmpresa == null || nomeEmpresa.trim().isEmpty()) {
 			return null;
 		}
-		return repository.searchEmpresasPagedByNameLike(nomeEmpresa, start, end).stream().map(EmpresaBaseDTO::new).toList();
+		return repository.findByNameLikePaged(nomeEmpresa, start, max).stream().map(EmpresaBaseDTO::new).toList();
 	}
 	
 	
@@ -70,8 +70,8 @@ public class EmpresaService {
 	public List<EmpresaBaseDTO> consultaEmpresas() {
 		return repository.findEmpresas().stream().map(EmpresaBaseDTO::new).toList();
 	}
-	public List<EmpresaBaseDTO> queryEmpresasPaged(Integer start, Integer end){
-		return repository.findEmpresasPaged(start, end).stream().map(EmpresaBaseDTO::new).toList();
+	public List<EmpresaBaseDTO> getEmpresasPaged(Integer start, Integer max){
+		return repository.findAllPaged(start, max).stream().map(EmpresaBaseDTO::new).toList();
 	}
 	
 	
@@ -79,21 +79,21 @@ public class EmpresaService {
 	public List<ListaEmpresasUsuarioDTO> consultaEmpresasUsuario(Long id) {
 		return repository.findEmpresasByUsuarioId(id).stream().map(ListaEmpresasUsuarioDTO::new).toList();
 	}
-	public List<ListaEmpresasUsuarioDTO> queryPagedEmpresasUsuario(Long id, Integer start, Integer end, Boolean ativo) {
-		return repository.findEmpresasPagedByUsuarioIdAndAtivo(id, start, end, ativo).stream().map(ListaEmpresasUsuarioDTO::new).toList();
+	public List<ListaEmpresasUsuarioDTO> getEmpresasUsuarioPaged(Long id, Integer start, Integer max, Boolean ativo) {
+		return repository.findByUsuarioIdAndAtivoPaged(id, start, max, ativo).stream().map(ListaEmpresasUsuarioDTO::new).toList();
 	}
 	
 	
-	public Long countEmpresas() {
-		return repository.countEmpresasByAtivoTrue();
+	public Long getCountEmpresas() {
+		return repository.countByAtivoTrue();
 	}
-	public Long countEmpresasAtivoUsuario(Long id, Boolean ativo) {
-		return repository.countEmpresasUsuarioByAtivo(id, ativo);
+	public Long getCountEmpresasUsuarioAtivo(Long id, Boolean ativo) {
+		return repository.countByUsuarioAndAtivo(id, ativo);
 	}
-	public Long countSearchEmpresas(String nomeEmpresa) {
+	public Long getCountEmpresasSearch(String nomeEmpresa) {
 		if(nomeEmpresa == null || nomeEmpresa.trim().isEmpty()) {
 			return 0L;
 		}
-		return repository.countEmpresasByParamSearch(nomeEmpresa);
+		return repository.countByParamSearch(nomeEmpresa);
 	}
 }

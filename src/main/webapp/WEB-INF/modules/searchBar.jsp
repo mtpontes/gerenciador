@@ -17,7 +17,7 @@
 <form class="form-search" id="form-search" action="${linkEmpresaServlet}" method="get">
 	<div class="search" id="search">
 		<div class="form-search-container">
-			<input type="search" class="search-input" id="search-input" name="nomeEmpresa">
+			<input type="search" class="search-input" id="search-input" name="nomeEmpresa" placeholder="Ex: Abc Inc">
 			<p class="botao-limpar material-symbols-outlined" id="botao-limpar" style="display:none">close</p>
 		</div>
 

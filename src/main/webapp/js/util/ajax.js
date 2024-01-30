@@ -1,7 +1,17 @@
-export async function postRequest(url, corpo) {
+/**
+ * Realiza uma requisição HTTP do tipo POST para a URL especificada com o corpo fornecido.
+ * 
+ * @async
+ * @function
+ * @param {string} url - A URL de destino da requisição.
+ * @param {Object} body - O corpo da requisição, que será convertido para JSON.
+ * @returns {Promise<Object>} - Uma Promise que resolve para os dados convertidos da resposta JSON da requisição.
+ * @throws {Error} - Lança um erro caso a resposta não esteja OK ou ocorra algum problema durante a requisição.
+ */
+export async function postRequest(url, body) {
 	return fetch(url, {
 		method: 'POST',
-		body: JSON.stringify(corpo),
+		body: JSON.stringify(body),
 		headers: {
 			'Content-Type': 'application/json'
 		}
@@ -25,6 +35,16 @@ export async function postRequest(url, corpo) {
 	});
 };
 
+/**
+ * Realiza uma requisição HTTP do tipo GET para a URL relativa especificada com os parâmetros fornecidos.
+ * 
+ * @async
+ * @function
+ * @param {string} urlRelativa - A parte da URL após o domínio.
+ * @param {Object} params - Parâmetros a serem incluídos na URL da requisição.
+ * @returns {Promise<Object>} - Uma Promise que resolve para os dados convertidos da resposta JSON da requisição.
+ * @throws {Error} - Lança um erro caso a resposta não esteja OK ou ocorra algum problema durante a requisição.
+ */
 export async function getRequest(urlRelativa, params) {
     //constroi a URL com os parâmetros
     const baseURL = window.location.origin;
@@ -56,12 +76,21 @@ export async function getRequest(urlRelativa, params) {
     });
 };
 
-
-export async function putRequest(urlRelativa, corpo) {
+/**
+ * Realiza uma requisição HTTP do tipo PUT para a URL relativa especificada com o corpo de requisição fornecido.
+ * 
+ * @async
+ * @function
+ * @param {string} urlRelativa - A parte da URL após o domínio.
+ * @param {Object} body - Dados a serem enviados no corpo da requisição.
+ * @returns {Promise<Response>} - Uma Promise que resolve para a resposta da requisição.
+ * @throws {Error} - Lança um erro caso a resposta não esteja OK ou ocorra algum problema durante a requisição.
+ */
+export async function putRequest(urlRelativa, body) {
 	const completeUrl = window.location.origin + urlRelativa;
 	return fetch(completeUrl, {
 		method: 'PUT',
-		body: JSON.stringify(corpo),
+		body: JSON.stringify(body),
 		headers: {
 			'Content-Type': 'application/json'
 		}
