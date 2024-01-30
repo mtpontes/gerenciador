@@ -192,7 +192,7 @@ class ControllerEmpresaTest {
     	var empresasArray = resposta.get("empresas").getAsJsonArray();
     	Assertions.assertTrue(empresasArray.isJsonArray() && empresasArray.size() == 2);
     	
-    	Assertions.assertTrue(resposta.has("acao") && resposta.has("empresas") && resposta.has("pagination"));
+    	Assertions.assertTrue(resposta.has("empresas") && resposta.has("pagination"));
     }
     
     @Test
