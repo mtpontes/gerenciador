@@ -23,7 +23,14 @@ function atualizaPagina(result){
 	logicaPaginacao();
 }
 
-// Substitui a requisição form HTML padrão da searchBar por uma requisição AJAX
+/**
+ * Substitui a requisição form HTML padrão da searchBar por uma requisição AJAX.
+ * 
+ * @description Esta função é vinculada ao evento de envio do formulário da barra de pesquisa.
+ *              Ela impede o comportamento padrão do formulário, obtém o nome da empresa do input
+ *              do formulário, realiza uma requisição AJAX para buscar empresas com base no nome
+ *              fornecido e, em seguida, atualiza a página com os dados obtidos na resposta da requisição.
+ */
 async function alteraRequisicao() {
     const formulario = document.getElementById('form-search');
     formulario.addEventListener('submit', async (event) => {
@@ -48,18 +55,23 @@ async function alteraRequisicao() {
 /**
  * Adiciona eventos de paginação à lista de empresas.
  * Obtém o nome da empresa a partir da URL e utiliza como parâmetro na criação dos eventos de paginação.
+ * 
+ * @description Esta função configura eventos de paginação para a lista de empresas. 
+ *              Ela extrai o nome da empresa da URL e utiliza como parâmetro na criação dos eventos.
+ *              Além disso, instancia um `ElementFactory` específico para a página de pesquisa de empresas.
  */
 function paginationEvent() {
     // Obtém o nome da empresa a partir da URL
     let params = { nomeEmpresa: getParamNomeEmpresaFromURL() };
 
-	// Instancia seu ElementFactory
-	let elementFactory = new SearchEmpresasElementFactory();
+    // Instancia seu ElementFactory específico para a página de pesquisa de empresas
+    let elementFactory = new SearchEmpresasElementFactory();
 
     // Cria um evento de paginação com os parâmetros configurados e o ElementFactory
     const paginationEvent = clickEventPaginationtIndex(params, null, elementFactory);
     paginationEvent.addEventClick();
 }
+
 /**
  * Atualiza os eventos de paginação.
  * Apaga todos os eventos vinculados aos elementos `.index` usando clonagem.
@@ -82,21 +94,37 @@ function paginationEventUpdate() {
 }
 
 
-// Mostra mensagem de falha na pesquisa caso não haja elementos .lista na página
-function mostraMensagemFalhaPesquisaAoCarregarPagina(){
-	const colecaoLista = Array.from(document.querySelectorAll('.lista'));
-	const mensagem = document.querySelector('.listagemVazia');
-	const card = document.querySelector('.card');
+/**
+ * Mostra uma mensagem de falha na pesquisa caso não haja elementos .lista na página.
+ * 
+ * @description Esta função verifica se há elementos com a classe .lista na página. 
+ *              Se não houver, exibe uma mensagem de falha na pesquisa, oculta o card de resultados 
+ *              e exibe uma mensagem indicando a falta de resultados. Caso contrário, restaura a exibição 
+ *              do card e oculta a mensagem de falha na pesquisa.
+ */
+function mostraMensagemFalhaPesquisaAoCarregarPagina() {
+    const colecaoLista = Array.from(document.querySelectorAll('.lista'));
+    const mensagem = document.querySelector('.listagemVazia');
+    const card = document.querySelector('.card');
 
-	if(colecaoLista.length === 0){
-		card.classList.add('card-off');
-		mensagem.style.display = 'flex';
-	} else {
-		card.classList.remove('card-off');
-		mensagem.style.display = 'none';
-	}
+    if (colecaoLista.length === 0) {
+        card.classList.add('card-off');
+        mensagem.style.display = 'flex';
+    } else {
+        card.classList.remove('card-off');
+        mensagem.style.display = 'none';
+    }
 }
-// Mostra mensagem de falha na pesquisa caso o retorno do AJAX não tenha dados de `Empresa` no Json
+
+/**
+ * Mostra uma mensagem de falha na pesquisa caso o retorno do AJAX não contenha dados de `Empresa` no JSON.
+ * 
+ * @param {Object} result - O objeto resultante da requisição AJAX.
+ * @description Esta função verifica se o objeto result contém o atributo "empresas" e se o array associado a esse 
+ *              atributo está vazio. Caso afirmativo, exibe uma mensagem de falha na pesquisa, oculta o card de resultados 
+ *              e exibe uma mensagem indicando a falta de resultados. Caso contrário, restaura a exibição do card e 
+ *              oculta a mensagem de falha na pesquisa.
+ */
 function mostraMensagemFalhaPesquisaAJAXRequest(result){
 	const mensagem = document.querySelector('.listagemVazia');
 	const card = document.querySelector('.card');

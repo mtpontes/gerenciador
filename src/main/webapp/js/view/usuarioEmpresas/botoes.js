@@ -14,41 +14,39 @@ function getState() {
 }
 
 
-// Muda o estilo do botao 'arquivados'
+/**
+ * Atualiza o estilo do botão 'arquivados' com base no estado atual.
+ * 
+ * @description Esta função obtém o estado atual chamando a função getState(). Em seguida, ajusta as cores do texto e do
+ *              fundo do botão 'arquivados' conforme o estado. Além disso, adiciona transição suave de 0.3s para a mudança
+ *              de cor de fundo. Emula o comportamento de hover ao alterar as cores durante os eventos de mouseover e mouseout.
+ * 
+ * @seealso {@link getState} Função que obtém o estado atual.
+ * @seealso {@link cssColors} Função que fornece as cores CSS utilizadas no estilo.
+ */
 export function atualizaEstiloArquivados() {
-	const state = getState();
+    const state = getState();
     const colors = cssColors();
     const arquivados = document.getElementById('arquivados');
 
-	// Altera estilo do botao    
-	arquivados.style.color = state ? colors.corPrincipal : colors.corBranca;
-	arquivados.style.backgroundColor = state ? colors.corTerciaria : 'none';
+    // Altera o estilo do botão
+    arquivados.style.color = state ? colors.corPrincipal : colors.corBranca;
+    arquivados.style.backgroundColor = state ? colors.corTerciaria : 'none';
 
     arquivados.style.transition = 'background-color 0.3s';
 
-    // Emula o comportamento da subclase hover pois ele se perde quando o estilo é manipulado
-    arquivados.addEventListener('mouseover', function() {
+    // Emula o comportamento da subclasse hover, pois ele se perde quando o estilo é manipulado
+    arquivados.addEventListener('mouseover', function () {
         arquivados.style.color = colors.corPrincipal;
         arquivados.style.backgroundColor = colors.corBranca;
     });
-    arquivados.addEventListener('mouseout', function() {
+    arquivados.addEventListener('mouseout', function () {
         arquivados.style.color = state ? colors.corPrincipal : colors.corBranca;
         arquivados.style.backgroundColor = state ? colors.corTerciaria : colors.corSecundaria;
     });
 }
 
-export function atualizaIconeBotaoArquivar() {
-	const state = getState();
-	const botaoArquivarCollection = document.querySelectorAll('.botao-arquivar');
 
-	botaoArquivarCollection.forEach(botao => {
-		const textoBotaoArquivar = botao.querySelector('.texto-arquiva');
-		const iconeBotaoArquivar = botao.querySelector('.icone-arquiva');
-		
-		textoBotaoArquivar.textContent = state ? 'Desarquivar' : 'Arquivar';
-		iconeBotaoArquivar.textContent = state ? 'unarchive' : 'archive';
-	});
-}
 
 /**
  * Adiciona um evento de arquivar/desarquivar a uma coleção de botões.
