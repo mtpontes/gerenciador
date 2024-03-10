@@ -5,7 +5,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
 public record AlteraEmpresaDTO(
-		@NotNull(message = "VALIDATION ERROR EMPRESA: ID não pode ser nulo")
+		@NotNull(message = "ID não pode ser nulo")
 		Long id,
 		
 		@Valid
