@@ -18,6 +18,8 @@ import jakarta.persistence.EntityManager;
 public class EmpresaService {
 
 	private EmpresaRepository repository;
+	private ValidatorUtil validator = new ValidatorUtil();
+
 	
 	public EmpresaService(EntityManager em) {
 		this.repository = new EmpresaRepositoryJPA(em);
@@ -30,11 +32,11 @@ public class EmpresaService {
 	}
 	
 	public void alteraDadosEmpresa(AlteraEmpresaDTO dto, Usuario usuario) {
-		ValidatorUtil.valida(dto);
-		
+		validator.validaJson(dto);
 		Empresa empresa = repository.findById(dto.id());
+		
 		if(empresa.getUsuario().getId() != usuario.getId()) {
-			throw new FormValidationException("Usuario sem autorização para alterar empresa");
+			throw new FormValidationException("{ message: \"Usuario sem autorização\" }");
 		}
 		
 		empresa.alteraDados(dto.base().nome(), LocalDateUtil.formatStringToLocalDate(dto.base().data()));

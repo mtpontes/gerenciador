@@ -238,9 +238,10 @@ public class ControllerEmpresa extends HttpServlet {
 	protected void atualizaEmpresa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("atualizaEmpresa!");
 		
-		JsonObject jsonResponse = new JsonObject();
+		String responseString = "";
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
+		
 		try {
 			JsonObject jsonRequestBody = getBodyJsonRequest(request);
 			
@@ -250,15 +251,18 @@ public class ControllerEmpresa extends HttpServlet {
 			Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
 			
 			AlteraEmpresaDTO dto = new AlteraEmpresaDTO(id, new EmpresaBaseDTO(nome, data));
-			
 			empresaService.alteraDadosEmpresa(dto, usuario);
-			response.getWriter().print(jsonResponse.toString());
 			
-		} catch(IOException | FormValidationException e) {
-        	response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        	jsonResponse.addProperty("error", "Ocorreu um erro ao processar a sua requisição.");
-        	response.getWriter().print(jsonResponse.toString());
-		}
+		} catch(IOException | PersistenceException e) {
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			responseString = "{ error: \"Ocorreu um erro no servidor\" }";
+
+		} catch(FormValidationException e) {
+        	response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        	responseString = e.getMessage();
+		}   	
+
+		response.getWriter().print(responseString);
 	}
 	
 	
