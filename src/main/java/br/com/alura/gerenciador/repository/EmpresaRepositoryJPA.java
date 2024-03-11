@@ -46,7 +46,7 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 			query.setParameter("id", id);
 			return (Empresa) query.getSingleResult();
 		} catch (NoResultException e) {
-			return null;
+			throw new NoResultException("{ message: registro não encontrado }");
 		}
 	}
 

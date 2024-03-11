@@ -20,6 +20,7 @@ import br.com.alura.gerenciador.util.ControllerUtil;
 import br.com.alura.gerenciador.util.JPAUtil;
 import br.com.alura.gerenciador.validation.FormValidationException;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceException;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -220,25 +221,32 @@ public class ControllerEmpresa extends HttpServlet {
 		JsonObject jsonResponse = new JsonObject();
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
+		
 		try {
 			JsonObject jsonRequestBody = getBodyJsonRequest(request);
 			
 			Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
 			Long empresaId = (jsonRequestBody.get("empresaId").getAsLong());
+			
 			empresaService.arquivaEmpresa(empresaId, usuario.getId());
 			jsonResponse.addProperty("response", true);
 			
-		} catch(PersistenceException | FormValidationException e) {
+		} catch(FormValidationException e) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			jsonResponse.addProperty("message", e.getMessage());
+
+		} catch(IOException | PersistenceException e) {
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-			jsonResponse.addProperty("error", "Ocorreu um erro no servidor");
-		} 
-		response.getWriter().print(jsonResponse.toString());
+			jsonResponse.addProperty("message", "ocorreu um erro no servidor");
+		}
+		
+		response.getWriter().print(jsonResponse);
 	}
 	
 	protected void atualizaEmpresa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("atualizaEmpresa!");
 		
-		String responseString = "";
+		JsonObject jsonResponse = new JsonObject();
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		
@@ -253,16 +261,16 @@ public class ControllerEmpresa extends HttpServlet {
 			AlteraEmpresaDTO dto = new AlteraEmpresaDTO(id, new EmpresaBaseDTO(nome, data));
 			empresaService.alteraDadosEmpresa(dto, usuario);
 			
+		} catch(FormValidationException | NoResultException e) {
+        	response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        	jsonResponse.addProperty("message", e.getMessage());
+		
 		} catch(IOException | PersistenceException e) {
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-			responseString = "{ error: \"Ocorreu um erro no servidor\" }";
+			jsonResponse.addProperty("message", "ocorreu um erro no servidor");;
+		}
 
-		} catch(FormValidationException e) {
-        	response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        	responseString = e.getMessage();
-		}   	
-
-		response.getWriter().print(responseString);
+		response.getWriter().print(jsonResponse.toString());
 	}
 	
 	

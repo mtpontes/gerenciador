@@ -36,7 +36,7 @@ public class EmpresaService {
 		Empresa empresa = repository.findById(dto.id());
 		
 		if(empresa.getUsuario().getId() != usuario.getId()) {
-			throw new FormValidationException("{ message: \"Usuario sem autorização\" }");
+			throw new FormValidationException("usuario sem autorizacao");
 		}
 		
 		empresa.alteraDados(dto.base().nome(), LocalDateUtil.formatStringToLocalDate(dto.base().data()));
@@ -46,11 +46,11 @@ public class EmpresaService {
 	public void arquivaEmpresa(Long empresaId, Long usuarioId) {
 		Empresa empresa = repository.findById(empresaId);
 				
-		if(empresa != null && empresa.getUsuario().getId().equals(usuarioId)) {
+		if(empresa.getUsuario().getId().equals(usuarioId)) {
 			empresa = empresa.removeOrRestoreEmpresa();
 			repository.update(empresa);
 		} else {
-			throw new FormValidationException("ID de empresa inválido");
+			throw new FormValidationException("usuario sem autorização");
 		}
 	}
 	
