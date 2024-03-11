@@ -9,8 +9,7 @@
  * @property {string} EMPRESA.PARAM_ACAO.ARQUIVA - Parâmetro de ação para arquivar empresa.
  * @property {string} EMPRESA.PARAM_ACAO.SEARCH - Parâmetro de ação para pesquisa.
  * @property {string} EMPRESA.PARAM_ACAO.LISTA_EMPRESAS - Parâmetro de ação para listar empresas.
- * @property {string} EMPRESA.PARAM_ACAO.LISTA_EMPRESAS_USUARIO - Parâmetro de ação para listar empresas do usuário.
- * @property {string} EMPRESA.PARAM_ACAO.LISTA_EMPRESAS_DESATIVADAS_USUARIO - Parâmetro de ação para listar empresas desativadas do usuário.
+ * @property {string} EMPRESA.PARAM_ACAO.LISTA_EMPRESAS_USUARIO - Parâmetro de ação para listar empresas do usuário. Por padrão ele retorn as empresas com ativo === true, mas também aceita o parâmetro ativo === false pela URL
  * @property {function} getParamAcao - Função que retorna um parâmetro de ação formatado com base em um valor.
  * @property {function} getUrlRelativaComParamAcao - Função que retorna uma URL relativa com um parâmetro de ação.
  */
@@ -22,8 +21,8 @@ export const API_CONFIG = {
 			ATUALIZA: 'atualizaEmpresa',
 			ARQUIVA: 'removeEmpresa',
 			SEARCH: 'search',
-			LISTA_EMPRESAS: 'listaEmpresas',
-			LISTA_EMPRESAS_USUARIO: 'listaEmpresasUsuario',
+			LISTA_EMPRESAS: 'listaEmpresasAjax',
+			LISTA_EMPRESAS_USUARIO: 'listaEmpresasAtivoUsuarioAjax',
 			LISTA_EMPRESAS_DESATIVADAS_USUARIO: 'listaEmpresasDesativadasUsuario'
 		}
 	},

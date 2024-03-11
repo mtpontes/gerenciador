@@ -82,8 +82,8 @@ public class ControllerEmpresa extends HttpServlet {
 			case "listaEmpresasUsuario":
 				listaEmpresasUsuario(request, response);
 				break;
-			case "listaEmpresasDesativadasUsuario":
-				listaEmpresasUsuario(request, response);
+			case "listaEmpresasAtivoUsuarioAjax":
+				listaEmpresasAtivoUsuarioAjax(request, response);
 				break;
 			case "novaEmpresaForm":
 				novaEmpresaForm(request, response);
@@ -125,79 +125,67 @@ public class ControllerEmpresa extends HttpServlet {
 	
 	protected void listaEmpresas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("listaEmpresas!");
-		String requestType = (request.getContentType() == null) ? "" : request.getContentType();
 
-		Pagination pg = criaPagination(request, empresaService.getCountEmpresas());
+		Pagination pg = this.criaPagination(request, empresaService.getCountEmpresas());
 		List<EmpresaBaseDTO> listaEmpresas = empresaService.getEmpresasPaged(pg.getStartIndex(), pg.getPageSize());
-		if(requestType.equals("application/json")) {
-			response.setContentType("application/json");
-			response.setCharacterEncoding("UTF-8");
-			String listaEmpresaJson = new Gson().toJson(listaEmpresas);
-			response.getWriter().print(listaEmpresaJson);
-			
-		} else {
-			request.setAttribute("empresas", listaEmpresas);
-			request.setAttribute("currentPage", pg.getPageNumber());
-			request.setAttribute("pageSize", pg.getPageSize());
-			request.setAttribute("totalPages", pg.getTotalPages());
-			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("listaEmpresas.jsp"));
-			rd.forward(request, response);
-		}
+		request.setAttribute("empresas", listaEmpresas);
+		request.setAttribute("currentPage", pg.getPageNumber());
+		request.setAttribute("pageSize", pg.getPageSize());
+		request.setAttribute("totalPages", pg.getTotalPages());
+		RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("listaEmpresas.jsp"));
+		
+		rd.forward(request, response);
 	}
 	
 	protected void listaEmpresasUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		System.out.println("listaEmpresasUsuario!");
-		String requestType = (request.getContentType() == null) ? "" : request.getContentType();
-		
-		String requestAcao = request.getParameter("acao");
-		String requestAtivoTrue = "listaEmpresasUsuario";
-		String requestAtivoFalse = "listaEmpresasDesativadasUsuario";
-		
-
-		//define qual será o paramAcao da página após o sucesso dessa requisição
-		String responseParamAcao;
-		//define se esta será uma consulta empresa.ativo = 1 (true) ou empresa.tivo = 0 (false)
-		Boolean switcher;
-		if(requestAcao.equals(requestAtivoTrue)) {
-			responseParamAcao = requestAtivoTrue;
-			switcher = true;
-		} else {
-			responseParamAcao = requestAtivoFalse;
-			switcher = false;
-		}
 		
 		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
-		Pagination pg = criaPagination(request, (empresaService.getCountEmpresasUsuarioAtivo(usuario.getId(), switcher)));
 		
-		List<ListaEmpresasUsuarioDTO> listaEmpresas = empresaService
-				.getEmpresasUsuarioPaged(usuario.getId(),
-						pg.getStartIndex(),
-						pg.getPageSize(),
-						switcher);
-		ListaEmpresasUsuarioWrapperDTO wrapper = new ListaEmpresasUsuarioWrapperDTO(listaEmpresas, pg, responseParamAcao);
-		listaEmpresas.forEach(empresa -> System.out.println(empresa.getNome()));
-		if(requestType.equals("application/json")) {
-			response.setContentType("application/json");
-			response.setCharacterEncoding("UTF-8");
-			String empresaWrapper = new Gson().toJson(wrapper);
-			response.getWriter().print(empresaWrapper);
-			
-		} else {
-			request.setAttribute("empresas", listaEmpresas);
-			request.setAttribute("currentPage", pg.getPageNumber());
-			request.setAttribute("pageSize", pg.getPageSize());
-			request.setAttribute("totalPages", pg.getTotalPages());
-			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("usuarioEmpresas.jsp"));
-			rd.forward(request, response);
-		}
+		Pagination pg = criaPagination(
+				request, 
+				(empresaService.getCountEmpresasUsuarioAtivo(
+						usuario.getId(),
+						true))
+				);
+		List<ListaEmpresasUsuarioDTO> listaEmpresas = empresaService.getEmpresasAtivoUsuarioPaged(
+				usuario.getId(),
+				pg.getStartIndex(),
+				pg.getPageSize(),
+				true);
+		
+		request.setAttribute("empresas", listaEmpresas);
+		request.setAttribute("currentPage", pg.getPageNumber());
+		request.setAttribute("pageSize", pg.getPageSize());
+		request.setAttribute("totalPages", pg.getTotalPages());
+		RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("usuarioEmpresas.jsp"));
+		rd.forward(request, response);
 	}
 	
+	protected void listaEmpresasAtivoUsuarioAjax(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		System.out.println("listaEmpresasAtivoUsuarioAjax!");
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		
+		boolean ativo = Boolean.valueOf(request.getParameter("ativo"));
+		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
+		
+		Pagination pg = criaPagination(request, (empresaService.getCountEmpresasUsuarioAtivo(usuario.getId(), ativo)));
+		List<ListaEmpresasUsuarioDTO> listaEmpresas = empresaService.getEmpresasAtivoUsuarioPaged(
+				usuario.getId(),
+				pg.getStartIndex(),
+				pg.getPageSize(),
+				ativo);
+		ListaEmpresasUsuarioWrapperDTO wrapper = new ListaEmpresasUsuarioWrapperDTO(listaEmpresas, pg);
+		
+		String empresaWrapper = new Gson().toJson(wrapper);
+		response.getWriter().print(empresaWrapper);
+	}
 	
 	protected void novaEmpresaForm(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("formNovaEmpresa.jsp"));
 		rd.forward(request, response);
 	}
-	
 	
 	public void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String acao = request.getParameter("acao");
@@ -226,7 +214,7 @@ public class ControllerEmpresa extends HttpServlet {
 			JsonObject jsonRequestBody = getBodyJsonRequest(request);
 			
 			Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
-			Long empresaId = (jsonRequestBody.get("empresaId").getAsLong());
+			Long empresaId = jsonRequestBody.get("empresaId").getAsLong();
 			
 			empresaService.arquivaEmpresa(empresaId, usuario.getId());
 			jsonResponse.addProperty("response", true);

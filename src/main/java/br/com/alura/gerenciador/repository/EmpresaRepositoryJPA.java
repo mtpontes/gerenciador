@@ -36,7 +36,7 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 			
 		} catch (PersistenceException e) {
 			transaction.rollback();
-			e.printStackTrace();
+			throw new PersistenceException("erro interno ao atualizar empresa", e);
 		}
 	}
 	
@@ -46,7 +46,7 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 			query.setParameter("id", id);
 			return (Empresa) query.getSingleResult();
 		} catch (NoResultException e) {
-			throw new NoResultException("{ message: registro não encontrado }");
+			throw new NoResultException("registro não encontrado");
 		}
 	}
 

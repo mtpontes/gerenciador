@@ -245,7 +245,7 @@ class EmpresaServiceTest {
 		BDDMockito.given(typedQuery.getResultList()).willReturn(empresas);
 		
 		// Act
-		List<ListaEmpresasUsuarioDTO> empresasMock = empresaService.getEmpresasUsuarioPaged(1l, 0, 0, true);
+		List<ListaEmpresasUsuarioDTO> empresasMock = empresaService.getEmpresasAtivoUsuarioPaged(1l, 0, 0, true);
 		
 		// Assert
 		Assertions.assertEquals(empresasMock.size(), empresas.size());

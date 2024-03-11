@@ -5,7 +5,7 @@ import { UsuarioEmpresasElementFactory } from "./UsuarioEmpresasElementFactory.j
 import { eventArchiveUnarquive } from "./botoes.js";
 import { eventoClickElementoEditar, eventoSubmitElementoFormLista } from "./editarEmpresa.js";
 
-import { alteraDadosPaginacao, atualizaParamAcaoUrl, clickEventPaginationtIndex, atualizaElementos } from "../../modules/pagination/paginationConfigs.js";
+import { alteraDadosPaginacao, clickEventPaginationtIndex, atualizaElementos } from "../../modules/pagination/paginationConfigs.js";
 import { logicaPaginacao } from "../../modules/pagination/pagination.js";
 
 import { atualizaEstiloArquivados } from "./botoes.js";
@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', paginationEvent);
 document.addEventListener('DOMContentLoaded', alternaEmpresasAtivo);
 document.addEventListener('DOMContentLoaded', atualizaEstiloArquivados);
 document.addEventListener('DOMContentLoaded', atualizaIconeBotaoArquivar);
+//document.addEventListener('DOMContentLoaded', atualizaParamAtivo);
 
 /**
  * Atualiza o conteúdo do card e o controlador de paginação.
@@ -30,7 +31,6 @@ document.addEventListener('DOMContentLoaded', atualizaIconeBotaoArquivar);
  */
 function atualizaPagina(result, eventManager, elementFactory) {
     atualizaElementos(result, eventManager, elementFactory);
-    atualizaParamAcaoUrl(result.acao);
     alteraDadosPaginacao(result.pagination);
     logicaPaginacao();
 }
@@ -52,12 +52,18 @@ function alternaEmpresasAtivo() {
         // Recupera os parâmetros da URL atual
         const searchParams = new URLSearchParams(window.location.search);
 
-        // Alterna o valor do parâmetro `acao` da URL
-        const ativadas = API_CONFIG.EMPRESA.PARAM_ACAO.LISTA_EMPRESAS_USUARIO;
-        const desativadas = API_CONFIG.EMPRESA.PARAM_ACAO.LISTA_EMPRESAS_DESATIVADAS_USUARIO;
-        (searchParams.get('acao') === desativadas) 
-            ? searchParams.set('acao', ativadas) 
-            : searchParams.set('acao', desativadas);
+        // Altera o endpoint para onde a requisição irá
+        searchParams.set("acao", API_CONFIG.EMPRESA.PARAM_ACAO.LISTA_EMPRESAS_USUARIO)
+        
+        // Alterna o valor do parâmetro "ativo" entre true e false
+        if(searchParams.get("ativo") !== null && searchParams.get("ativo") !== undefined){
+			console.log("morreu no if");
+			searchParams.set("ativo", searchParams.get("ativo") === "true" ? false : true);
+		} else {
+			console.log("morreu no else");
+			searchParams.set("ativo", false);
+		}
+		console.log("O valor é ", searchParams.get("ativo"));
 
         // Transforma searchParams em um objeto literal, cada parâmetro vira chave:valor no objeto
         const params = Object.fromEntries(searchParams.entries());
@@ -68,8 +74,15 @@ function alternaEmpresasAtivo() {
         const elementFactory = new UsuarioEmpresasElementFactory();
 
         atualizaPagina(result, eventManager, elementFactory);
+        atualizaParamAtivo(params.ativo);
         atualizaEstiloArquivados();
     });
+}
+
+function atualizaParamAtivo(ativo){
+    const urlAtual = new URL(window.location.href);
+    urlAtual.searchParams.set('ativo', ativo);
+    history.pushState(null, '', urlAtual.href);
 }
 
 

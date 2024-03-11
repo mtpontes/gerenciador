@@ -81,7 +81,7 @@ public class EmpresaService {
 	public List<ListaEmpresasUsuarioDTO> consultaEmpresasUsuario(Long id) {
 		return repository.findEmpresasByUsuarioId(id).stream().map(ListaEmpresasUsuarioDTO::new).toList();
 	}
-	public List<ListaEmpresasUsuarioDTO> getEmpresasUsuarioPaged(Long id, Integer start, Integer max, Boolean ativo) {
+	public List<ListaEmpresasUsuarioDTO> getEmpresasAtivoUsuarioPaged(Long id, Integer start, Integer max, Boolean ativo) {
 		return repository.findByUsuarioIdAndAtivoPaged(id, start, max, ativo).stream().map(ListaEmpresasUsuarioDTO::new).toList();
 	}
 	
