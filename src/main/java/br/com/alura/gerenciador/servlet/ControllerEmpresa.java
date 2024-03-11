@@ -100,9 +100,8 @@ public class ControllerEmpresa extends HttpServlet {
 		
 		Pagination pg = criaPagination(request, empresaService.getCountEmpresasSearch(nomeEmpresa));
 		List<EmpresaBaseDTO> listaEmpresas = empresaService.getEmpresasByNamePaged(
-				nomeEmpresa, 
-				pg.getStartIndex(), 
-				pg.getPageSize()
+				pg,
+				nomeEmpresa 
 				);
 		
 		EmpresaBaseWrapperDTO wrapper = new EmpresaBaseWrapperDTO(listaEmpresas, pg);
@@ -127,7 +126,7 @@ public class ControllerEmpresa extends HttpServlet {
 		System.out.println("listaEmpresas!");
 
 		Pagination pg = this.criaPagination(request, empresaService.getCountEmpresas());
-		List<EmpresaBaseDTO> listaEmpresas = empresaService.getEmpresasPaged(pg.getStartIndex(), pg.getPageSize());
+		List<EmpresaBaseDTO> listaEmpresas = empresaService.getEmpresasPaged(pg);
 		request.setAttribute("empresas", listaEmpresas);
 		request.setAttribute("currentPage", pg.getPageNumber());
 		request.setAttribute("pageSize", pg.getPageSize());
@@ -149,9 +148,8 @@ public class ControllerEmpresa extends HttpServlet {
 						true))
 				);
 		List<ListaEmpresasUsuarioDTO> listaEmpresas = empresaService.getEmpresasAtivoUsuarioPaged(
+				pg,
 				usuario.getId(),
-				pg.getStartIndex(),
-				pg.getPageSize(),
 				true);
 		
 		request.setAttribute("empresas", listaEmpresas);
@@ -172,9 +170,8 @@ public class ControllerEmpresa extends HttpServlet {
 		
 		Pagination pg = criaPagination(request, (empresaService.getCountEmpresasUsuarioAtivo(usuario.getId(), ativo)));
 		List<ListaEmpresasUsuarioDTO> listaEmpresas = empresaService.getEmpresasAtivoUsuarioPaged(
+				pg,
 				usuario.getId(),
-				pg.getStartIndex(),
-				pg.getPageSize(),
 				ativo);
 		ListaEmpresasUsuarioWrapperDTO wrapper = new ListaEmpresasUsuarioWrapperDTO(listaEmpresas, pg);
 		

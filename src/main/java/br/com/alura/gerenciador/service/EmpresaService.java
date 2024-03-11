@@ -8,6 +8,7 @@ import br.com.alura.gerenciador.dto.empresa.request.NovaEmpresaDTO;
 import br.com.alura.gerenciador.dto.empresa.response.ListaEmpresasUsuarioDTO;
 import br.com.alura.gerenciador.modelo.Empresa;
 import br.com.alura.gerenciador.modelo.Usuario;
+import br.com.alura.gerenciador.pagination.Pagination;
 import br.com.alura.gerenciador.repository.EmpresaRepository;
 import br.com.alura.gerenciador.repository.EmpresaRepositoryJPA;
 import br.com.alura.gerenciador.util.LocalDateUtil;
@@ -60,11 +61,11 @@ public class EmpresaService {
 	public List<EmpresaBaseDTO> pesquisaEmpresas(String nomeDaEmpresa) {
 		return repository.searchEmpresasByNameLike(nomeDaEmpresa).stream().map(EmpresaBaseDTO::new).toList();
 	}
-	public List<EmpresaBaseDTO> getEmpresasByNamePaged(String nomeEmpresa, Integer start, Integer max) {
+	public List<EmpresaBaseDTO> getEmpresasByNamePaged(Pagination pg, String nomeEmpresa) {
 		if(nomeEmpresa == null || nomeEmpresa.trim().isEmpty()) {
 			return null;
 		}
-		return repository.findByNameLikePaged(nomeEmpresa, start, max).stream().map(EmpresaBaseDTO::new).toList();
+		return repository.findByNameLikePaged(nomeEmpresa, pg.getStartIndex(), pg.getPageSize()).stream().map(EmpresaBaseDTO::new).toList();
 	}
 	
 	
@@ -72,8 +73,8 @@ public class EmpresaService {
 	public List<EmpresaBaseDTO> consultaEmpresas() {
 		return repository.findEmpresas().stream().map(EmpresaBaseDTO::new).toList();
 	}
-	public List<EmpresaBaseDTO> getEmpresasPaged(Integer start, Integer max){
-		return repository.findAllPaged(start, max).stream().map(EmpresaBaseDTO::new).toList();
+	public List<EmpresaBaseDTO> getEmpresasPaged(Pagination pg){
+		return repository.findAllPaged(pg.getStartIndex(), pg.getPageSize()).stream().map(EmpresaBaseDTO::new).toList();
 	}
 	
 	
@@ -81,8 +82,8 @@ public class EmpresaService {
 	public List<ListaEmpresasUsuarioDTO> consultaEmpresasUsuario(Long id) {
 		return repository.findEmpresasByUsuarioId(id).stream().map(ListaEmpresasUsuarioDTO::new).toList();
 	}
-	public List<ListaEmpresasUsuarioDTO> getEmpresasAtivoUsuarioPaged(Long id, Integer start, Integer max, Boolean ativo) {
-		return repository.findByUsuarioIdAndAtivoPaged(id, start, max, ativo).stream().map(ListaEmpresasUsuarioDTO::new).toList();
+	public List<ListaEmpresasUsuarioDTO> getEmpresasAtivoUsuarioPaged(Pagination pg, Long userId, Boolean ativo) {
+		return repository.findByUsuarioIdAndAtivoPaged(userId, pg.getStartIndex(), pg.getPageSize(), ativo).stream().map(ListaEmpresasUsuarioDTO::new).toList();
 	}
 	
 	
