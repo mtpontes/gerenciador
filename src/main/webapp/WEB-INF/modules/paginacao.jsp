@@ -22,9 +22,9 @@
 			<a class="start index" data-page="" data-size="${pageSize}" data-acao=""  href="acao=&size=&page=1">1</a>
 			<p class="ellipse start">...</p>
 
-			<a class="index-page index" data-page="" data-size="${pageSize}" data-acao="" href="acao=&size&page=">1</a>
-			<a class="index-page index" data-page="" data-size="${pageSize}" data-acao="" href="acao=&size&page=">2</a>
-			<a class="index-page index" data-page="" data-size="${pageSize}" data-acao="" href="acao=&size&page=">3</a>
+			<a class="index-page index" data-page="" data-size="${pageSize}" data-acao="${acao}" href="acao=&size&page=">1</a>
+			<a class="index-page index" data-page="" data-size="${pageSize}" data-acao="${acao}" href="acao=&size&page=">2</a>
+			<a class="index-page index" data-page="" data-size="${pageSize}" data-acao="${acao}" href="acao=&size&page=">3</a>
 
     		<p class="ellipse end">...</p>
 			<a class="end index" data-page="" data-size="${pageSize}" data-acao=""  href="acao=&size=&page=${totalPages }">${totalPages }</a>
