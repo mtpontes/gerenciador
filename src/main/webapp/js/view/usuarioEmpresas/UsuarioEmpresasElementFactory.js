@@ -1,3 +1,4 @@
+import { API_CONFIG } from "../../util/api-config.js";
 import { ElementFactory } from "../../modules/elementFactory/ElementFactory.js"
 
 /**
@@ -6,6 +7,10 @@ import { ElementFactory } from "../../modules/elementFactory/ElementFactory.js"
  * @param {Object} empresa - Objeto contendo informações sobre a empresa.
  */
 export class UsuarioEmpresasElementFactory extends ElementFactory {
+	constructor() {
+		super(API_CONFIG.EMPRESA.PARAM_ACAO.LISTA_EMPRESAS_USUARIO);
+	}
+	
 	createElement(empresa) {
 		//form .lista
 	    const novoForm = document.createElement('form');

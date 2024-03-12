@@ -10,6 +10,10 @@
  * @param {Object} elementDataJson - Dados a serem utilizados na criação do elemento.
  */
 export class ElementFactory {
+	constructor(acao) {
+		this.acao = acao;
+	}
+	
 	createElement(elementDataJson){
 	}
 }

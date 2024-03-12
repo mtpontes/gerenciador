@@ -1,4 +1,6 @@
+import { API_CONFIG } from "../../util/api-config.js";
 import { ElementFactory } from "../../modules/elementFactory/ElementFactory.js";
+
 
 /**
  * Classe que cria um novo elemento HTML representando uma empresa.
@@ -6,6 +8,10 @@ import { ElementFactory } from "../../modules/elementFactory/ElementFactory.js";
  * @param {Object} empresa - Objeto contendo informações sobre a empresa.
  */
 export class ListaEmpresasElementFactory extends ElementFactory {
+	constructor() {
+		super(API_CONFIG.EMPRESA.PARAM_ACAO.LISTA_EMPRESAS);
+	}
+	
 	createElement(empresa) {
 	    const novoLi = document.createElement('li');
 	    novoLi.classList.add('lista');

@@ -20,7 +20,7 @@ export const API_CONFIG = {
 		PARAM_ACAO: {
 			ATUALIZA: 'atualizaEmpresa',
 			ARQUIVA: 'removeEmpresa',
-			SEARCH: 'search',
+			SEARCH: 'searchAjax',
 			LISTA_EMPRESAS: 'listaEmpresasAjax',
 			LISTA_EMPRESAS_USUARIO: 'listaEmpresasAtivoUsuarioAjax',
 		}

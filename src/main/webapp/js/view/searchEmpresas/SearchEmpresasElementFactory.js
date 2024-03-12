@@ -1,3 +1,4 @@
+import { API_CONFIG } from "../../util/api-config.js";
 import { ElementFactory } from "../../modules/elementFactory/ElementFactory.js";
 
 /**
@@ -6,6 +7,10 @@ import { ElementFactory } from "../../modules/elementFactory/ElementFactory.js";
  * @param {Object} empresa - Objeto contendo informações sobre a empresa.
  */
 export class SearchEmpresasElementFactory extends ElementFactory {
+	constructor() {
+		super(API_CONFIG.EMPRESA.PARAM_ACAO.SEARCH);
+	}
+	
 	createElement(empresa) {
 	    const novoLi = document.createElement('li');
 	    novoLi.classList.add('lista');
