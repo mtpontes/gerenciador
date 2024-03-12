@@ -23,7 +23,6 @@ export const API_CONFIG = {
 			SEARCH: 'search',
 			LISTA_EMPRESAS: 'listaEmpresasAjax',
 			LISTA_EMPRESAS_USUARIO: 'listaEmpresasAtivoUsuarioAjax',
-			LISTA_EMPRESAS_DESATIVADAS_USUARIO: 'listaEmpresasDesativadasUsuario'
 		}
 	},
 	
