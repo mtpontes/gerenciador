@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', atualizaIconeBotaoArquivar);
 function atualizaPagina(result, eventManager, elementFactory) {
     atualizaElementos(result, eventManager, elementFactory);
     alteraDadosPaginacao(result.pagination);
-    logicaPaginacao();
+    logicaPaginacao(API_CONFIG.EMPRESA.PARAM_ACAO.LISTA_EMPRESAS_USUARIO);
 }
 
 
@@ -52,24 +52,24 @@ function alternaEmpresasAtivo() {
         // Recupera os parâmetros da URL atual
         const searchParams = new URLSearchParams(window.location.search);
 
-        // Altera o endpoint para onde a requisição irá
-        searchParams.set("acao", API_CONFIG.EMPRESA.PARAM_ACAO.LISTA_EMPRESAS_USUARIO)
-        
         // Alterna o valor do parâmetro "ativo" entre true e false
-        if(searchParams.get("ativo") !== null && searchParams.get("ativo") !== undefined){
-			console.log("morreu no if");
-			searchParams.set("ativo", searchParams.get("ativo") === "true" ? false : true);
-		} else {
-			console.log("morreu no else");
-			searchParams.set("ativo", false);
-		}
-		console.log("O valor é ", searchParams.get("ativo"));
-
+        searchParams.get("ativo") != (null || undefined) ? 
+        	(searchParams.get("ativo") == "true" ? 
+        		false 
+        		:
+        		true) 
+        	: false
+        
+        
+		searchParams.set("ativo", );
+		searchParams.set("acao", API_CONFIG.EMPRESA.PARAM_ACAO.LISTA_EMPRESAS_USUARIO);
+        
         // Transforma searchParams em um objeto literal, cada parâmetro vira chave:valor no objeto
         const params = Object.fromEntries(searchParams.entries());
+        
+        console.log(params);
 
         const result = await getRequest(relativeURL, params);
-
         const eventManager = criaEventManager();
         const elementFactory = new UsuarioEmpresasElementFactory();
 

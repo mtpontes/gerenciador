@@ -10,17 +10,17 @@ document.addEventListener("DOMContentLoaded", paginationEvent);
 document.addEventListener("DOMContentLoaded", mostraMensagemFalhaPesquisaAoCarregarPagina);
 
 // Atualiza o conteúdo do card e o controlador de paginação
-function atualizaPagina(result){
+function atualizaPagina(result, elementFactory){
 	// Interno
 	mostraMensagemFalhaPesquisaAJAXRequest(result)
 	paginationEventUpdate();
 	
 	// Import
-	atualizaElementos(result);
+	atualizaElementos(result, null, elementFactory);
 	clickEventIndexCollection();
 	alteraDadosPaginacao(result.pagination);
 	
-	logicaPaginacao();
+	logicaPaginacao(API_CONFIG.EMPRESA.PARAM_ACAO.SEARCH);
 }
 
 /**
@@ -46,9 +46,10 @@ async function alteraRequisicao() {
             acao: API_CONFIG.EMPRESA.PARAM_ACAO.SEARCH
         };
         const result = await getRequest(urlRelativa, params);
+        const elementFactory = new SearchEmpresasElementFactory();
 
         // Atualiza a página com os dados obtidos na resposta da requisição
-        atualizaPagina(result);
+        atualizaPagina(result, elementFactory);
     });
 }
 
@@ -156,4 +157,3 @@ function getParamNomeEmpresaFromInput() {
     const nomeEmpresa = searchInputValue ? searchInputValue : searchInputPlaceholder;
     return nomeEmpresa;
 }
-
