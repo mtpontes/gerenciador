@@ -39,7 +39,7 @@ export const clickEventPaginationtIndex = (params = null, adicionador = null, el
 	    const urlRelativa = API_CONFIG.EMPRESA.URL_RELATIVA;
 	
 	    let urlParams = {
-	        acao: event.currentTarget.dataset.acao,
+	        acao: elementFactory.acao,
 	        page: event.currentTarget.dataset.page,
 	        size: event.currentTarget.dataset.size
 	    };

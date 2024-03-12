@@ -1,14 +1,14 @@
 export function atualizaControlePaginacao(){
 	alteraExibicaoPaginacao();
 	atualizaIndices();
-	alteraDatasetAcao();
+//	alteraDatasetAcao();
 	atualizaExibicaoEllipse();
 	atualizaIndexStartEnd();
 	atualizaSetas();
 }
-export function logicaPaginacao(){
+export function logicaPaginacao(acao = null){
 	atualizaIndices();
-	alteraDatasetAcao();
+	alteraDatasetAcao(acao);
 	atualizaExibicaoEllipse();
 	atualizaIndexStartEnd();
 	atualizaSetas();
@@ -91,9 +91,9 @@ function getIndexConfig(currentPage, totalPages, indexValue) {
  * Atualiza o parâmetro 'acao' do dataset de todos os elementos .index.
  * Obtém o valor do parâmetro 'acao' da URL e atribui a todos os elementos .index.
  */
-function alteraDatasetAcao(){
+function alteraDatasetAcao(acao){
     const linkCollection = document.querySelectorAll('.index');
-    const acao = getParamAcaoFromURL();
+    acao = getParamAcaoFromURL();
     
     linkCollection.forEach(link => {
         link.dataset.acao = acao;
