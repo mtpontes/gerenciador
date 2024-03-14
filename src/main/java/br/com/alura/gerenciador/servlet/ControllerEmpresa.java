@@ -56,10 +56,12 @@ public class ControllerEmpresa extends HttpServlet {
 		try {
 			empresaService.cadastraEmpresa(empresaDto);
 			response.sendRedirect(empresaParamAcao("listaEmpresasUsuario"));
+			
 		} catch (FormValidationException e) {
 			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("/error/validationError.html"));
 			rd.forward(request, response);
-		} catch (PersistenceException e) {
+			
+		} catch (IOException | PersistenceException e) {
 			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("/error/500.html"));
 			rd.forward(request, response);
 		}
@@ -97,87 +99,118 @@ public class ControllerEmpresa extends HttpServlet {
 	protected void search(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String nomeEmpresa = request.getParameter("nomeEmpresa");
 		
-		Pagination pg = criaPagination(request, empresaService.getCountEmpresasSearch(nomeEmpresa));
-		List<EmpresaBaseDTO> listaEmpresas = empresaService
-				.getEmpresasByNamePaged(pg,nomeEmpresa);
-		
-		request.setAttribute("acao", "searchAjax");
-		request.setAttribute("empresas", listaEmpresas);
-		request.setAttribute("currentPage", pg.getPageNumber());
-		request.setAttribute("pageSize", pg.getPageSize());
-		request.setAttribute("totalPages", pg.getTotalPages());
-		request.setAttribute("nomeEmpresa", nomeEmpresa);
-		RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("searchEmpresas.jsp"));
-		rd.forward(request, response);
+		try {
+			Pagination pg = criaPagination(request, empresaService.getCountEmpresasSearch(nomeEmpresa));
+			List<EmpresaBaseDTO> listaEmpresas = empresaService
+					.getEmpresasByNamePaged(pg,nomeEmpresa);
+			
+			request.setAttribute("acao", "searchAjax");
+			request.setAttribute("empresas", listaEmpresas);
+			request.setAttribute("currentPage", pg.getPageNumber());
+			request.setAttribute("pageSize", pg.getPageSize());
+			request.setAttribute("totalPages", pg.getTotalPages());
+			request.setAttribute("nomeEmpresa", nomeEmpresa);
+			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("searchEmpresas.jsp"));
+			rd.forward(request, response);
+			
+		} catch (IOException | PersistenceException e) {
+			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("/error/500.html"));
+			rd.forward(request, response);
+		}
 	}
 	protected void searchAjax(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		JsonObject jsonResponse = new JsonObject();
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		
-		String nomeEmpresa = request.getParameter("nomeEmpresa");
-		Pagination pg = criaPagination(request, empresaService.getCountEmpresasSearch(nomeEmpresa));
-		List<EmpresaBaseDTO> listaEmpresas = empresaService
-				.getEmpresasByNamePaged(pg,nomeEmpresa);
-		
-		EmpresaBaseWrapperDTO wrapper = new EmpresaBaseWrapperDTO(listaEmpresas, pg);
-		System.out.println(new Gson().toJson(wrapper));
-
-		String listaEmpresaJson = new Gson().toJson(wrapper);
-		response.getWriter().print(listaEmpresaJson);
+		try {
+			String nomeEmpresa = request.getParameter("nomeEmpresa");
+			Pagination pg = criaPagination(request, empresaService.getCountEmpresasSearch(nomeEmpresa));
+			List<EmpresaBaseDTO> listaEmpresas = empresaService
+					.getEmpresasByNamePaged(pg,nomeEmpresa);
+			
+			EmpresaBaseWrapperDTO wrapper = new EmpresaBaseWrapperDTO(listaEmpresas, pg);
+			System.out.println(new Gson().toJson(wrapper));
+			
+			String listaEmpresaJson = new Gson().toJson(wrapper);
+			response.getWriter().print(listaEmpresaJson);
+			
+		} catch (IOException | PersistenceException e) {
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			jsonResponse.addProperty("message", "ocorreu um erro no servidor");
+			response.getWriter().print(jsonResponse.toString());
+		}
 	}
 	
 	protected void listaEmpresas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Pagination pg = this.criaPagination(request, empresaService.getCountEmpresas());
-		List<EmpresaBaseDTO> listaEmpresas = empresaService.getEmpresasPaged(pg);
-		
-		request.setAttribute("acao", "listaEmpresas");
-		request.setAttribute("empresas", listaEmpresas);
-		request.setAttribute("currentPage", pg.getPageNumber());
-		request.setAttribute("pageSize", pg.getPageSize());
-		request.setAttribute("totalPages", pg.getTotalPages());
-		RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("listaEmpresas.jsp"));
-		
-		rd.forward(request, response);
+		try {
+			Pagination pg = this.criaPagination(request, empresaService.getCountEmpresas());
+			List<EmpresaBaseDTO> listaEmpresas = empresaService.getEmpresasPaged(pg);
+			
+			request.setAttribute("acao", "listaEmpresas");
+			request.setAttribute("empresas", listaEmpresas);
+			request.setAttribute("currentPage", pg.getPageNumber());
+			request.setAttribute("pageSize", pg.getPageSize());
+			request.setAttribute("totalPages", pg.getTotalPages());
+			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("listaEmpresas.jsp"));
+			
+			rd.forward(request, response);
+			
+		} catch (IOException | PersistenceException e) {
+			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("/error/500.html"));
+			rd.forward(request, response);
+		}
 	}
 	
 	protected void listaEmpresasUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
-		
-		Pagination pg = criaPagination(
-				request, 
-				(empresaService.getCountEmpresasUsuarioAtivo(
-						usuario.getId(),
-						true))
-				);
-		List<ListaEmpresasUsuarioDTO> listaEmpresas = empresaService
-				.getEmpresasAtivoUsuarioPaged(pg, usuario.getId(), true);
-		
-		request.setAttribute("acao", "listaEmpresasAtivoUsuarioAjax");
-		request.setAttribute("empresas", listaEmpresas);
-		request.setAttribute("currentPage", pg.getPageNumber());
-		request.setAttribute("pageSize", pg.getPageSize());
-		request.setAttribute("totalPages", pg.getTotalPages());
-		RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("usuarioEmpresas.jsp"));
-		rd.forward(request, response);
+		try {
+			Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
+			
+			Pagination pg = criaPagination(
+					request, 
+					(empresaService.getCountEmpresasUsuarioAtivo(
+							usuario.getId(),
+							true))
+					);
+			List<ListaEmpresasUsuarioDTO> listaEmpresas = empresaService
+					.getEmpresasAtivoUsuarioPaged(pg, usuario.getId(), true);
+			
+			request.setAttribute("acao", "listaEmpresasAtivoUsuarioAjax");
+			request.setAttribute("empresas", listaEmpresas);
+			request.setAttribute("currentPage", pg.getPageNumber());
+			request.setAttribute("pageSize", pg.getPageSize());
+			request.setAttribute("totalPages", pg.getTotalPages());
+			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("usuarioEmpresas.jsp"));
+			rd.forward(request, response);
+			
+		} catch (IOException | PersistenceException e) {
+			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("/error/500.html"));
+			rd.forward(request, response);
+		}
 	}
 	
 	protected void listaEmpresasAtivoUsuarioAjax(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		JsonObject jsonResponse = new JsonObject();
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		
-		boolean ativo = request.getParameter("ativo") == null ? true : Boolean.valueOf(request.getParameter("ativo"));
-		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
-		Pagination pg = criaPagination(request, (empresaService.getCountEmpresasUsuarioAtivo(usuario.getId(), ativo)));
 
-		List<ListaEmpresasUsuarioDTO> listaEmpresas = empresaService
-				.getEmpresasAtivoUsuarioPaged(pg, usuario.getId(), ativo);
-		
-		System.out.println(listaEmpresas);
-		
-		ListaEmpresasUsuarioWrapperDTO wrapper = new ListaEmpresasUsuarioWrapperDTO(listaEmpresas, pg);
-		
-		String empresaWrapper = new Gson().toJson(wrapper);
-		response.getWriter().print(empresaWrapper);
+		try {
+			boolean ativo = request.getParameter("ativo") == null ? true : Boolean.valueOf(request.getParameter("ativo"));
+			Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
+			Pagination pg = criaPagination(request, (empresaService.getCountEmpresasUsuarioAtivo(usuario.getId(), ativo)));
+			
+			List<ListaEmpresasUsuarioDTO> listaEmpresas = empresaService
+					.getEmpresasAtivoUsuarioPaged(pg, usuario.getId(), ativo);
+			ListaEmpresasUsuarioWrapperDTO wrapper = new ListaEmpresasUsuarioWrapperDTO(listaEmpresas, pg);
+			
+			String empresaWrapper = new Gson().toJson(wrapper);
+			response.getWriter().print(empresaWrapper);
+			
+		} catch (IOException | PersistenceException e) {
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			jsonResponse.addProperty("message", "ocorreu um erro no servidor");
+			response.getWriter().print(jsonResponse.toString());
+		}
 	}
 	
 	protected void novaEmpresaForm(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -243,8 +276,8 @@ public class ControllerEmpresa extends HttpServlet {
 			AlteraEmpresaDTO dto = new AlteraEmpresaDTO(id, new EmpresaBaseDTO(nome, data));
 			empresaService.alteraDadosEmpresa(dto, usuario);
 			
-		} catch(FormValidationException | NoResultException e) {
-        	response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		} catch(IllegalStateException | NoResultException e) {
+        	response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         	jsonResponse.addProperty("message", e.getMessage());
 		
 		} catch(IOException | PersistenceException e) {

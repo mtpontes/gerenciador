@@ -37,7 +37,7 @@ public class EmpresaService {
 		Empresa empresa = repository.findById(dto.id());
 		
 		if(empresa.getUsuario().getId() != usuario.getId()) {
-			throw new FormValidationException("usuario sem autorizacao");
+			throw new IllegalStateException("usuario sem autorizacao");
 		}
 		
 		empresa.alteraDados(dto.base().nome(), LocalDateUtil.formatStringToLocalDate(dto.base().data()));
