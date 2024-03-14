@@ -180,6 +180,7 @@ public class ControllerEmpresa extends HttpServlet {
 			request.setAttribute("currentPage", pg.getPageNumber());
 			request.setAttribute("pageSize", pg.getPageSize());
 			request.setAttribute("totalPages", pg.getTotalPages());
+			
 			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("usuarioEmpresas.jsp"));
 			rd.forward(request, response);
 			
@@ -276,9 +277,13 @@ public class ControllerEmpresa extends HttpServlet {
 			AlteraEmpresaDTO dto = new AlteraEmpresaDTO(id, new EmpresaBaseDTO(nome, data));
 			empresaService.alteraDadosEmpresa(dto, usuario);
 			
-		} catch(IllegalStateException | NoResultException e) {
+		} catch(IllegalStateException e) {
         	response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         	jsonResponse.addProperty("message", e.getMessage());
+        	
+		} catch(NoResultException e) {
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			jsonResponse.addProperty("message", e.getMessage());
 		
 		} catch(IOException | PersistenceException e) {
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
