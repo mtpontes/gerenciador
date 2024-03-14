@@ -36,10 +36,9 @@ public class EmpresaService {
 		validator.validaJson(dto);
 		Empresa empresa = repository.findById(dto.id());
 		
-		if(empresa.getUsuario().getId() != usuario.getId()) {
+		if(!empresa.getUsuario().getId().equals(usuario.getId())) {
 			throw new IllegalStateException("usuario sem autorizacao");
 		}
-		
 		empresa.alteraDados(dto.base().nome(), LocalDateUtil.formatStringToLocalDate(dto.base().data()));
 		repository.update(empresa);
 	}
@@ -47,15 +46,13 @@ public class EmpresaService {
 	public void arquivaEmpresa(Long empresaId, Long usuarioId) {
 		Empresa empresa = repository.findById(empresaId);
 				
-		if(empresa.getUsuario().getId().equals(usuarioId)) {
-			empresa = empresa.removeOrRestoreEmpresa();
-			repository.update(empresa);
-		} else {
+		if(!empresa.getUsuario().getId().equals(usuarioId)) {
 			throw new FormValidationException("usuario sem autorização");
 		}
+		empresa = empresa.removeOrRestoreEmpresa();
+		repository.update(empresa);
 	}
-	
-	
+
 	
 	@Deprecated
 	public List<EmpresaBaseDTO> pesquisaEmpresas(String nomeDaEmpresa) {
