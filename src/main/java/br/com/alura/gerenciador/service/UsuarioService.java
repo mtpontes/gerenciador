@@ -17,7 +17,6 @@ public class UsuarioService {
 	
 	
 	public void cadastraUsuario(NovoUsuarioDTO dto) {
-		System.out.println("UsuarioService - cadastraUsuario!");
 		ValidatorUtil.valida(dto);
 		repository.persist(new Usuario(dto));
 	}

@@ -20,6 +20,7 @@ public class UsuarioRepositoryJPA implements UsuarioRepository{
 	@Transactional
 	public void persist(Usuario usuario) {
 		EntityTransaction transaction = em.getTransaction();
+		
 		try {
 			transaction.begin();
 			this.em.persist(usuario);
@@ -27,13 +28,14 @@ public class UsuarioRepositoryJPA implements UsuarioRepository{
 			
 		} catch (PersistenceException e) {
 			transaction.rollback();
-			System.out.println("Erro ao cadastrar Usuario - " + e.getMessage());
+			throw new PersistenceException("ocorreu um erro no servidor ao cadastrar usuário", e);
 		}
 	}
 	
 	@Transactional
 	public void update(Usuario usuario) {
 		EntityTransaction transaction = em.getTransaction();
+		
 		try {
 			transaction.begin();
 			em.merge(usuario);
@@ -41,7 +43,7 @@ public class UsuarioRepositoryJPA implements UsuarioRepository{
 			
 		} catch (PersistenceException e) {
 			transaction.rollback();
-			System.out.println("Erro ao fazer update em Usuario - " + e.getMessage());
+			throw new PersistenceException("ocorreu um erro no servidor ao atualizar usuário", e);
 		}
 	}
 	
@@ -52,21 +54,24 @@ public class UsuarioRepositoryJPA implements UsuarioRepository{
 			return(Usuario) query.getSingleResult();
 			
 		} catch (NoResultException e) {
-			System.out.println("Nenhum resultado foi encontrado na consulta por login");
-			return null;
+			throw new NoResultException("nenhum resultado foi encontrado na consulta por login");
 			
 		} catch(PersistenceException e) {
-	        System.out.println("Erro ao consultar Usuario por login - " + e.getMessage());
-			e.printStackTrace();
-			return null;
+			throw new PersistenceException("ocorreu um erro no servidor ao consultar login", e);
 		}
 	}
 	
 	public boolean existsByLogin(String login) {
-    	Query query = em.createQuery("SELECT CASE WHEN COUNT(u) > 0 THEN TRUE ELSE FALSE END FROM Usuario u WHERE u.login = :login");
-        query.setParameter("login", login);
+		try {
+			Query query = em.createQuery("SELECT CASE WHEN COUNT(u) > 0 THEN TRUE ELSE FALSE END FROM Usuario u WHERE u.login = :login");
+			query.setParameter("login", login);
+			
+			return (boolean) query.getSingleResult();
+			
+		} catch (PersistenceException e) {
+			throw new PersistenceException("ocorreu um erro interno no servidor", e);
+		}
         		
-        return (boolean) query.getSingleResult(); 
 	}
 
 }

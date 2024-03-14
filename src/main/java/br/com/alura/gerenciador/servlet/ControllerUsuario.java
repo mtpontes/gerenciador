@@ -11,6 +11,7 @@ import br.com.alura.gerenciador.util.ControllerUtil;
 import br.com.alura.gerenciador.util.JPAUtil;
 import br.com.alura.gerenciador.validation.FormValidationException;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceException;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -47,37 +48,47 @@ public class ControllerUsuario extends HttpServlet {
 		String login = request.getParameter("login");
 		String senha = request.getParameter("senha");
 		
-		Usuario usuario = usuarioService.buscaUsuarioPorLogin(login);
-		if (usuario != null && usuario.verificarSenha(senha)) {
+		try {
+			Usuario usuario = usuarioService.buscaUsuarioPorLogin(login);
+			
+			if (usuario.verificarSenha(senha)) {
+				HttpSession sessao = request.getSession();
+				sessao.setAttribute("usuarioLogado", usuario);
+				sessao.setMaxInactiveInterval(3600);
 
-			HttpSession sessao = request.getSession();
-			sessao.setAttribute("usuarioLogado", usuario);
-			sessao.setMaxInactiveInterval(3600);
-
-			response.sendRedirect(empresaParamAcao("listaEmpresasUsuario"));
-		} else {
+				response.sendRedirect(empresaParamAcao("listaEmpresasUsuario"));
+				
+			} else {
+				response.sendRedirect(usuarioParamAcao("loginForm"));
+			}
+		} catch (NoResultException e) {
 			response.sendRedirect(usuarioParamAcao("loginForm"));
+			
+		} catch (PersistenceException e) {
+			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("/error/500.html"));
+			rd.forward(request, response);
 		}
 	}
 	
     protected void verificaLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        JsonObject jsonRequest = getBodyJsonRequest(request);
+    	JsonObject respostaJson = new JsonObject();
+    	response.setContentType("application/json");
+    	response.setCharacterEncoding("UTF-8");
 
-        String login = jsonRequest.get("login").getAsString();
-        JsonObject respostaJson = new JsonObject();
-        try {
-            if (usuarioService.verificaSeLoginExiste(login)) {
+    	try {
+        	JsonObject jsonRequest = getBodyJsonRequest(request);
+        	String login = jsonRequest.get("login").getAsString();
+
+        	if (usuarioService.verificaSeLoginExiste(login)) {
                 respostaJson.addProperty("response", true);
             } else {
                 respostaJson.addProperty("response", false);
             }
         } catch (PersistenceException e) {
         	response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            respostaJson.addProperty("error", "Ocorreu um erro ao buscar o usuário");
+            respostaJson.addProperty("error", "ocorreu um erro ao buscar o usuário");
         }
-
-	    response.setContentType("application/json");
-	    response.setCharacterEncoding("UTF-8");
+    	
 	    response.getWriter().print(respostaJson.toString());
     }
 	
@@ -91,9 +102,13 @@ public class ControllerUsuario extends HttpServlet {
 		try {
 			usuarioService.cadastraUsuario(dto);
 			response.sendRedirect(usuarioParamAcao("loginForm"));
+		
 		} catch (FormValidationException e) {
-			//se o usuário conseguir enviar um formulário inválido, redireciona o usuário para página de validationError
 			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("/error/validationError.html"));
+			rd.forward(request, response);
+			
+		} catch (IOException | PersistenceException e) {
+			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("/error/500.html"));
 			rd.forward(request, response);
 		}
 	}
@@ -128,11 +143,8 @@ public class ControllerUsuario extends HttpServlet {
 	}
 	
 	protected void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("logout!");
-		
 		HttpSession sessao = request.getSession();
 		sessao.invalidate();
-		
 		response.sendRedirect(usuarioParamAcao("loginForm"));
 	}
 
