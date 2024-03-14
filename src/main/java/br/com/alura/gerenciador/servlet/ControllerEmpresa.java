@@ -48,8 +48,6 @@ public class ControllerEmpresa extends HttpServlet {
 	}
 	
 	protected void novaEmpresa(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		System.out.println("novaEmpresa!");
-		
 		String nome = request.getParameter("nome");
 		String data = request.getParameter("data");
 		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
@@ -70,7 +68,7 @@ public class ControllerEmpresa extends HttpServlet {
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String acao = request.getParameter("acao");
-		System.out.println("Bateu ControllerEmpresa doGet, o valor do parametro é : " + acao);
+		System.out.println("ControllerEmpresa doGet, o valor do parametro é : " + acao);
 		
 		switch (acao) {
 			case "search":
@@ -97,7 +95,6 @@ public class ControllerEmpresa extends HttpServlet {
 	}
 
 	protected void search(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("search!");
 		String nomeEmpresa = request.getParameter("nomeEmpresa");
 		
 		Pagination pg = criaPagination(request, empresaService.getCountEmpresasSearch(nomeEmpresa));
@@ -114,7 +111,6 @@ public class ControllerEmpresa extends HttpServlet {
 		rd.forward(request, response);
 	}
 	protected void searchAjax(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("searchAjax!");
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		
@@ -131,8 +127,6 @@ public class ControllerEmpresa extends HttpServlet {
 	}
 	
 	protected void listaEmpresas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("listaEmpresas!");
-
 		Pagination pg = this.criaPagination(request, empresaService.getCountEmpresas());
 		List<EmpresaBaseDTO> listaEmpresas = empresaService.getEmpresasPaged(pg);
 		
@@ -147,8 +141,6 @@ public class ControllerEmpresa extends HttpServlet {
 	}
 	
 	protected void listaEmpresasUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		System.out.println("listaEmpresasUsuario!");
-		
 		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
 		
 		Pagination pg = criaPagination(
@@ -170,7 +162,6 @@ public class ControllerEmpresa extends HttpServlet {
 	}
 	
 	protected void listaEmpresasAtivoUsuarioAjax(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		System.out.println("listaEmpresasAtivoUsuarioAjax!");
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		
@@ -211,8 +202,6 @@ public class ControllerEmpresa extends HttpServlet {
 	}
 	
 	protected void removeEmpresa(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		System.out.println("removeEmpresa!");
-		
 		JsonObject jsonResponse = new JsonObject();
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
@@ -239,8 +228,6 @@ public class ControllerEmpresa extends HttpServlet {
 	}
 	
 	protected void atualizaEmpresa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("atualizaEmpresa!");
-		
 		JsonObject jsonResponse = new JsonObject();
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");

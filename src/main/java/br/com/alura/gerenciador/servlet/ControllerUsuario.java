@@ -44,8 +44,6 @@ public class ControllerUsuario extends HttpServlet {
 	}
 	
 	protected void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("login!");
-
 		String login = request.getParameter("login");
 		String senha = request.getParameter("senha");
 		
@@ -63,7 +61,6 @@ public class ControllerUsuario extends HttpServlet {
 	}
 	
     protected void verificaLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        System.out.println("verificaLogin!");
         JsonObject jsonRequest = getBodyJsonRequest(request);
 
         String login = jsonRequest.get("login").getAsString();
@@ -85,8 +82,6 @@ public class ControllerUsuario extends HttpServlet {
     }
 	
 	protected void novoUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		System.out.println("novoUsuario!");
-		
 		String nome = request.getParameter("nome");
 		String login = request.getParameter("login");
 		String senha = request.getParameter("senha");
