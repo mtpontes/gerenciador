@@ -27,12 +27,12 @@ public class EmpresaService {
 	
 	
 	public void cadastraEmpresa(NovaEmpresaDTO dto) {
-		ValidatorUtil.valida(dto);
+		validator.valida(dto);
 		repository.persist(new Empresa(dto));
 	}
 	
 	public void alteraDadosEmpresa(AlteraEmpresaDTO dto, Usuario usuario) {
-		validator.validaJson(dto);
+		validator.valida(dto);
 		Empresa empresa = repository.findById(dto.id());
 		
 		if(!empresa.getUsuario().getId().equals(usuario.getId())) {

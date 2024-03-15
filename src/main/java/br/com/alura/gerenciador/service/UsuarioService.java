@@ -10,14 +10,15 @@ import jakarta.persistence.EntityManager;
 public class UsuarioService {
 
 	private UsuarioRepository repository;
+	private ValidatorUtil validator = new ValidatorUtil();
+
 	
 	public UsuarioService(EntityManager em) {
 		this.repository = new UsuarioRepositoryJPA(em);
 	}
 	
-	
 	public void cadastraUsuario(NovoUsuarioDTO dto) {
-		ValidatorUtil.valida(dto);
+		validator.valida(dto);
 		repository.persist(new Usuario(dto));
 	}
 	

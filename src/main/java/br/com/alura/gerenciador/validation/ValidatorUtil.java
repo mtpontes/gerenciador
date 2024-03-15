@@ -14,28 +14,15 @@ public class ValidatorUtil {
 
 	private static ValidatorFactory factoryValidator = Validation.buildDefaultValidatorFactory();
 	
-	private static Validator getValidator() {
-		return factoryValidator.getValidator();
-	}
-	
-	public static void valida(Record record) {
-		Validator validator = getValidator();
-		Set<ConstraintViolation<Record>> violations = validator.validate(record);
-		
-		if(!violations.isEmpty()) {
-			violations.forEach(msg -> System.out.println(msg.getMessage()));
-			throw new FormValidationException("Erro na validação!");
-		}
-	}
-	
-	public void validaJson(Record record) {
-		Validator validator = getValidator();
+	public void valida(Record record) {
+		Validator validator = factoryValidator.getValidator();
 		Set<ConstraintViolation<Record>> violations = validator.validate(record);
 		
 		JsonObject jsonErrors = new JsonObject();
 		violations.forEach(violation -> {
 			String field = violation.getPropertyPath().toString();
 			String message = violation.getMessage() + " - Valor inserido - " + violation.getInvalidValue();
+			
 			if(field.contains(".")) {
 				int indexLastDot = field.lastIndexOf(".");
 				field = field.substring(indexLastDot +1);
