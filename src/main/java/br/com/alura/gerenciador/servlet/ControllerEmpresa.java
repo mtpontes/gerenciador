@@ -59,8 +59,7 @@ public class ControllerEmpresa extends HttpServlet {
 			response.sendRedirect(empresaParamAcao("listaEmpresasUsuario"));
 			
 		} catch (FormValidationException e) {
-			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("/error/validationError.html"));
-			rd.forward(request, response);
+			response.sendRedirect(empresaParamAcao("novaEmpresaForm"));
 			
 		} catch (IOException | DatabaseAccessException e) {
 			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("/error/500.html"));
