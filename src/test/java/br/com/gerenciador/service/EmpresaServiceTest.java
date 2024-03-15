@@ -2,6 +2,7 @@ package br.com.gerenciador.service;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 
@@ -26,6 +27,8 @@ import br.com.gerenciador.dto.empresa.response.ListaEmpresasUsuarioDTO;
 import br.com.gerenciador.exception.FormValidationException;
 import br.com.gerenciador.modelo.Empresa;
 import br.com.gerenciador.modelo.Usuario;
+import br.com.gerenciador.pagination.Pagination;
+import br.com.gerenciador.pagination.PaginationBuilder;
 import br.com.gerenciador.repository.EmpresaRepository;
 import br.com.gerenciador.util.LocalDateUtil;
 import jakarta.persistence.EntityManager;
@@ -68,6 +71,12 @@ class EmpresaServiceTest {
     private static final String DATA_INVALIDA = "01-13-2100";
     
     private static final String PARAM_ID = "id";
+    
+	private static final Pagination pg = new PaginationBuilder()
+			.setPageNumber("1")
+			.setPageSize("5")
+			.setTotalPages(1L)
+			.build();
     
 	@Test
 	@DisplayName("Deveria cadastrar Empresa")
@@ -156,56 +165,9 @@ class EmpresaServiceTest {
 	    BDDMockito.given(typedQuery.getSingleResult()).willReturn(empresa);
 
 		//assert
-		Assertions.assertThrows(FormValidationException.class, () -> empresaService.alteraDadosEmpresa(dto, usuario));
+		Assertions.assertThrows(IllegalStateException.class, () -> empresaService.alteraDadosEmpresa(dto, usuario));
 	}
-	
-	//criar o teste para arquiva empresa
 
-	@Test
-	@DisplayName("Deveria consultar empresas pelo nome")
-	void pesquisaEmpresasTest() {
-		// Arrange
-		BDDMockito.given(em.createQuery(Mockito.anyString(), eq(Empresa.class))).willReturn(typedQuery);
-		BDDMockito.given(typedQuery.setParameter(anyString(), anyString())).willReturn(typedQuery);
-		BDDMockito.given(typedQuery.getResultList()).willReturn(empresas);
-		
-		// Act
-		List<EmpresaBaseDTO> empresasMock = empresaService.pesquisaEmpresas("empresa");
-		
-		// Assert
-		Assertions.assertEquals(empresasMock.size(), empresas.size());
-		Assertions.assertEquals(empresas.stream().map(EmpresaBaseDTO::new).toList(), empresasMock);
-	}
-	@Test
-	@DisplayName("Deveria consultar empresas de forma paginada")
-	void getEmpresasByNamePaged() {
-		// Arrange
-		BDDMockito.given(em.createQuery(Mockito.anyString(), eq(Empresa.class))).willReturn(typedQuery);
-		BDDMockito.given(typedQuery.setParameter(anyString(), anyString())).willReturn(typedQuery);
-		BDDMockito.given(typedQuery.getResultList()).willReturn(empresas);
-		
-		// Act
-		List<EmpresaBaseDTO> empresasMock = empresaService.getEmpresasByNamePaged("empresa", 0, 2);
-		
-		// Assert
-		Assertions.assertEquals(empresasMock.size(), empresas.size());
-		Assertions.assertEquals(empresas.stream().map(EmpresaBaseDTO::new).toList(), empresasMock);
-	}
-	
-	@Test
-	@DisplayName("Deveria consultar empresas")
-	void consultaEmpresasTest() {
-		// Arrange
-	    BDDMockito.given(em.createQuery(Mockito.anyString(), eq(Empresa.class))).willReturn(typedQuery);
-	    BDDMockito.given(typedQuery.getResultList()).willReturn(empresas);
-
-	    // Act
-	    List<EmpresaBaseDTO> empresasMock = empresaService.consultaEmpresas();
-
-	    // Assert
-		Assertions.assertEquals(empresasMock.size(), empresas.size());
-	    Assertions.assertEquals(empresas.stream().map(EmpresaBaseDTO::new).toList(), empresasMock);
-	}
 	@Test
 	@DisplayName("Deveria consultar empresas")
 	void getEmpresasPagedTest() {
@@ -214,7 +176,7 @@ class EmpresaServiceTest {
 		BDDMockito.given(typedQuery.getResultList()).willReturn(empresas);
 		
 		// Act
-		List<EmpresaBaseDTO> empresasMock = empresaService.getEmpresasPaged(anyInt(), anyInt());
+		List<EmpresaBaseDTO> empresasMock = empresaService.getEmpresasPaged(this.pg);
 		
 		// Assert
 		Assertions.assertEquals(empresasMock.size(), empresas.size());
@@ -223,29 +185,15 @@ class EmpresaServiceTest {
 
 	@Test
 	@DisplayName("Deveria consultar empresas do Usuario")
-	void consultaEmpresasUsuarioTest() {
-	    // Arrange
-	    BDDMockito.given(em.createQuery(Mockito.anyString(), eq(Empresa.class))).willReturn(typedQuery);
-	    BDDMockito.given(typedQuery.setParameter(PARAM_ID, ID_VALIDO)).willReturn(typedQuery);
-	    BDDMockito.given(typedQuery.getResultList()).willReturn(empresas);
-
-	    // Act
-	    List<ListaEmpresasUsuarioDTO> empresasMock = empresaService.consultaEmpresasUsuario(1l);
-
-	    // Assert
-		Assertions.assertEquals(empresasMock.size(), empresas.size());
-	    Assertions.assertEquals(empresas.stream().map(ListaEmpresasUsuarioDTO::new).toList(), empresasMock);
-	}
-	@Test
-	@DisplayName("Deveria consultar empresas do Usuario")
 	void getEmpresasUsuarioPagedTest() {
 		// Arrange
 		BDDMockito.given(em.createQuery(Mockito.anyString(), eq(Empresa.class))).willReturn(typedQuery);
 		BDDMockito.given(typedQuery.setParameter(PARAM_ID, ID_VALIDO)).willReturn(typedQuery);
 		BDDMockito.given(typedQuery.getResultList()).willReturn(empresas);
 		
+		// corrigir parâmetro para Pagination
 		// Act
-		List<ListaEmpresasUsuarioDTO> empresasMock = empresaService.getEmpresasAtivoUsuarioPaged(1l, 0, 0, true);
+		List<ListaEmpresasUsuarioDTO> empresasMock = empresaService.getEmpresasAtivoUsuarioPaged(this.pg, 1l, true);
 		
 		// Assert
 		Assertions.assertEquals(empresasMock.size(), empresas.size());

@@ -6,12 +6,16 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
 
 import br.com.gerenciador.dto.usuario.NovoUsuarioDTO;
+import br.com.gerenciador.exception.DatabaseAccessException;
 import br.com.gerenciador.modelo.Usuario;
 import br.com.gerenciador.repository.UsuarioRepository;
 import br.com.gerenciador.repository.UsuarioRepositoryJPA;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.PersistenceException;
 
 public class UsuarioRepositoryJPATest {
 	private EntityManager em;
@@ -59,8 +63,7 @@ public class UsuarioRepositoryJPATest {
 	}
 	@Test
 	void findByLoginTest02() {
-		Usuario usuario = rp.findByLogin("outroLogin");
-		Assertions.assertNull(usuario);
+		Assertions.assertThrows(NoResultException.class, () -> rp.findByLogin("outroLogin"));
 	}
 	
 	@Test

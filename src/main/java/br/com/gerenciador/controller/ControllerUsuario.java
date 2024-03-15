@@ -90,7 +90,6 @@ public class ControllerUsuario extends HttpServlet {
 			response.setStatus(HttpStatusErrorMapperUtil.getStatusCodeByException(e));
             respostaJson.addProperty("error", e.getMessage());
         }
-    	
 	    response.getWriter().print(respostaJson.toString());
     }
 	
@@ -108,7 +107,7 @@ public class ControllerUsuario extends HttpServlet {
 		} catch (FormValidationException e) {
 			response.sendRedirect(usuarioParamAcao("novoUsuarioForm"));
 			
-		} catch (IOException | PersistenceException e) {
+		} catch (IOException | DatabaseAccessException e) {
 			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("/error/500.html"));
 			rd.forward(request, response);
 		}

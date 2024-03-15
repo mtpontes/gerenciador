@@ -25,11 +25,12 @@ import com.google.gson.JsonParser;
 
 import br.com.gerenciador.controller.ControllerUsuario;
 import br.com.gerenciador.dto.usuario.NovoUsuarioDTO;
+import br.com.gerenciador.exception.DatabaseAccessException;
 import br.com.gerenciador.exception.FormValidationException;
 import br.com.gerenciador.modelo.Usuario;
 import br.com.gerenciador.service.UsuarioService;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceException;
+import jakarta.persistence.NoResultException;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -83,7 +84,8 @@ class ControllerUsuarioTest {
     }
     
     @Test
-    void loginTest() throws ServletException, IOException {
+    @DisplayName("Deve redirecionar para página de listar empresas do usuário")
+    void loginTest01() throws ServletException, IOException {
     	//arrange
     	BDDMockito.given(request.getParameter(PARAM_ACAO)).willReturn("login");
     	
@@ -100,8 +102,70 @@ class ControllerUsuarioTest {
     	BDDMockito.then(session).should().setAttribute(anyString(), any());
     	BDDMockito.then(session).should().setMaxInactiveInterval(anyInt());
     }
+    @Test
+    @DisplayName("Deve redirecionar para a página atual")
+    void loginTest02() throws ServletException, IOException {
+    	//arrange
+    	BDDMockito.given(request.getParameter(PARAM_ACAO)).willReturn("login");
+    	
+    	BDDMockito.given(request.getParameter(PARAM_LOGIN)).willReturn(PARAM_LOGIN_VALUE);
+    	BDDMockito.given(usuarioService.buscaUsuarioPorLogin(PARAM_LOGIN_VALUE)).willReturn(usuario);
+    	BDDMockito.given(usuario.verificarSenha(any())).willReturn(false);
+    	
+    	//act
+    	controller.doPost(request, response);
+    	
+    	//asert
+    	
+    	BDDMockito.verify(response).sendRedirect(stringCaptor.capture());
+    	System.out.println(stringCaptor.getValue());
+    	String endereco = stringCaptor.getValue();
+    	endereco = endereco.substring(endereco.indexOf("loginForm"));
+    	Assertions.assertEquals(endereco, "loginForm");
+    }
+    @Test
+    @DisplayName("Deve redirecionar para a página atual ao não encontrar o usuário no banco de dados")
+    void loginTest03() throws ServletException, IOException {
+    	//arrange
+    	BDDMockito.given(request.getParameter(PARAM_ACAO)).willReturn("login");
+    	
+    	BDDMockito.given(request.getParameter(PARAM_LOGIN)).willReturn(PARAM_LOGIN_VALUE);
+    	BDDMockito.willThrow(new NoResultException()).given(usuarioService).buscaUsuarioPorLogin(any());
+    	
+    	//act
+    	controller.doPost(request, response);
+    	
+    	//asert
+    	BDDMockito.verify(response).sendRedirect(stringCaptor.capture());
+    	System.out.println(stringCaptor.getValue());
+    	String endereco = stringCaptor.getValue();
+    	endereco = endereco.substring(endereco.indexOf("loginForm"));
+    	
+    	Assertions.assertEquals(endereco, "loginForm");
+    }
+    @Test
+    @DisplayName("Deve encaminhar a requisição para a página de erro 500")
+    void loginTest04() throws ServletException, IOException {
+    	//arrange
+    	BDDMockito.given(request.getParameter(PARAM_ACAO)).willReturn("login");
+    	
+    	BDDMockito.given(request.getParameter(PARAM_LOGIN)).willReturn(PARAM_LOGIN_VALUE);
+    	BDDMockito.willThrow(new DatabaseAccessException("")).given(usuarioService).buscaUsuarioPorLogin(any());
+    	BDDMockito.given(request.getRequestDispatcher(anyString())).willReturn(rd);
+    	
+    	//act
+    	controller.doPost(request, response);
+    	
+    	//asert
+    	BDDMockito.verify(request).getRequestDispatcher(stringCaptor.capture());
+    	String endereco = stringCaptor.getValue();
+    	endereco = endereco.substring(endereco.indexOf("500.html"));
+    	
+    	Assertions.assertEquals(endereco, "500.html");
+    }
     
     @Test
+    @DisplayName("Deve retornar json")
     void verificaLoginTest01() throws ServletException, IOException {
     	//arrange
     	BDDMockito.given(request.getParameter(PARAM_ACAO)).willReturn("verificaLogin");
@@ -120,6 +184,7 @@ class ControllerUsuarioTest {
     	Assertions.assertTrue(jsonResponse.has("response"));
     }
     @Test
+    @DisplayName("Deve retornar json com mensagem de erro")
     void verificaLoginTest02() throws ServletException, IOException {
     	//arrange
     	BDDMockito.given(request.getParameter(PARAM_ACAO)).willReturn("verificaLogin");
@@ -128,7 +193,7 @@ class ControllerUsuarioTest {
     	BDDMockito.given(request.getReader()).willReturn(new BufferedReader(new StringReader(requestBody)));
     	BDDMockito.given(response.getWriter()).willReturn(out);
     	
-    	BDDMockito.willThrow(new PersistenceException("")).given(usuarioService).verificaSeLoginExiste(anyString());
+    	BDDMockito.willThrow(new DatabaseAccessException("")).given(usuarioService).verificaSeLoginExiste(anyString());
     	
     	//act
     	controller.doPost(request, response);
@@ -144,8 +209,8 @@ class ControllerUsuarioTest {
     	Assertions.assertEquals(statusCode, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
     }
     
-    
     @Test
+    @DisplayName("Deve redirecionar para página de login ao cadastrar usuário com sucesso")
     void novoUsuarioTest01() throws ServletException, IOException {
     	//arrange
     	BDDMockito.given(request.getParameter(PARAM_ACAO)).willReturn("novoUsuario");
@@ -160,15 +225,32 @@ class ControllerUsuarioTest {
     	String acao = extractParamFromUrl(endereco, PARAM_ACAO);
     	Assertions.assertEquals("loginForm", acao);
     }
-    
     @Test
-    @DisplayName("Deve redirecionar para página de erro")
+    @DisplayName("Deve redirecionar para página atual ao falhar em cadastrar usuário")
     void novoUsuarioTest02() throws ServletException, IOException {
     	//arrange
     	BDDMockito.given(request.getParameter(PARAM_ACAO)).willReturn("novoUsuario");
-    	BDDMockito.given(request.getRequestDispatcher(anyString())).willReturn(rd);
     	BDDMockito.willThrow(new FormValidationException("")).given(usuarioService).cadastraUsuario(any());;
 
+    	//act
+    	controller.doPost(request, response);
+    	
+    	//assert
+    	BDDMockito.verify(response).sendRedirect(stringCaptor.capture());
+    	
+    	String endereco = stringCaptor.getValue();
+    	String acao = endereco.substring(endereco.indexOf("novoUsuarioForm")); 
+    	Assertions.assertEquals("novoUsuarioForm", acao);
+    }
+    @Test
+    @DisplayName("Deve encaminhar a requisicao para página de erro 500")
+    void novoUsuarioTest03() throws ServletException, IOException {
+    	//arrange
+    	BDDMockito.given(request.getParameter(PARAM_ACAO)).willReturn("novoUsuario");
+    	BDDMockito.given(request.getRequestDispatcher(anyString())).willReturn(rd);
+    	BDDMockito.willThrow(new DatabaseAccessException("")).given(usuarioService).cadastraUsuario(any());;
+    	BDDMockito.given(request.getRequestDispatcher(anyString())).willReturn(rd);
+    	
     	//act
     	controller.doPost(request, response);
     	
@@ -176,13 +258,12 @@ class ControllerUsuarioTest {
     	BDDMockito.verify(request).getRequestDispatcher(stringCaptor.capture());
     	
     	String endereco = stringCaptor.getValue();
-    	String acao = endereco.substring(endereco.indexOf("validationError.html")); 
-    	Assertions.assertEquals("validationError.html", acao);
+    	String acao = endereco.substring(endereco.indexOf("500.html")); 
+    	Assertions.assertEquals("500.html", acao);
     }
     
-    
     @Test
-    @DisplayName("Erro 404 quando o parâmetro 'acao' é inválido")
+    @DisplayName("Deve lançar erro 404 quando o parâmetro 'acao' é inválido")
     void doGetTest() throws ServletException, IOException {
     	//arrange
     	BDDMockito.given(request.getParameter(PARAM_ACAO)).willReturn(PARAMETRO_INVALIDO);
@@ -193,6 +274,7 @@ class ControllerUsuarioTest {
     }
     
     @Test
+    @DisplayName("Deve encaminhar request para a página de login")
     void loginFormTest() throws ServletException, IOException {
     	//arrange
     	BDDMockito.given(request.getParameter(PARAM_ACAO)).willReturn("loginForm");
@@ -204,6 +286,7 @@ class ControllerUsuarioTest {
     }
     
     @Test
+    @DisplayName("Deve encaminhar request para a página de criação de um novo usuário")
     void novoUsuarioFormTest() throws ServletException, IOException {
     	//arrange
     	BDDMockito.given(request.getParameter(PARAM_ACAO)).willReturn("novoUsuarioForm");
@@ -217,6 +300,7 @@ class ControllerUsuarioTest {
     }
     
     @Test
+    @DisplayName("Deve redirecionar para a de login ao deslogar com sucesso")
     void logoutTest() throws ServletException, IOException {
     	//arrange
     	BDDMockito.given(request.getParameter(PARAM_ACAO)).willReturn("logout");

@@ -13,6 +13,7 @@ import br.com.gerenciador.modelo.Usuario;
 import br.com.gerenciador.repository.EmpresaRepository;
 import br.com.gerenciador.repository.EmpresaRepositoryJPA;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 
 public class EmpresaRepositoryJPATest {
 	private EntityManager em;
@@ -73,24 +74,10 @@ public class EmpresaRepositoryJPATest {
 	
 	@Test
 	void findByIdTest02() {
-		//act
-		Empresa empresaDb = rp.findById(USUARIO_ID_INVALIDO);
-		//assert 
-		Assertions.assertNull(empresaDb);
+		//act e assert 
+		Assertions.assertThrows(NoResultException.class, () -> rp.findById(USUARIO_ID_INVALIDO));
 	}
 
-	@Test
-	void findEmpresasTest() {
-		//act
-		List<Empresa> listaEmpresas = rp.findEmpresas();
-		//arrange
-		Assertions.assertFalse(listaEmpresas.isEmpty());
-		Assertions.assertEquals(empresasTest.get(0).getNome(), listaEmpresas.get(0).getNome());
-		Assertions.assertEquals(empresasTest.get(0).getDataAbertura(), listaEmpresas.get(0).getDataAbertura());
-		Assertions.assertEquals(empresasTest.get(1).getNome(), listaEmpresas.get(1).getNome());
-		Assertions.assertEquals(empresasTest.get(1).getDataAbertura(), listaEmpresas.get(1).getDataAbertura());
-	}
-	
 	@Test
 	void findAllPagedTest() {
 		//act
@@ -106,20 +93,6 @@ public class EmpresaRepositoryJPATest {
 	}
 	
 	@Test
-	void findEmpresasByUsuarioIdTest01() {
-		//act
-		List<Empresa> listaEmpresas = rp.findEmpresasByUsuarioId(USUARIO_ID_VALIDO);
-		//assert
-		listaEmpresas.forEach(empresa -> Assertions.assertEquals(empresa.getUsuario().getId(), USUARIO_ID_VALIDO));
-	}
-	@Test
-	void findEmpresasByUsuarioIdTest02() {
-		//act
-		List<Empresa> listaEmpresas = rp.findEmpresasByUsuarioId(USUARIO_ID_INVALIDO);
-		//assert
-		Assertions.assertTrue(listaEmpresas.isEmpty());
-	}
-	@Test
 	void findByUsuarioIdAndAtivoPagedTest() {
 		//act
 		List<Empresa> listaEmpresas = rp.findByUsuarioIdAndAtivoPaged(USUARIO_ID_VALIDO, INDEX_START, MAX_RESULTS, ATIVO_TRUE);
@@ -131,13 +104,6 @@ public class EmpresaRepositoryJPATest {
 		});
 	}
 	
-	@Test
-	void searchEmpresasByNameLikeTest() {
-		//act
-		List<Empresa> empresas = rp.searchEmpresasByNameLike("Empresa");
-		//assert
-		Assertions.assertEquals(empresas.size(), QUANTIDADE_REGISTROS_TRUE);
-	}
 	@Test
 	void findByNameLikePagedTest() {
 		//act

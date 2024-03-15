@@ -131,7 +131,6 @@ public class ControllerEmpresa extends HttpServlet {
 					.getEmpresasByNamePaged(pg,nomeEmpresa);
 			
 			EmpresaBaseWrapperDTO wrapper = new EmpresaBaseWrapperDTO(listaEmpresas, pg);
-			System.out.println(new Gson().toJson(wrapper));
 			
 			String listaEmpresaJson = new Gson().toJson(wrapper);
 			response.getWriter().print(listaEmpresaJson);
@@ -158,11 +157,11 @@ public class ControllerEmpresa extends HttpServlet {
 			request.setAttribute("currentPage", pg.getPageNumber());
 			request.setAttribute("pageSize", pg.getPageSize());
 			request.setAttribute("totalPages", pg.getTotalPages());
-			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("listaEmpresas.jsp"));
 			
+			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("listaEmpresas.jsp"));
 			rd.forward(request, response);
 			
-		} catch (IOException | PersistenceException e) {
+		} catch (IOException | DatabaseAccessException e) {
 			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("/error/500.html"));
 			rd.forward(request, response);
 		}
