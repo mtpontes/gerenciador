@@ -53,15 +53,14 @@ function alternaEmpresasAtivo() {
         const searchParams = new URLSearchParams(window.location.search);
 
         // Alterna o valor do parâmetro "ativo" entre true e false
-        searchParams.get("ativo") != (null || undefined) ? 
+        const ativo = searchParams.get("ativo") != (null || undefined) ? 
         	(searchParams.get("ativo") == "true" ? 
         		false 
         		:
         		true) 
         	: false
+		searchParams.set("ativo", ativo);
         
-        
-		searchParams.set("ativo", );
 		searchParams.set("acao", API_CONFIG.EMPRESA.PARAM_ACAO.LISTA_EMPRESAS_USUARIO);
         
         // Transforma searchParams em um objeto literal, cada parâmetro vira chave:valor no objeto
