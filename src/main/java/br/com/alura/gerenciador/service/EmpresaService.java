@@ -53,11 +53,6 @@ public class EmpresaService {
 		repository.update(empresa);
 	}
 
-	
-	@Deprecated
-	public List<EmpresaBaseDTO> pesquisaEmpresas(String nomeDaEmpresa) {
-		return repository.searchEmpresasByNameLike(nomeDaEmpresa).stream().map(EmpresaBaseDTO::new).toList();
-	}
 	public List<EmpresaBaseDTO> getEmpresasByNamePaged(Pagination pg, String nomeEmpresa) {
 		if(nomeEmpresa == null || nomeEmpresa.trim().isEmpty()) {
 			return null;
@@ -65,24 +60,13 @@ public class EmpresaService {
 		return repository.findByNameLikePaged(nomeEmpresa, pg.getStartIndex(), pg.getPageSize()).stream().map(EmpresaBaseDTO::new).toList();
 	}
 	
-	
-	@Deprecated
-	public List<EmpresaBaseDTO> consultaEmpresas() {
-		return repository.findEmpresas().stream().map(EmpresaBaseDTO::new).toList();
-	}
 	public List<EmpresaBaseDTO> getEmpresasPaged(Pagination pg){
 		return repository.findAllPaged(pg.getStartIndex(), pg.getPageSize()).stream().map(EmpresaBaseDTO::new).toList();
 	}
 	
-	
-	@Deprecated
-	public List<ListaEmpresasUsuarioDTO> consultaEmpresasUsuario(Long id) {
-		return repository.findEmpresasByUsuarioId(id).stream().map(ListaEmpresasUsuarioDTO::new).toList();
-	}
 	public List<ListaEmpresasUsuarioDTO> getEmpresasAtivoUsuarioPaged(Pagination pg, Long userId, Boolean ativo) {
 		return repository.findByUsuarioIdAndAtivoPaged(userId, pg.getStartIndex(), pg.getPageSize(), ativo).stream().map(ListaEmpresasUsuarioDTO::new).toList();
 	}
-	
 	
 	public Long getCountEmpresas() {
 		return repository.countByAtivoTrue();
