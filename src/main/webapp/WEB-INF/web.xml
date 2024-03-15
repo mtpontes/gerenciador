@@ -7,7 +7,7 @@
 
   <filter>
   	<filter-name>MF</filter-name>
-  	<filter-class>br.com.alura.gerenciador.controller.MonitoramentoFilter</filter-class>
+  	<filter-class>br.com.gerenciador.controller.MonitoramentoFilter</filter-class>
   </filter>
   <filter-mapping>
 	<filter-name>MF</filter-name>
@@ -17,7 +17,7 @@
   
   <filter>
   	<filter-name>AF</filter-name>
-  	<filter-class>br.com.alura.gerenciador.controller.AutorizacaoFilter</filter-class>
+  	<filter-class>br.com.gerenciador.controller.AutorizacaoFilter</filter-class>
   </filter>
   <filter-mapping>
 	<filter-name>AF</filter-name>
@@ -27,7 +27,7 @@
   
   <servlet>
   	<servlet-name>CF</servlet-name>
-  	<servlet-class>br.com.alura.gerenciador.controller.ControllerEmpresa</servlet-class>
+  	<servlet-class>br.com.gerenciador.controller.ControllerEmpresa</servlet-class>
   </servlet>
   <servlet-mapping>
 	<servlet-name>CF</servlet-name>
@@ -36,7 +36,7 @@
   
   <servlet>
     <servlet-name>CU</servlet-name>
-    <servlet-class>br.com.alura.gerenciador.controller.ControllerUsuario</servlet-class>
+    <servlet-class>br.com.gerenciador.controller.ControllerUsuario</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>CU</servlet-name>
