@@ -12,6 +12,7 @@ import br.com.alura.gerenciador.dto.empresa.request.NovaEmpresaDTO;
 import br.com.alura.gerenciador.dto.empresa.response.ListaEmpresasUsuarioDTO;
 import br.com.alura.gerenciador.dto.empresa.response.paginated.EmpresaBaseWrapperDTO;
 import br.com.alura.gerenciador.dto.empresa.response.paginated.ListaEmpresasUsuarioWrapperDTO;
+import br.com.alura.gerenciador.exception.DatabaseAccessException;
 import br.com.alura.gerenciador.modelo.Usuario;
 import br.com.alura.gerenciador.pagination.Pagination;
 import br.com.alura.gerenciador.pagination.PaginationBuilder;
@@ -61,7 +62,7 @@ public class ControllerEmpresa extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("/error/validationError.html"));
 			rd.forward(request, response);
 			
-		} catch (IOException | PersistenceException e) {
+		} catch (IOException | DatabaseAccessException e) {
 			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("/error/500.html"));
 			rd.forward(request, response);
 		}
@@ -113,7 +114,7 @@ public class ControllerEmpresa extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("searchEmpresas.jsp"));
 			rd.forward(request, response);
 			
-		} catch (IOException | PersistenceException e) {
+		} catch (IOException | DatabaseAccessException e) {
 			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("/error/500.html"));
 			rd.forward(request, response);
 		}
@@ -135,9 +136,14 @@ public class ControllerEmpresa extends HttpServlet {
 			String listaEmpresaJson = new Gson().toJson(wrapper);
 			response.getWriter().print(listaEmpresaJson);
 			
-		} catch (IOException | PersistenceException e) {
+		} catch (DatabaseAccessException e) {
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-			jsonResponse.addProperty("message", "ocorreu um erro no servidor");
+			jsonResponse.addProperty("message", e.getMessage());
+			response.getWriter().print(jsonResponse.toString());
+			
+		} catch (IOException e) {
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			jsonResponse.addProperty("message", "ocorreu um erro interno no servidor");
 			response.getWriter().print(jsonResponse.toString());
 		}
 	}
@@ -207,9 +213,14 @@ public class ControllerEmpresa extends HttpServlet {
 			String empresaWrapper = new Gson().toJson(wrapper);
 			response.getWriter().print(empresaWrapper);
 			
-		} catch (IOException | PersistenceException e) {
+		} catch (DatabaseAccessException e) {
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-			jsonResponse.addProperty("message", "ocorreu um erro no servidor");
+			jsonResponse.addProperty("message", e.getMessage());
+			response.getWriter().print(jsonResponse.toString());
+			
+		} catch (IOException e) {
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			jsonResponse.addProperty("message", "ocorreu um erro interno no servidor");
 			response.getWriter().print(jsonResponse.toString());
 		}
 	}
@@ -253,11 +264,14 @@ public class ControllerEmpresa extends HttpServlet {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			jsonResponse.addProperty("message", e.getMessage());
 
-		} catch(IOException | PersistenceException e) {
+		} catch (DatabaseAccessException e) {
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-			jsonResponse.addProperty("message", "ocorreu um erro no servidor");
+			jsonResponse.addProperty("message", e.getMessage());
+			
+		} catch (IOException e) {
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			jsonResponse.addProperty("message", "ocorreu um erro interno no servidor");
 		}
-		
 		response.getWriter().print(jsonResponse);
 	}
 	
@@ -276,6 +290,7 @@ public class ControllerEmpresa extends HttpServlet {
 			
 			AlteraEmpresaDTO dto = new AlteraEmpresaDTO(id, new EmpresaBaseDTO(nome, data));
 			empresaService.alteraDadosEmpresa(dto, usuario);
+			jsonResponse.addProperty("message", "empresa atualizada com sucesso");
 			
 		} catch(IllegalStateException e) {
         	response.setStatus(HttpServletResponse.SC_FORBIDDEN);
@@ -285,11 +300,14 @@ public class ControllerEmpresa extends HttpServlet {
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			jsonResponse.addProperty("message", e.getMessage());
 		
-		} catch(IOException | PersistenceException e) {
+		} catch (DatabaseAccessException e) {
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-			jsonResponse.addProperty("message", "ocorreu um erro no servidor");;
+			jsonResponse.addProperty("message", e.getMessage());
+			
+		} catch (IOException e) {
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			jsonResponse.addProperty("message", "ocorreu um erro interno no servidor");
 		}
-
 		response.getWriter().print(jsonResponse.toString());
 	}
 	

@@ -2,6 +2,7 @@ package br.com.alura.gerenciador.repository;
 
 import java.util.List;
 
+import br.com.alura.gerenciador.exception.DatabaseAccessException;
 import br.com.alura.gerenciador.modelo.Empresa;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -30,7 +31,7 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 			
 		} catch (PersistenceException e) {
 			transaction.rollback();
-			throw new PersistenceException("ocorreu um erro ao cadastrar empresa", e);
+			throw new DatabaseAccessException("ocorreu um erro ao cadastrar empresa", e);
 		}
 	}
 	
@@ -44,7 +45,7 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 			
 		} catch (PersistenceException e) {
 			transaction.rollback();
-			throw new PersistenceException("erro interno ao atualizar empresa", e);
+			throw new DatabaseAccessException("ocorreu um erro ao atualizar empresa", e);
 		}
 	}
 	
@@ -55,7 +56,7 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 			return (Empresa) query.getSingleResult();
 			
 		} catch (NoResultException e) {
-			throw new NoResultException("registro não encontrado");
+			throw new NoResultException("registro de empresa não encontrado");
 		}
 	}
 	
@@ -68,7 +69,7 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 			return query.getResultList();
 			
 		} catch (PersistenceException e) {
-			throw new PersistenceException("ocorreu um erro no servidor", e);
+			throw new DatabaseAccessException("ocorreu um erro ao consultar todas as empresas", e);
 		}
 	}
 	
@@ -82,7 +83,7 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 			return query.getResultList();
 			
 		} catch (PersistenceException e) {
-			throw new PersistenceException("ocorreu um erro no servidor", e);
+			throw new DatabaseAccessException("ocorreu um erro ao consultar todas as empresas do usuário", e);
 		}
 	}
 	
@@ -95,7 +96,7 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 			return query.getResultList();
 			
 		} catch (PersistenceException e) {
-			throw new PersistenceException("ocorreu um erro no servidor", e);
+			throw new DatabaseAccessException("ocorreu um erro ao consultar empresas pelo nome", e);
 		}
 	}
 	
@@ -106,7 +107,7 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 			return (Long) query.getSingleResult();
 			
 		} catch (PersistenceException e) {
-			throw new PersistenceException(e);
+			throw new DatabaseAccessException("ocorreu um erro ao contar empresas ativas", e);
 		}
 	}
 	
@@ -118,7 +119,7 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 			return (Long) query.getSingleResult();
 			
 		} catch (PersistenceException e) {
-			throw new PersistenceException(e);
+			throw new DatabaseAccessException("ocorreu um erro ao contar empresas ativas do usuário", e);
 		}
 	}
 	
@@ -129,7 +130,7 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 			return (Long) query.getSingleResult();
 			
 		} catch (PersistenceException e) {
-			throw new PersistenceException(e);
+			throw new DatabaseAccessException("ocorreu um erro ao contar empresas pelo parâmetro consultado" ,e);
 		}
 	}
 }

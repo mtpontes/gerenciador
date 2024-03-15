@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.google.gson.JsonObject;
 
 import br.com.alura.gerenciador.dto.usuario.NovoUsuarioDTO;
+import br.com.alura.gerenciador.exception.DatabaseAccessException;
 import br.com.alura.gerenciador.modelo.Usuario;
 import br.com.alura.gerenciador.service.UsuarioService;
 import br.com.alura.gerenciador.util.ControllerUtil;
@@ -64,7 +65,7 @@ public class ControllerUsuario extends HttpServlet {
 		} catch (NoResultException e) {
 			response.sendRedirect(usuarioParamAcao("loginForm"));
 			
-		} catch (PersistenceException e) {
+		} catch (DatabaseAccessException e) {
 			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("/error/500.html"));
 			rd.forward(request, response);
 		}
@@ -84,9 +85,9 @@ public class ControllerUsuario extends HttpServlet {
             } else {
                 respostaJson.addProperty("response", false);
             }
-        } catch (PersistenceException e) {
+        } catch (DatabaseAccessException e) {
         	response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            respostaJson.addProperty("error", "ocorreu um erro ao buscar o usuário");
+            respostaJson.addProperty("error", e.getMessage());
         }
     	
 	    response.getWriter().print(respostaJson.toString());
@@ -104,8 +105,7 @@ public class ControllerUsuario extends HttpServlet {
 			response.sendRedirect(usuarioParamAcao("loginForm"));
 		
 		} catch (FormValidationException e) {
-			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("/error/validationError.html"));
-			rd.forward(request, response);
+			response.sendRedirect(usuarioParamAcao("novoUsuarioForm"));
 			
 		} catch (IOException | PersistenceException e) {
 			RequestDispatcher rd = request.getRequestDispatcher(enderecoJSP("/error/500.html"));

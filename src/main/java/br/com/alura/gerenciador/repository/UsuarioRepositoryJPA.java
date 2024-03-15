@@ -1,5 +1,6 @@
 package br.com.alura.gerenciador.repository;
 
+import br.com.alura.gerenciador.exception.DatabaseAccessException;
 import br.com.alura.gerenciador.modelo.Usuario;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -28,7 +29,7 @@ public class UsuarioRepositoryJPA implements UsuarioRepository{
 			
 		} catch (PersistenceException e) {
 			transaction.rollback();
-			throw new PersistenceException("ocorreu um erro no servidor ao cadastrar usuário", e);
+			throw new DatabaseAccessException("ocorreu um erro ao cadastrar usuário", e);
 		}
 	}
 	
@@ -43,7 +44,7 @@ public class UsuarioRepositoryJPA implements UsuarioRepository{
 			
 		} catch (PersistenceException e) {
 			transaction.rollback();
-			throw new PersistenceException("ocorreu um erro no servidor ao atualizar usuário", e);
+			throw new DatabaseAccessException("ocorreu um erro ao atualizar usuário", e);
 		}
 	}
 	
@@ -57,7 +58,7 @@ public class UsuarioRepositoryJPA implements UsuarioRepository{
 			throw new NoResultException("nenhum resultado foi encontrado na consulta por login");
 			
 		} catch(PersistenceException e) {
-			throw new PersistenceException("ocorreu um erro no servidor ao consultar login", e);
+			throw new DatabaseAccessException("ocorreu um erro ao consultar login", e);
 		}
 	}
 	
@@ -69,7 +70,7 @@ public class UsuarioRepositoryJPA implements UsuarioRepository{
 			return (boolean) query.getSingleResult();
 			
 		} catch (PersistenceException e) {
-			throw new PersistenceException("ocorreu um erro interno no servidor", e);
+			throw new DatabaseAccessException("ocorreu um erro ao verificar existência de login", e);
 		}
         		
 	}
