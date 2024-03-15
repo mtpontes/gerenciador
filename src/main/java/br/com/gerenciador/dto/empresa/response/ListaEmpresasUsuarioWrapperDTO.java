@@ -1,8 +1,7 @@
-package br.com.gerenciador.dto.empresa.response.paginated;
+package br.com.gerenciador.dto.empresa.response;
 
 import java.util.List;
 
-import br.com.gerenciador.dto.empresa.response.ListaEmpresasUsuarioDTO;
 import br.com.gerenciador.pagination.Pagination;
 
 public record ListaEmpresasUsuarioWrapperDTO(List<ListaEmpresasUsuarioDTO> empresas, Pagination pagination) {

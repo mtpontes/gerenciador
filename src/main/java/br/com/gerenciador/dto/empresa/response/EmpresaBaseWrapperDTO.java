@@ -1,4 +1,4 @@
-package br.com.gerenciador.dto.empresa.response.paginated;
+package br.com.gerenciador.dto.empresa.response;
 
 import java.util.List;
 
