@@ -14,16 +14,10 @@ public interface EmpresaRepository {
 
 	public Empresa findById(Long id);
 	
-	@Deprecated
-	public List<Empresa> findEmpresas();
 	public List<Empresa> findAllPaged(Integer startIndex, Integer endIndex);
 
-	@Deprecated
-	public List<Empresa> findEmpresasByUsuarioId(Long id);
 	public List<Empresa> findByUsuarioIdAndAtivoPaged(Long id, Integer start, Integer end, Boolean ativo);
 
-	@Deprecated
-	public List<Empresa> searchEmpresasByNameLike(String nomeEmpresa);
 	public List<Empresa> findByNameLikePaged(String nomeEmpresa, Integer start, Integer end);
 	
 	public Long countByAtivoTrue();
