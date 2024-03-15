@@ -23,6 +23,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import br.com.alura.gerenciador.controller.ControllerUsuario;
 import br.com.alura.gerenciador.dto.usuario.NovoUsuarioDTO;
 import br.com.alura.gerenciador.exception.FormValidationException;
 import br.com.alura.gerenciador.modelo.Usuario;
