@@ -31,10 +31,10 @@ import com.google.gson.JsonParser;
 
 import br.com.alura.gerenciador.dto.empresa.EmpresaBaseDTO;
 import br.com.alura.gerenciador.dto.empresa.request.AlteraEmpresaDTO;
+import br.com.alura.gerenciador.exception.FormValidationException;
 import br.com.alura.gerenciador.modelo.Empresa;
 import br.com.alura.gerenciador.modelo.Usuario;
 import br.com.alura.gerenciador.service.EmpresaService;
-import br.com.alura.gerenciador.validation.FormValidationException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
 import jakarta.servlet.RequestDispatcher;

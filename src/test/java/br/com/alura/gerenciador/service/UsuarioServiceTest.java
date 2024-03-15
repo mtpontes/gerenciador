@@ -15,9 +15,9 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import br.com.alura.gerenciador.dto.usuario.NovoUsuarioDTO;
+import br.com.alura.gerenciador.exception.FormValidationException;
 import br.com.alura.gerenciador.modelo.Usuario;
 import br.com.alura.gerenciador.repository.UsuarioRepository;
-import br.com.alura.gerenciador.validation.FormValidationException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;

@@ -6,11 +6,12 @@ import com.google.gson.JsonObject;
 
 import br.com.alura.gerenciador.dto.usuario.NovoUsuarioDTO;
 import br.com.alura.gerenciador.exception.DatabaseAccessException;
+import br.com.alura.gerenciador.exception.FormValidationException;
 import br.com.alura.gerenciador.modelo.Usuario;
 import br.com.alura.gerenciador.service.UsuarioService;
 import br.com.alura.gerenciador.util.ControllerUtil;
+import br.com.alura.gerenciador.util.HttpStatusErrorMapperUtil;
 import br.com.alura.gerenciador.util.JPAUtil;
-import br.com.alura.gerenciador.validation.FormValidationException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceException;
@@ -86,7 +87,7 @@ public class ControllerUsuario extends HttpServlet {
                 respostaJson.addProperty("response", false);
             }
         } catch (DatabaseAccessException e) {
-        	response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			response.setStatus(HttpStatusErrorMapperUtil.getStatusCodeByException(e));
             respostaJson.addProperty("error", e.getMessage());
         }
     	

@@ -12,7 +12,6 @@ import br.com.alura.gerenciador.pagination.Pagination;
 import br.com.alura.gerenciador.repository.EmpresaRepository;
 import br.com.alura.gerenciador.repository.EmpresaRepositoryJPA;
 import br.com.alura.gerenciador.util.LocalDateUtil;
-import br.com.alura.gerenciador.validation.FormValidationException;
 import br.com.alura.gerenciador.validation.ValidatorUtil;
 import jakarta.persistence.EntityManager;
 
@@ -47,7 +46,7 @@ public class EmpresaService {
 		Empresa empresa = repository.findById(empresaId);
 				
 		if(!empresa.getUsuario().getId().equals(usuarioId)) {
-			throw new FormValidationException("usuario sem autorização");
+			throw new IllegalStateException("usuario sem autorização");
 		}
 		empresa = empresa.removeOrRestoreEmpresa();
 		repository.update(empresa);

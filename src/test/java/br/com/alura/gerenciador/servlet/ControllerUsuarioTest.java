@@ -24,9 +24,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import br.com.alura.gerenciador.dto.usuario.NovoUsuarioDTO;
+import br.com.alura.gerenciador.exception.FormValidationException;
 import br.com.alura.gerenciador.modelo.Usuario;
 import br.com.alura.gerenciador.service.UsuarioService;
-import br.com.alura.gerenciador.validation.FormValidationException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
 import jakarta.servlet.RequestDispatcher;

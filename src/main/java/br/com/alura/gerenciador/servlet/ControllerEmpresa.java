@@ -13,13 +13,14 @@ import br.com.alura.gerenciador.dto.empresa.response.ListaEmpresasUsuarioDTO;
 import br.com.alura.gerenciador.dto.empresa.response.paginated.EmpresaBaseWrapperDTO;
 import br.com.alura.gerenciador.dto.empresa.response.paginated.ListaEmpresasUsuarioWrapperDTO;
 import br.com.alura.gerenciador.exception.DatabaseAccessException;
+import br.com.alura.gerenciador.exception.FormValidationException;
 import br.com.alura.gerenciador.modelo.Usuario;
 import br.com.alura.gerenciador.pagination.Pagination;
 import br.com.alura.gerenciador.pagination.PaginationBuilder;
 import br.com.alura.gerenciador.service.EmpresaService;
 import br.com.alura.gerenciador.util.ControllerUtil;
+import br.com.alura.gerenciador.util.HttpStatusErrorMapperUtil;
 import br.com.alura.gerenciador.util.JPAUtil;
-import br.com.alura.gerenciador.validation.FormValidationException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceException;
@@ -37,7 +38,7 @@ public class ControllerEmpresa extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String acao = request.getParameter("acao");
-		System.out.println("Bateu ControllerEmpresa doPost, o valor do parametro é : " + acao);
+		System.out.println("doPost");
 
 		switch (acao) {
 			case "novaEmpresa":
@@ -70,7 +71,7 @@ public class ControllerEmpresa extends HttpServlet {
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String acao = request.getParameter("acao");
-		System.out.println("ControllerEmpresa doGet, o valor do parametro é : " + acao);
+		System.out.println("doGet");
 		
 		switch (acao) {
 			case "search":
@@ -136,12 +137,12 @@ public class ControllerEmpresa extends HttpServlet {
 			response.getWriter().print(listaEmpresaJson);
 			
 		} catch (DatabaseAccessException e) {
-			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			response.setStatus(HttpStatusErrorMapperUtil.getStatusCodeByException(e));
 			jsonResponse.addProperty("message", e.getMessage());
 			response.getWriter().print(jsonResponse.toString());
 			
 		} catch (IOException e) {
-			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			response.setStatus(HttpStatusErrorMapperUtil.getStatusCodeByException(e));
 			jsonResponse.addProperty("message", "ocorreu um erro interno no servidor");
 			response.getWriter().print(jsonResponse.toString());
 		}
@@ -213,12 +214,12 @@ public class ControllerEmpresa extends HttpServlet {
 			response.getWriter().print(empresaWrapper);
 			
 		} catch (DatabaseAccessException e) {
-			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			response.setStatus(HttpStatusErrorMapperUtil.getStatusCodeByException(e));
 			jsonResponse.addProperty("message", e.getMessage());
 			response.getWriter().print(jsonResponse.toString());
 			
 		} catch (IOException e) {
-			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			response.setStatus(HttpStatusErrorMapperUtil.getStatusCodeByException(e));
 			jsonResponse.addProperty("message", "ocorreu um erro interno no servidor");
 			response.getWriter().print(jsonResponse.toString());
 		}
@@ -231,7 +232,7 @@ public class ControllerEmpresa extends HttpServlet {
 	
 	public void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String acao = request.getParameter("acao");
-		System.out.println("Bateu ControllerEmpresa doPut, o valor do parametro é : " + acao);
+		System.out.println("doPut");
 		
 		switch (acao) {
 			case "removeEmpresa":
@@ -259,16 +260,12 @@ public class ControllerEmpresa extends HttpServlet {
 			empresaService.arquivaEmpresa(empresaId, usuario.getId());
 			jsonResponse.addProperty("response", true);
 			
-		} catch(FormValidationException e) {
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			jsonResponse.addProperty("message", e.getMessage());
-
-		} catch (DatabaseAccessException e) {
-			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		} catch(DatabaseAccessException | IllegalStateException e) {
+			response.setStatus(HttpStatusErrorMapperUtil.getStatusCodeByException(e));
 			jsonResponse.addProperty("message", e.getMessage());
 			
 		} catch (IOException e) {
-			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			response.setStatus(HttpStatusErrorMapperUtil.getStatusCodeByException(e));
 			jsonResponse.addProperty("message", "ocorreu um erro interno no servidor");
 		}
 		response.getWriter().print(jsonResponse);
@@ -291,20 +288,12 @@ public class ControllerEmpresa extends HttpServlet {
 			empresaService.alteraDadosEmpresa(dto, usuario);
 			jsonResponse.addProperty("message", "empresa atualizada com sucesso");
 			
-		} catch(IllegalStateException e) {
-        	response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-        	jsonResponse.addProperty("message", e.getMessage());
-        	
-		} catch(NoResultException e) {
-			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-			jsonResponse.addProperty("message", e.getMessage());
-		
-		} catch (DatabaseAccessException e) {
-			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		} catch(DatabaseAccessException| NoResultException | IllegalStateException | FormValidationException e) {
+			response.setStatus(HttpStatusErrorMapperUtil.getStatusCodeByException(e));
 			jsonResponse.addProperty("message", e.getMessage());
 			
 		} catch (IOException e) {
-			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			response.setStatus(HttpStatusErrorMapperUtil.getStatusCodeByException(e));
 			jsonResponse.addProperty("message", "ocorreu um erro interno no servidor");
 		}
 		response.getWriter().print(jsonResponse.toString());

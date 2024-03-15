@@ -4,6 +4,7 @@ import java.util.Set;
 
 import com.google.gson.JsonObject;
 
+import br.com.alura.gerenciador.exception.FormValidationException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
