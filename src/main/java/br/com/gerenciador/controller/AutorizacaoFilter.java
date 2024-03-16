@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import br.com.gerenciador.modelo.Usuario;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -13,14 +14,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-//@WebFilter("/entrada")
 public class AutorizacaoFilter implements Filter {
 
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
 		System.out.println("AutorizacaoFilter");
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
-		HttpSession sessao = request.getSession();
+		HttpSession sessaoAtual = request.getSession();
 		
 		String paramAcao = request.getParameter("acao");
 		List<String> acoesLiberadas = Arrays.asList(
@@ -30,13 +30,20 @@ public class AutorizacaoFilter implements Filter {
 				"novoUsuario", 
 				"verificaLogin");
 		
-		boolean usuarioNaoEstaLogado = (sessao.getAttribute("usuarioLogado") == null);
+		boolean usuarioNaoEstaLogado = (sessaoAtual.getAttribute("usuarioLogado") == null);
 		boolean ehUmaAcaoProtegida = !acoesLiberadas.contains(paramAcao);
 		
 		if(ehUmaAcaoProtegida && usuarioNaoEstaLogado) {
 			response.sendRedirect("usuario?acao=loginForm");
 			return;
 		}
+		Usuario user = (Usuario) sessaoAtual.getAttribute("usuarioLogado");
+		sessaoAtual.invalidate();
+
+		HttpSession novaSessao = request.getSession(true);
+		novaSessao.setAttribute("usuarioLogado", user);
+		novaSessao.setMaxInactiveInterval(3600);
+		
 		chain.doFilter(request, response);
 	}
 }
