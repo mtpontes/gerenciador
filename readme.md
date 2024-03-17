@@ -100,7 +100,7 @@ Este é um projeto web com Java legado. É meu primeiro projeto web, nele tive a
 
 
 ## Considerações finais
-Quase tudo que fiz nesse projeto, quando fiz estava sendo a minha primeira vez. Esse está finalizado e não irei mais implementar coisas novas nele, irei apenas fazer algumas refatorações. Consigo ver diversas melhorias que posso fazer, mas pretendo apenas melhorar o que já está pronto.
+Este projeto está finalizado e não irei mais implementar coisas novas nele, irei apenas fazer algumas refatorações. Consigo ver diversas melhorias que posso fazer, mas pretendo apenas melhorar o que já está pronto.
 
 ### Pontos fracos
 - **Segurança:** merecia mais atenção, ficou de lado nesse projeto, mas o foco era entregar código back e front funcionando para o cliente.
