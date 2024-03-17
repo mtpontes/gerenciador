@@ -96,9 +96,7 @@ Este é um projeto web com Java legado. É meu primeiro projeto web, nele tive a
 
 ### Tratamento das entradas nos formulários  server-side
 
-- Mesmo que o usuário consiga inserir entradas que estão em desacordo com as regras dos campos, são feitas validações com Bean Validation do lado do servidor. Caso não passe na validação do servidor, será redirecionado para a página de validationError:
-
-![validationErrorPage](readme/validationErrorPage.png)
+- Mesmo que o usuário consiga inserir entradas que estão em desacordo com as regras dos campos, são feitas validações com Bean Validation do lado do servidor.
 
 
 ## Considerações finais
