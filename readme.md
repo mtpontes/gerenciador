@@ -1,8 +1,37 @@
 # Gerenciador de Empresas
 
-A base desse projeto foi criada no curso [Java Web: crie aplicações com Servlets e MVC](https://cursos.alura.com.br/formacao-java-web) da [Alura](https://github.com/alura-cursos), a versão base se encontra na branch versao-original-alura.
+## Sobre 
 
-Este é um projeto web com Java legado. É meu primeiro projeto web, nele tive a primeira vez de muitas coisas, por isso, preferi por não usar frameworks e libs no front-end, para conseguir resolver tudo da maneira mais crua. Esse projeto surgiu como um treinamento para praticar CSS e alguns conceitos de backend. A medida que fui desenvolvendo surgiram novas ideias e acabou tomando outra proporção. Com ele consolidei o entendimento de testes automatizados de unidade e integração, boas práticas e padrões de projeto, anotações personalizadas, validações client-side e server-side com lógica de programação e expressões regulares, tratamento de exceções, tratamento de respostas ao cliente, requisições AJAX, modularização no front-end, CSS e principalmente JS. JS era uma linguagem completamente desconhecida para mim, foi criando esse projeto que aprendi a programar em JS para o front do zero. 
+Esse projeto foi desenvolvido na base de um projeto simples de MVC. Nele foi desenvolvido um back-end mais robusto e um front-end dinâmico. A base desse projeto foi criada no curso [Java Web: crie aplicações com Servlets e MVC](https://cursos.alura.com.br/formacao-java-web) da [Alura](https://github.com/alura-cursos), a versão base se encontra na branch versao-original-alura. O conteúdo das outras branches já não condiz mais em quase nada com o projeto base. Essa é uma aplicação web de registro de empresas com Java legado, o usuário insere um nome e a data de abertura, pode editar o cadastro e também arquivar.
+
+## Desenvolvimento do projeto
+
+ É meu primeiro projeto web, nele tive a primeira vez de muitas coisas, por isso, preferi por não usar frameworks e libs no front-end, para conseguir resolver tudo da maneira mais crua. Esse projeto surgiu como um treinamento para praticar CSS e alguns conceitos de backend. A medida que fui desenvolvendo surgiram novas ideias e foi tomando novas proporções.
+
+## Aprendizado
+
+### Tecnologias aprendidas
+- CSS
+- JSP
+- JavaScript
+
+### Conhecimentos de tecnologias, conceitos e ferramentas consolidados
+- Jakarta Persistence API (JPA)
+- Arquitetura MVC
+- Testes automatizados de unidade com Junit
+- Testes automatizados de integração com Junit e H2
+- Bean Validation
+- Validações server-side e client-side
+- Manipulação e tratamento de exceções
+- Tratamento de resposta ao cliente
+- Serialização e desserialização
+- Requisições em formato Json
+- Expressões Regulares
+- Anotações personalizadas
+- Padrão de design DTO
+- Padrão de projeto Builder
+- Paginação
+- Criptografia de senhas com Bcrypt
 
 ## Tecnologias utilizadas
 
@@ -26,18 +55,17 @@ Este é um projeto web com Java legado. É meu primeiro projeto web, nele tive a
 
 - Reestruturação de pacotes.
 - Gerenciamento de dependências com Maven.
-- Migração da biblioteca javax-servlet para jakarta-servlet.
 - Relacionamento entre objetos.
 - Persistência com banco de dados relacional com JPA.
 - Criptografia de senha.
-- Validação de entradas com Bean Validation.
-- Testes automatizados de unidade.
-- Testes automatizados de integração.
+- Validação de entradas server-side com Bean Validation.
+- Testes automatizados de unidade e integração.
 - Padrões de design: services, repositories e DTOs.
-- Validação de formulários client-side.
 - Paginação de consultas.
+- Migração da biblioteca javax-servlet para jakarta-servlet.
+- Validação de formulários client-side.
 - Estilização com CSS.
-- Páginas dinâmicas com JS e AJAX.
+- Páginas dinâmicas com JS.
 - Modularização do front-end.
 
 ## Novas funções
@@ -100,20 +128,20 @@ Este é um projeto web com Java legado. É meu primeiro projeto web, nele tive a
 
 
 ## Considerações finais
-Este projeto está finalizado e não irei mais implementar coisas novas nele, irei apenas fazer algumas refatorações. Consigo ver diversas melhorias que posso fazer, mas pretendo apenas melhorar o que já está pronto.
+Consigo ver diversas melhorias que posso fazer, mas pretendo apenas melhorar o que já está pronto. Este projeto está finalizado e não irei mais implementar coisas novas nele, farei apenas refatorações.
 
 ### Pontos fracos
-- **Segurança:** merecia mais atenção, ficou de lado nesse projeto, mas o foco era entregar código back e front funcionando para o cliente.
+- **Segurança:** merecia mais atenção, ficou de lado nesse projeto, mas o foco era entregar código back e front funcionando.
 
 - **CSS:** a escrita está complexa e acoplada, visivelmente um novato.
 
-- **JS:** apesar de bem completo, a falta de libs/framework gerou uma complexidade desnecessária no código, tornando a manutenção amendrontadora. Também acredito que dava para desacoplar mais as funções e separar melhor as responsabilidades por arquivos.
+- **JS:** apesar de bem completo, e de ter sido uma escolha usar ele puro, a falta de libs/framework gerou uma complexidade desnecessária no código, tornando a manutenção amendrontadora. Também acredito que dava para desacoplar mais as funções e separar melhor as responsabilidades por arquivos.
 
-- **Simplicidade:** o CRUD ficou muito simples, merecia mais funções e uma maior complexidade da entidade Empresa. Mas o foco estava mesmo em implementar código funcional.
+- **Simplicidade:** o CRUD ficou muito simples, merecia mais funções e uma maior complexidade da entidade Empresa, seria onde o R do CRUD seria bem aplicado, apesar de ele existe sim na aplicação. Mas o foco estava mesmo em entregar código funcional, trazer diversos dados pra essa entidade não iria mudar muita coisa.
 
 - **Responsividade:** como eu estava iniciando, dispensei a responsividade para não aumentar a complexidade.
 
-- **Separação de responsabilidades:** O controller EmpresaController com a responsabilidade de receber requisições json e requisições de apresentação me incomoda.
+- **Separação de responsabilidades:** O controller EmpresaController com a responsabilidade de receber requisições json e requisições de apresentação me incomoda, pois apesar de fazer o trabalho de um controller, ele está lidando com tipos diferentes de trabalho, indo contra o S dos princípios SOLID.
 
 - **Ordenação:** esqueci.
 
