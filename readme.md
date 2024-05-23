@@ -6,7 +6,7 @@ Esse projeto foi desenvolvido na base de um projeto simples de MVC. Nele foi des
 
 ## Desenvolvimento do projeto
 
- É meu primeiro projeto web, nele tive a primeira vez de muitas coisas, por isso, preferi por não usar frameworks e libs no front-end, para conseguir resolver tudo da maneira mais crua. Esse projeto surgiu como um treinamento para praticar CSS e alguns conceitos de backend. A medida que fui desenvolvendo surgiram novas ideias e foi tomando novas proporções.
+É meu primeiro projeto web, nele tive a primeira vez de muitas coisas, por isso, preferi por não usar frameworks e libs no front-end, para conseguir resolver tudo da maneira mais crua, de forma que excecitasse bastante a minha lógica, criatividade e conhecimento de algorítmos. Esse projeto surgiu como um treinamento para praticar CSS e alguns conceitos de backend. A medida que fui desenvolvendo surgiram novas ideias e foi tomando novas proporções.
 
 ## Aprendizado
 
