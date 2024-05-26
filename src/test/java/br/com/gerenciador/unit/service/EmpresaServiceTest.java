@@ -1,4 +1,4 @@
-package br.com.gerenciador.service;
+package br.com.gerenciador.unit.service;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -30,6 +30,7 @@ import br.com.gerenciador.modelo.Usuario;
 import br.com.gerenciador.pagination.Pagination;
 import br.com.gerenciador.pagination.PaginationBuilder;
 import br.com.gerenciador.repository.EmpresaRepository;
+import br.com.gerenciador.service.EmpresaService;
 import br.com.gerenciador.util.LocalDateUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;

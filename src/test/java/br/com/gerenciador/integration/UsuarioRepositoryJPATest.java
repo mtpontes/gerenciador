@@ -1,4 +1,4 @@
-package br.com.gerenciador.integration.database;
+package br.com.gerenciador.integration;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;

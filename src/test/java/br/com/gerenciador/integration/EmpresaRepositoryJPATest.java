@@ -1,4 +1,4 @@
-package br.com.gerenciador.integration.database;
+package br.com.gerenciador.integration;
 
 import java.util.List;
 

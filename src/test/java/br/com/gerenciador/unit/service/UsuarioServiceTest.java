@@ -1,4 +1,4 @@
-package br.com.gerenciador.service;
+package br.com.gerenciador.unit.service;
 
 import static org.mockito.ArgumentMatchers.eq;
 
@@ -18,6 +18,7 @@ import br.com.gerenciador.dto.usuario.NovoUsuarioDTO;
 import br.com.gerenciador.exception.FormValidationException;
 import br.com.gerenciador.modelo.Usuario;
 import br.com.gerenciador.repository.UsuarioRepository;
+import br.com.gerenciador.service.UsuarioService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;

@@ -1,4 +1,4 @@
-package br.com.gerenciador.validation.patterns;
+package br.com.gerenciador.unit.validation.patterns;
 
 import java.util.List;
 import java.util.regex.Pattern;
@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import br.com.gerenciador.validation.patterns.ValidationPatternsUsuario;
 
 @ExtendWith(MockitoExtension.class)
 class ValidationPatternsUsuarioTest {

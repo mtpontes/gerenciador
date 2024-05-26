@@ -1,4 +1,4 @@
-package br.com.gerenciador.validation.annotation;
+package br.com.gerenciador.unit.validation.annotation;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import br.com.gerenciador.repository.UsuarioRepository;
+import br.com.gerenciador.validation.annotation.LoginDisponivelValidator;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.validation.ConstraintValidatorContext;

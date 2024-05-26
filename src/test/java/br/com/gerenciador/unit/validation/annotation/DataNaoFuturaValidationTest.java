@@ -1,4 +1,4 @@
-package br.com.gerenciador.validation.annotation;
+package br.com.gerenciador.unit.validation.annotation;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,6 +14,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import br.com.gerenciador.util.LocalDateUtil;
+import br.com.gerenciador.validation.annotation.DataNaoFuturaValidation;
 import jakarta.validation.ConstraintValidatorContext;
 import jakarta.validation.ConstraintValidatorContext.ConstraintViolationBuilder;
 

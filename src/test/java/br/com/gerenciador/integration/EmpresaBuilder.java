@@ -1,4 +1,4 @@
-package br.com.gerenciador.integration.database;
+package br.com.gerenciador.integration;
 
 import br.com.gerenciador.dto.empresa.EmpresaBaseDTO;
 import br.com.gerenciador.dto.empresa.request.NovaEmpresaDTO;

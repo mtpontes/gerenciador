@@ -1,4 +1,4 @@
-package br.com.gerenciador.controller;
+package br.com.gerenciador.unit.controller;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
