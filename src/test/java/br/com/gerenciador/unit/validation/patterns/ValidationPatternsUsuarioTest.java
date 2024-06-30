@@ -16,23 +16,23 @@ class ValidationPatternsUsuarioTest {
 	private ValidationPatternsUsuario usuarioPatterns;
 	
 	private static final List<String> nomesValidos = List.of(
-			"João",
-			"O'Connor",
-			"José Álvares",
-			"AaÀàÖø",
-			"Mary-Jane");
+		"João",
+		"O'Connor",
+		"José Álvares",
+		"AaÀàÖø",
+		"Mary-Jane");
 	
     private static final List<String> nomesInvalidos = List.of(
-				"Nome@ComCaracteresEspeciais",
-				"Nome!ComCaracteresEspeciais",
-				"Nome#ComCaracteresEspeciais",
-				"Nome$ComCaracteresEspeciais",
-				"Nome%ComCaracteresEspeciais",
-				"Nome&ComCaracteresEspeciais",
-				"Nome*ComCaracteresEspeciais",
-				"Nome()ComCaracteresEspeciais",
-				"Nome=ComCaracteresEspeciais",
-				"Nome+ComCaracteresEspeciais"
+		"Nome@ComCaracteresEspeciais",
+		"Nome!ComCaracteresEspeciais",
+		"Nome#ComCaracteresEspeciais",
+		"Nome$ComCaracteresEspeciais",
+		"Nome%ComCaracteresEspeciais",
+		"Nome&ComCaracteresEspeciais",
+		"Nome*ComCaracteresEspeciais",
+		"Nome()ComCaracteresEspeciais",
+		"Nome=ComCaracteresEspeciais",
+		"Nome+ComCaracteresEspeciais"
 	);
 	
 	

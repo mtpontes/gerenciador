@@ -16,23 +16,23 @@ class ValidationPatternsEmpresaTest {
 
 	private ValidationPatternsEmpresa empresaPatterns;
 	private List<String> nomesValidos = List.of(
-			"Um Nome Normal Com Espaço",
-			"Nome.Composto-D'ExemploComPontoHífenApóstrofo",
-			"Nome123ComNumeros",
-			"NomeComAcentos AaÀàÖøÇçÃÕÑ"
-			);
+		"Um Nome Normal Com Espaço",
+		"Nome.Composto-D'ExemploComPontoHífenApóstrofo",
+		"Nome123ComNumeros",
+		"NomeComAcentos AaÀàÖøÇçÃÕÑ"
+		);
 	private List<String> nomesInvalidos = List.of(
-			"Nome@Inválido",
-			"Nom!Inválido",
-			"Nome#Inválido"
-			);
+		"Nome@Inválido",
+		"Nom!Inválido",
+		"Nome#Inválido"
+		);
 	private static final String DATA_VALIDA = "01/01/"+ Year.now().minusYears(1);
 	private List<String> datasInvalidas = List.of(
-			"01-01-2023",
-			"2101/01/23",
-			"01/13/2023",
-			"32/01/2023"
-			);
+		"01-01-2023",
+		"2101/01/23",
+		"01/13/2023",
+		"32/01/2023"
+		);
 	
 	
 	@Test

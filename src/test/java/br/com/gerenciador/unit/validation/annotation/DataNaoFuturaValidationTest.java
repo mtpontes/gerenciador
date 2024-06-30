@@ -1,9 +1,11 @@
 package br.com.gerenciador.unit.validation.annotation;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.time.LocalDate;
 import java.util.List;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,16 +31,17 @@ class DataNaoFuturaValidationTest {
 	private static final String DATA_VALIDA = LocalDateUtil.formatLocalDateToString(LocalDate.now());
 	private static final String DATA_INVALIDA_FUTURO = LocalDateUtil.formatLocalDateToString(LocalDate.now().plusYears(1));
 	private List<String> DATAS_FORMATO_INVALIDO = List.of(
-													"01-01-2023",
-													"2101/01/23",
-													"01/13/2023",
-													"32/01/2023");
+		"01-01-2023",
+		"2101/01/23",
+		"01/13/2023",
+		"32/01/2023"
+		);
 
 	
 	@Test
 	void isValidTest01() {
-		Assertions.assertTrue(validation.isValid(DATA_VALIDA, context));
-		Assertions.assertFalse(validation.isValid(DATA_INVALIDA_FUTURO, context));
+		assertTrue(validation.isValid(DATA_VALIDA, context));
+		assertFalse(validation.isValid(DATA_INVALIDA_FUTURO, context));
 	}
 	
 	@Test
@@ -48,7 +51,7 @@ class DataNaoFuturaValidationTest {
 			.willReturn(BDDMockito.mock(ConstraintViolationBuilder.class));
 
 		DATAS_FORMATO_INVALIDO.forEach(data -> {
-			Assertions.assertFalse(validation.isValid(data, context));
+			assertFalse(validation.isValid(data, context));
 		});
 	}
 }
