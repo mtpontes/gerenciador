@@ -19,3 +19,6 @@ log/
 target/
 .idea/
 build/
+
+# VSCode
+.vscode
