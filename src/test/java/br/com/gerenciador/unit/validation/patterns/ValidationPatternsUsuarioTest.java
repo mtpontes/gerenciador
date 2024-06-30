@@ -13,7 +13,7 @@ import br.com.gerenciador.validation.patterns.ValidationPatternsUsuario;
 @ExtendWith(MockitoExtension.class)
 class ValidationPatternsUsuarioTest {
 
-	private ValidationPatternsUsuario usuarioPatterns;
+	private final String NOME_USUARIO_REGEX_PATTERN = ValidationPatternsUsuario.NOME_USUARIO_ERROR_MESSAGE;
 	
 	private static final List<String> nomesValidos = List.of(
 		"João",
@@ -39,7 +39,7 @@ class ValidationPatternsUsuarioTest {
 	@Test
 	void regexNomeTest() {
 		//arrange
-		Pattern patternNome = Pattern.compile(usuarioPatterns.NOME_USUARIO_REGEX_PATTERN);
+		Pattern patternNome = Pattern.compile(NOME_USUARIO_REGEX_PATTERN);
 		
 		// act/assert
 		nomesValidos.forEach(nomeValido -> {

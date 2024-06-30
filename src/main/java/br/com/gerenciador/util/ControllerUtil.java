@@ -22,6 +22,7 @@ public class ControllerUtil {
 	public static String empresaParamAcao(String nomeDoMetodo) {
 		return "empresa?acao=".concat(nomeDoMetodo);
 	}
+	
 	public static JsonObject converteCorpoRequisicaoParaJsonObject(HttpServletRequest request) throws IOException {
         BufferedReader reader = request.getReader();
         StringBuilder stringBuilder = new StringBuilder();

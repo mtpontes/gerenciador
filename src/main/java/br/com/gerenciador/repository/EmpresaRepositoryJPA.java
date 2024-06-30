@@ -10,7 +10,6 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.Query;
-import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 
 public class EmpresaRepositoryJPA implements EmpresaRepository {
@@ -28,7 +27,6 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 	@Transactional
 	public void persist(Empresa empresa) {
 		EntityTransaction transaction = em.getTransaction();
-		
 		try {
 			transaction.begin();
 			em.persist(empresa);
@@ -56,10 +54,10 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 	
     public Empresa findByIdAndUserId(Long empresaId, Long userId) {
         try {
-            TypedQuery<Empresa> query = em.createQuery("SELECT e FROM Empresa e WHERE e.id = :empresaId AND e.usuario.id = :userId", Empresa.class);
-            query.setParameter("empresaId", empresaId);
-            query.setParameter("userId", userId);
-            return query.getSingleResult();
+            return em.createQuery("SELECT e FROM Empresa e WHERE e.id = :empresaId AND e.usuario.id = :userId", Empresa.class)
+            	.setParameter("empresaId", empresaId)
+            	.setParameter("userId", userId)
+				.getSingleResult();
 			
 		} catch (NoResultException e) {
 			throw new NoResultException("registro de empresa não encontrado");
@@ -68,10 +66,10 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 	
 	public List<Empresa> findAllPaged(Integer start, Integer max) {
 		try {
-			Query query = em.createQuery("SELECT e FROM Empresa e WHERE e.ativo = 1", Empresa.class);
-			query.setFirstResult(start);
-			query.setMaxResults(max);
-			return query.getResultList();
+			return em.createQuery("SELECT e FROM Empresa e WHERE e.ativo = 1", Empresa.class)
+				.setFirstResult(start)
+				.setMaxResults(max)
+				.getResultList();
 			
 		} catch (PersistenceException e) {
 			throw new DatabaseAccessException("ocorreu um erro ao consultar todas as empresas", e);
@@ -80,12 +78,12 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 	
 	public List<Empresa> findByUsuarioIdAndAtivoPaged(Long id, Integer start, Integer max, Boolean ativo) {
 		try {
-			Query query = em.createQuery("SELECT e FROM Empresa e WHERE e.ativo = :ativo AND e.usuario.id =:id", Empresa.class);
-			query.setFirstResult(start);
-			query.setMaxResults(max);
-			query.setParameter("id", id);
-			query.setParameter("ativo", ativo);
-			return query.getResultList();
+			return em.createQuery("SELECT e FROM Empresa e WHERE e.ativo = :ativo AND e.usuario.id =:id", Empresa.class)
+				.setFirstResult(start)
+				.setMaxResults(max)
+				.setParameter("id", id)
+				.setParameter("ativo", ativo)
+				.getResultList();
 			
 		} catch (PersistenceException e) {
 			throw new DatabaseAccessException("ocorreu um erro ao consultar todas as empresas do usuário", e);
@@ -94,11 +92,11 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 	
 	public List<Empresa> findByNameLikePaged(String nomeEmpresa, Integer start, Integer max){
 		try {
-			Query query = em.createQuery("SELECT e FROM Empresa e WHERE e.ativo = 1 AND e.nome LIKE :nomeEmpresa", Empresa.class)
-				.setParameter("nomeEmpresa", "%" + nomeEmpresa + "%");
-			query.setFirstResult(start);
-			query.setMaxResults(max);
-			return query.getResultList();
+			return em.createQuery("SELECT e FROM Empresa e WHERE e.ativo = 1 AND e.nome LIKE :nomeEmpresa", Empresa.class)
+				.setParameter("nomeEmpresa", "%" + nomeEmpresa + "%")
+				.setFirstResult(start)
+				.setMaxResults(max)
+				.getResultList();
 			
 		} catch (PersistenceException e) {
 			throw new DatabaseAccessException("ocorreu um erro ao consultar empresas pelo nome", e);

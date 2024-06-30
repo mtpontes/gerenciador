@@ -1,7 +1,5 @@
 package br.com.gerenciador.modelo.dto.empresa;
 
-import java.time.format.DateTimeFormatter;
-
 import br.com.gerenciador.modelo.Empresa;
 import br.com.gerenciador.validation.annotation.DataNaoFutura;
 import br.com.gerenciador.validation.patterns.ValidationPatternsEmpresa;

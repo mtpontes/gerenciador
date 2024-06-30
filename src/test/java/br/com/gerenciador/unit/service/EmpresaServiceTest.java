@@ -79,7 +79,7 @@ class EmpresaServiceTest {
     private static final String NOME_INVALIDO = "1@_";
     private static final String DATA_INVALIDA = "01-13-2100";
     
-	private static final Pagination pg = new PaginationBuilder()
+	private final Pagination pg = new PaginationBuilder()
 		.setPageNumber("1")
 		.setPageSize("5")
 		.setTotalPages(1L)
