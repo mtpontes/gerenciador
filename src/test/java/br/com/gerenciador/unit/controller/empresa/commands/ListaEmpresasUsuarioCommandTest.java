@@ -22,7 +22,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import br.com.gerenciador.controller.empresa.commands.ListaEmpresasUsuarioCommand;
+import br.com.gerenciador.controller.commands.empresa.ListaEmpresasUsuarioCommand;
 import br.com.gerenciador.modelo.Usuario;
 import br.com.gerenciador.service.EmpresaService;
 import jakarta.persistence.PersistenceException;

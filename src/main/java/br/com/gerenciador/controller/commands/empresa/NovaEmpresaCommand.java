@@ -1,8 +1,8 @@
-package br.com.gerenciador.controller.empresa.commands;
+package br.com.gerenciador.controller.commands.empresa;
 
 import java.io.IOException;
 
-import br.com.gerenciador.controller.Command;
+import br.com.gerenciador.controller.commands.Command;
 import br.com.gerenciador.exception.DatabaseAccessException;
 import br.com.gerenciador.exception.FormValidationException;
 import br.com.gerenciador.modelo.Usuario;

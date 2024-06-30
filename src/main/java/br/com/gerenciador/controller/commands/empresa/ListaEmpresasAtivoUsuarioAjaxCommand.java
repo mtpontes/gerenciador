@@ -1,4 +1,4 @@
-package br.com.gerenciador.controller.empresa.commands;
+package br.com.gerenciador.controller.commands.empresa;
 
 import java.io.IOException;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import br.com.gerenciador.controller.Command;
+import br.com.gerenciador.controller.commands.Command;
 import br.com.gerenciador.exception.DatabaseAccessException;
 import br.com.gerenciador.modelo.Usuario;
 import br.com.gerenciador.modelo.dto.empresa.response.ListaEmpresasUsuarioDTO;

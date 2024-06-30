@@ -1,31 +1,27 @@
-package br.com.gerenciador.controller.empresa.commands;
+package br.com.gerenciador.controller.commands.empresa;
 
 import java.io.IOException;
 
 import com.google.gson.JsonObject;
 
-import br.com.gerenciador.controller.Command;
+import br.com.gerenciador.controller.commands.Command;
 import br.com.gerenciador.exception.DatabaseAccessException;
-import br.com.gerenciador.exception.FormValidationException;
 import br.com.gerenciador.modelo.Usuario;
-import br.com.gerenciador.modelo.dto.empresa.EmpresaBaseDTO;
-import br.com.gerenciador.modelo.dto.empresa.request.AlteraEmpresaDTO;
 import br.com.gerenciador.service.EmpresaService;
 import br.com.gerenciador.util.ControllerUtil;
 import br.com.gerenciador.util.HttpStatusErrorMapperUtil;
-import jakarta.persistence.NoResultException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class AtualizaEmpresaCommand implements Command {
+public class RemoveEmpresaCommand implements Command {
 
     private EmpresaService empresaService;
 
-	public AtualizaEmpresaCommand() {
+	public RemoveEmpresaCommand() {
 		this.empresaService = new EmpresaService();
 	}
-	public AtualizaEmpresaCommand(EmpresaService service) {
+	public RemoveEmpresaCommand(EmpresaService service) {
 		this.empresaService = service;
 	}
 	
@@ -39,16 +35,13 @@ public class AtualizaEmpresaCommand implements Command {
 		try {
 			JsonObject jsonRequestBody = ControllerUtil.converteCorpoRequisicaoParaJsonObject(request);
 			
-			String nome = jsonRequestBody.get("nome").getAsString();
-			String data = jsonRequestBody.get("data").getAsString();
-			Long id = jsonRequestBody.get("id").getAsLong();
 			Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
+			Long empresaId = jsonRequestBody.get("empresaId").getAsLong();
 			
-			AlteraEmpresaDTO dto = new AlteraEmpresaDTO(id, new EmpresaBaseDTO(nome, data));
-			empresaService.alteraDadosEmpresa(dto, usuario);
-			jsonResponse.addProperty("message", "empresa atualizada com sucesso");
+			empresaService.arquivaEmpresa(empresaId, usuario.getId());
+			jsonResponse.addProperty("response", true);
 			
-		} catch(DatabaseAccessException| NoResultException | IllegalStateException | FormValidationException e) {
+		} catch(DatabaseAccessException | IllegalStateException e) {
 			response.setStatus(HttpStatusErrorMapperUtil.getStatusCodeByException(e));
 			jsonResponse.addProperty("message", e.getMessage());
 			
@@ -56,6 +49,6 @@ public class AtualizaEmpresaCommand implements Command {
 			response.setStatus(HttpStatusErrorMapperUtil.getStatusCodeByException(e));
 			jsonResponse.addProperty("message", "ocorreu um erro interno no servidor");
 		}
-		response.getWriter().print(jsonResponse.toString());
+		response.getWriter().print(jsonResponse);
     }
 }

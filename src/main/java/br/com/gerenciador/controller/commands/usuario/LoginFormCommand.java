@@ -1,8 +1,8 @@
-package br.com.gerenciador.controller.usuario.commands;
+package br.com.gerenciador.controller.commands.usuario;
 
 import java.io.IOException;
 
-import br.com.gerenciador.controller.Command;
+import br.com.gerenciador.controller.commands.Command;
 import br.com.gerenciador.util.ControllerUtil;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;

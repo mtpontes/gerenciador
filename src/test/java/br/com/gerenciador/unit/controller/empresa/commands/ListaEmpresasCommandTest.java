@@ -21,7 +21,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import br.com.gerenciador.controller.empresa.commands.ListaEmpresasCommand;
+import br.com.gerenciador.controller.commands.empresa.ListaEmpresasCommand;
 import br.com.gerenciador.exception.DatabaseAccessException;
 import br.com.gerenciador.modelo.Usuario;
 import br.com.gerenciador.service.EmpresaService;

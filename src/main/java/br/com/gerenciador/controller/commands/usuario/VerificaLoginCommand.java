@@ -1,10 +1,10 @@
-package br.com.gerenciador.controller.usuario.commands;
+package br.com.gerenciador.controller.commands.usuario;
 
 import java.io.IOException;
 
 import com.google.gson.JsonObject;
 
-import br.com.gerenciador.controller.Command;
+import br.com.gerenciador.controller.commands.Command;
 import br.com.gerenciador.exception.DatabaseAccessException;
 import br.com.gerenciador.service.UsuarioService;
 import br.com.gerenciador.util.ControllerUtil;
