@@ -1,4 +1,4 @@
-package br.com.gerenciador.dto.empresa.response;
+package br.com.gerenciador.modelo.dto.empresa.response;
 
 import java.util.List;
 

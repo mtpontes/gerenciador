@@ -1,13 +1,14 @@
-package br.com.gerenciador.dto.empresa.response;
+package br.com.gerenciador.modelo.dto.empresa.response;
 
-import br.com.gerenciador.dto.empresa.EmpresaBaseDTO;
 import br.com.gerenciador.modelo.Empresa;
+import br.com.gerenciador.modelo.dto.empresa.EmpresaBaseDTO;
 import br.com.gerenciador.util.LocalDateUtil;
 
 public record ListaEmpresasUsuarioDTO(
-		Long id, 
-		EmpresaBaseDTO base,
-		Boolean ativo) {
+	Long id, 
+	EmpresaBaseDTO base,
+	Boolean ativo
+	) {
 	
 	public ListaEmpresasUsuarioDTO(EmpresaBaseDTO dto) {
 		this(null, new EmpresaBaseDTO(dto.getNome(), (dto.data())), null);
