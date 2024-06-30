@@ -1,24 +1,28 @@
 package br.com.gerenciador.unit.service;
 
-import static org.mockito.ArgumentMatchers.eq;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.when;
 
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.BDDMockito;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import br.com.gerenciador.dto.usuario.NovoUsuarioDTO;
 import br.com.gerenciador.exception.FormValidationException;
 import br.com.gerenciador.modelo.Usuario;
+import br.com.gerenciador.modelo.dto.usuario.NovoUsuarioDTO;
 import br.com.gerenciador.repository.UsuarioRepository;
 import br.com.gerenciador.service.UsuarioService;
+import br.com.gerenciador.validation.ValidatorUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
@@ -52,51 +56,50 @@ class UsuarioServiceTest {
     private static final String SENHA_INVALIDA = "1 34567";
     private static final String SENHA_CONFIRMACAO_INVALIDA = "12345678";
 	
+
+	@BeforeEach
+	void setup() {
+		this.usuarioService = new UsuarioService(repository, new ValidatorUtil());
+	}
 	
 	@Test
 	@DisplayName("Deveria cadastrar usuario")
 	void cadastraUsuarioTest01() {
 	    // Arrange
 	    NovoUsuarioDTO dto = new NovoUsuarioDTO(NOME_VALIDO, LOGIN_VALIDO, SENHA_VALIDA, SENHA_CONFIRMACAO_VALIDA);
-	    BDDMockito.given(em.getTransaction()).willReturn(transaction);
 
 	    // Act
 	    usuarioService.cadastraUsuario(dto);
 
 	    // Assert
-	    BDDMockito.then(em).should().persist(usuarioCaptor.capture());
-	    BDDMockito.then(transaction).should().commit();
-	    
+	    then(repository).should().persist(usuarioCaptor.capture());
 	    var empresaCapturada = usuarioCaptor.getValue();
-	    Assertions.assertEquals(empresaCapturada.getNome(), dto.nome());
-	    Assertions.assertEquals(empresaCapturada.getLogin(), dto.login());
-	}
 
+	    assertEquals(empresaCapturada.getNome(), dto.nome());
+	    assertEquals(empresaCapturada.getLogin(), dto.login());
+	}
 	@Test
 	@DisplayName("Não deveria cadastrar usuario com os atributos inválidos")
 	void cadastraUsuarioTest02() {
 	    // Arrange
 	    NovoUsuarioDTO dto = new NovoUsuarioDTO(NOME_INVALIDO, LOGIN_INVALIDO, SENHA_INVALIDA, SENHA_CONFIRMACAO_INVALIDA);
-	    
+
 	    // Act and Assert
-	    BDDMockito.then(em).shouldHaveNoInteractions();
-	    BDDMockito.then(transaction).shouldHaveNoInteractions();
-	    Assertions.assertThrows(FormValidationException.class, () -> usuarioService.cadastraUsuario(dto));
+	    then(em).shouldHaveNoInteractions();
+	    then(transaction).shouldHaveNoInteractions();
+	    assertThrows(FormValidationException.class, () -> usuarioService.cadastraUsuario(dto));
 	}
 
 	@Test
 	@DisplayName("Deveria retornar um Usuario")
-	void getUsuarioPorLoginTest01() {
+	void buscaUsuarioPorLoginTest() {
 	    // Arrange
-	    BDDMockito.given(em.createQuery(Mockito.anyString(), eq(Usuario.class))).willReturn(typedQuery);
-	    BDDMockito.given(typedQuery.getSingleResult()).willReturn(usuario);
+		when(repository.findByLogin(anyString())).thenReturn(usuario);
 
 	    // Act
-	    var usuarioMock = usuarioService.buscaUsuarioPorLogin(LOGIN_VALIDO);
+	    var result = usuarioService.buscaUsuarioPorLogin(LOGIN_VALIDO);
 	    
 	    // Assert
-	    BDDMockito.then(typedQuery).should().getSingleResult();
-	    Assertions.assertInstanceOf(Usuario.class, usuarioMock);
+	    assertInstanceOf(Usuario.class, result);
 	}
-
 }
