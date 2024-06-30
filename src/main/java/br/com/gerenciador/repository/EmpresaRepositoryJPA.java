@@ -4,21 +4,26 @@ import java.util.List;
 
 import br.com.gerenciador.exception.DatabaseAccessException;
 import br.com.gerenciador.modelo.Empresa;
+import br.com.gerenciador.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 
 public class EmpresaRepositoryJPA implements EmpresaRepository {
 	
 	private EntityManager em;
-	
-	public EmpresaRepositoryJPA(EntityManager em) {
-		this.em  = em;
+
+	public EmpresaRepositoryJPA() {
+		this.em = JPAUtil.getEntityManager();
 	}
-	
+	public EmpresaRepositoryJPA(EntityManager entityManger) {
+		this.em = entityManger;
+	}
+
 	
 	@Transactional
 	public void persist(Empresa empresa) {
@@ -49,11 +54,12 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 		}
 	}
 	
-	public Empresa findById(Long id) {
-		try {
-			Query query = em.createQuery("SELECT e FROM Empresa e WHERE e.id =:id", Empresa.class);
-			query.setParameter("id", id);
-			return (Empresa) query.getSingleResult();
+    public Empresa findByIdAndUserId(Long empresaId, Long userId) {
+        try {
+            TypedQuery<Empresa> query = em.createQuery("SELECT e FROM Empresa e WHERE e.id = :empresaId AND e.usuario.id = :userId", Empresa.class);
+            query.setParameter("empresaId", empresaId);
+            query.setParameter("userId", userId);
+            return query.getSingleResult();
 			
 		} catch (NoResultException e) {
 			throw new NoResultException("registro de empresa não encontrado");
@@ -65,7 +71,6 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 			Query query = em.createQuery("SELECT e FROM Empresa e WHERE e.ativo = 1", Empresa.class);
 			query.setFirstResult(start);
 			query.setMaxResults(max);
-			
 			return query.getResultList();
 			
 		} catch (PersistenceException e) {
@@ -90,7 +95,7 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 	public List<Empresa> findByNameLikePaged(String nomeEmpresa, Integer start, Integer max){
 		try {
 			Query query = em.createQuery("SELECT e FROM Empresa e WHERE e.ativo = 1 AND e.nome LIKE :nomeEmpresa", Empresa.class)
-					.setParameter("nomeEmpresa", "%" + nomeEmpresa + "%");
+				.setParameter("nomeEmpresa", "%" + nomeEmpresa + "%");
 			query.setFirstResult(start);
 			query.setMaxResults(max);
 			return query.getResultList();
@@ -114,8 +119,8 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 	public Long countByUsuarioAndAtivo(Long id, Boolean ativo) {
 		try {
 			Query query = em.createQuery("SELECT COUNT(e) FROM Empresa e WHERE e.ativo = :ativo AND e.usuario.id = :id")
-					.setParameter("id", id)
-					.setParameter("ativo", ativo);
+				.setParameter("id", id)
+				.setParameter("ativo", ativo);
 			return (Long) query.getSingleResult();
 			
 		} catch (PersistenceException e) {
@@ -126,7 +131,7 @@ public class EmpresaRepositoryJPA implements EmpresaRepository {
 	public Long countByParamSearch(String nomeEmpresa) {
 		try {
 			Query query = em.createQuery("SELECT COUNT(e) FROM Empresa e WHERE e.ativo =1 AND e.nome LIKE :nomeEmpresa")
-					.setParameter("nomeEmpresa", "%" + nomeEmpresa + "%");
+				.setParameter("nomeEmpresa", "%" + nomeEmpresa + "%");
 			return (Long) query.getSingleResult();
 			
 		} catch (PersistenceException e) {

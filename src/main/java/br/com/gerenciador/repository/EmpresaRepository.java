@@ -9,10 +9,11 @@ public interface EmpresaRepository {
 	
 	@Transactional
 	public void persist(Empresa empresa);
+	
 	@Transactional
 	public void update(Empresa empresa);
 
-	public Empresa findById(Long id);
+	public Empresa findByIdAndUserId(Long empresaId, Long userId);
 	
 	public List<Empresa> findAllPaged(Integer startIndex, Integer endIndex);
 
