@@ -2,6 +2,7 @@ package br.com.gerenciador.repository;
 
 import br.com.gerenciador.exception.DatabaseAccessException;
 import br.com.gerenciador.modelo.Usuario;
+import br.com.gerenciador.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
@@ -12,9 +13,12 @@ import jakarta.transaction.Transactional;
 public class UsuarioRepositoryJPA implements UsuarioRepository{
 	
 	private EntityManager em;
-	
-	public UsuarioRepositoryJPA(EntityManager entityManager) {
-		this.em = entityManager;
+
+	public UsuarioRepositoryJPA() {
+		this.em = JPAUtil.getEntityManager();
+	}
+	public UsuarioRepositoryJPA(EntityManager entityManger) {
+		this.em = entityManger;
 	}
 	
 	
@@ -74,5 +78,4 @@ public class UsuarioRepositoryJPA implements UsuarioRepository{
 		}
         		
 	}
-
 }
