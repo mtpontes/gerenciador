@@ -5,9 +5,9 @@
   <version>5.0.2</version>
   <packaging>war</packaging>
   
-  <properties>
-	  <java.version>17</java.version>
-  </properties>
+	<properties>
+		<java.version>17</java.version>
+	</properties>
   
   	<dependencies>
 		  
@@ -109,7 +109,6 @@
 		    <artifactId>hibernate-validator</artifactId>
 		    <version>8.0.1.Final</version>
 		</dependency>
-		
 
 		<dependency>
 		    <groupId>org.mockito</groupId>
