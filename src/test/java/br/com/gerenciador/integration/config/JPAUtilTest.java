@@ -1,4 +1,4 @@
-package br.com.gerenciador.integration;
+package br.com.gerenciador.integration.config;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -9,5 +9,5 @@ public class JPAUtilTest {
 	
 	public static EntityManager getEntityManager() {
 		return FACTORY.createEntityManager();
-}
+	}
 }
