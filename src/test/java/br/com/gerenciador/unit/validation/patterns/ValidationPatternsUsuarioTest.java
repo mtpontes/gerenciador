@@ -13,7 +13,7 @@ import br.com.gerenciador.validation.patterns.ValidationPatternsUsuario;
 @ExtendWith(MockitoExtension.class)
 class ValidationPatternsUsuarioTest {
 
-	private final String NOME_USUARIO_REGEX_PATTERN = ValidationPatternsUsuario.NOME_USUARIO_ERROR_MESSAGE;
+	private final String NOME_USUARIO_REGEX_PATTERN = ValidationPatternsUsuario.NOME_USUARIO_REGEX_PATTERN;
 	
 	private static final List<String> nomesValidos = List.of(
 		"João",
