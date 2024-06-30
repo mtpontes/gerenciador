@@ -2,12 +2,13 @@ package br.com.gerenciador.integration;
 
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import br.com.gerenciador.integration.config.EmpresaBuilder;
+import br.com.gerenciador.integration.config.JPAUtilTest;
+import br.com.gerenciador.integration.config.UsuarioBuilder;
 import br.com.gerenciador.modelo.Empresa;
 import br.com.gerenciador.modelo.Usuario;
 import br.com.gerenciador.repository.EmpresaRepository;
@@ -16,20 +17,21 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 
 public class EmpresaRepositoryJPATest {
-	private EntityManager em;
-	private EmpresaRepository rp;
-	
+
+	private static EmpresaRepository rp;
+
+	private final Long EMPRESA_ID_INVALIDO = 10000L;
 	private static final Long USUARIO_ID_VALIDO = 1l;
 	private static final Long USUARIO_ID_INVALIDO = 9999l;
 	private static final Usuario usuario = new UsuarioBuilder().setNome("Um Nome").setLogin("umLogin").setSenha("umaSenha").build();
 	private static final List<Empresa> empresasTest = List.of(
-			new EmpresaBuilder().setNome("Empresa1").setData("01/12/2023").setUsuario(usuario).build(),
-			new EmpresaBuilder().setNome("Empresa2").setData("01/12/2023").setUsuario(usuario).build(),
-			new EmpresaBuilder().setNome("Empresa3").setData("01/12/2023").setUsuario(usuario).build(),
-			new EmpresaBuilder().setNome("Empresa4").setData("01/12/2023").setUsuario(usuario).build().removeOrRestoreEmpresa(),
-			new EmpresaBuilder().setNome("Empresa4").setData("01/12/2023").setUsuario(usuario).build().removeOrRestoreEmpresa(),
-			new EmpresaBuilder().setNome("Empresa4").setData("01/12/2023").setUsuario(usuario).build().removeOrRestoreEmpresa()
-			);
+		new EmpresaBuilder().setNome("Empresa1").setData("01/12/2023").setUsuario(usuario).build(),
+		new EmpresaBuilder().setNome("Empresa2").setData("01/12/2023").setUsuario(usuario).build(),
+		new EmpresaBuilder().setNome("Empresa3").setData("01/12/2023").setUsuario(usuario).build(),
+		new EmpresaBuilder().setNome("Empresa4").setData("01/12/2023").setUsuario(usuario).build().removeOrRestoreEmpresa(),
+		new EmpresaBuilder().setNome("Empresa4").setData("01/12/2023").setUsuario(usuario).build().removeOrRestoreEmpresa(),
+		new EmpresaBuilder().setNome("Empresa4").setData("01/12/2023").setUsuario(usuario).build().removeOrRestoreEmpresa()
+		);
 	
 	private static Long QUANTIDADE_REGISTROS_TRUE = empresasTest.stream().filter(empresa -> empresa.getAtivo().equals(true)).count();
 	private static Long QUANTIDADE_REGISTROS_FALSE= empresasTest.stream().filter(empresa -> empresa.getAtivo().equals(false)).count();
@@ -41,6 +43,8 @@ public class EmpresaRepositoryJPATest {
 	
 	@BeforeAll
 	public static void setUpEmpresasDeTeste() {
+		rp = new EmpresaRepositoryJPA(JPAUtilTest.getEntityManager());
+
 		EntityManager emSetup = JPAUtilTest.getEntityManager();
 		emSetup.getTransaction().begin();
 		emSetup.persist(usuario);
@@ -50,20 +54,11 @@ public class EmpresaRepositoryJPATest {
 		emSetup.getTransaction().commit();
 	}
 	
-	@BeforeEach
-	public void beforeEach() {
-		this.em = JPAUtilTest.getEntityManager();
-		this.rp = new EmpresaRepositoryJPA(em);
-	}
-	@AfterEach
-	public void afterEach() {
-	}
-	
-	
+
 	@Test
-	void findByIdTest01() {
+	void findByIdAndUserIdTest01() {
 		//act
-		Empresa empresaDb = rp.findById(1l);
+		Empresa empresaDb = rp.findByIdAndUserId(1L, 1L);
 		//assert
 		Assertions.assertNotNull(empresaDb);
 		Assertions.assertNotNull(empresaDb.getId());
@@ -71,11 +66,10 @@ public class EmpresaRepositoryJPATest {
 		Assertions.assertNotNull(empresaDb.getDataAbertura());
 		Assertions.assertNotNull(empresaDb.getAtivo());
 	}
-	
 	@Test
-	void findByIdTest02() {
+	void findByIdAndUserIdTest02() {
 		//act e assert 
-		Assertions.assertThrows(NoResultException.class, () -> rp.findById(USUARIO_ID_INVALIDO));
+		Assertions.assertThrows(NoResultException.class, () -> rp.findByIdAndUserId(EMPRESA_ID_INVALIDO, USUARIO_ID_INVALIDO));
 	}
 
 	@Test
