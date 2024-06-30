@@ -3,7 +3,7 @@ package br.com.gerenciador.modelo;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import br.com.gerenciador.dto.empresa.request.NovaEmpresaDTO;
+import br.com.gerenciador.modelo.dto.empresa.request.NovaEmpresaDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,7 +25,8 @@ public class Empresa {
 	private String nome;
 	private LocalDate dataAbertura;
 	private Boolean ativo = true;
-	@ManyToOne @JoinColumn(name = "usuario_id")
+	@ManyToOne 
+	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
 
 	public Empresa(NovaEmpresaDTO dto) {
@@ -35,11 +36,7 @@ public class Empresa {
 	}
 	
 	public Empresa removeOrRestoreEmpresa() {
-		if (this.ativo == true) {
-			this.ativo = false;
-			} else {
-				this.ativo = true;				
-			}
+		this.ativo = !ativo;
 		return this;
 	}
 	
