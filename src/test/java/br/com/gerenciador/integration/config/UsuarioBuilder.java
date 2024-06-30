@@ -1,7 +1,7 @@
-package br.com.gerenciador.integration;
+package br.com.gerenciador.integration.config;
 
-import br.com.gerenciador.dto.usuario.NovoUsuarioDTO;
 import br.com.gerenciador.modelo.Usuario;
+import br.com.gerenciador.modelo.dto.usuario.NovoUsuarioDTO;
 
 public class UsuarioBuilder {
 
