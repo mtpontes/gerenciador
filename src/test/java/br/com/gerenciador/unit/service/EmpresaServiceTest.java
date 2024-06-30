@@ -1,37 +1,43 @@
 package br.com.gerenciador.unit.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.List;
 
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.BDDMockito;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import br.com.gerenciador.dto.empresa.EmpresaBaseDTO;
-import br.com.gerenciador.dto.empresa.request.AlteraEmpresaDTO;
-import br.com.gerenciador.dto.empresa.request.NovaEmpresaDTO;
-import br.com.gerenciador.dto.empresa.response.ListaEmpresasUsuarioDTO;
 import br.com.gerenciador.exception.FormValidationException;
 import br.com.gerenciador.modelo.Empresa;
 import br.com.gerenciador.modelo.Usuario;
+import br.com.gerenciador.modelo.dto.empresa.EmpresaBaseDTO;
+import br.com.gerenciador.modelo.dto.empresa.request.AlteraEmpresaDTO;
+import br.com.gerenciador.modelo.dto.empresa.request.NovaEmpresaDTO;
+import br.com.gerenciador.modelo.dto.empresa.response.ListaEmpresasUsuarioDTO;
 import br.com.gerenciador.pagination.Pagination;
 import br.com.gerenciador.pagination.PaginationBuilder;
 import br.com.gerenciador.repository.EmpresaRepository;
 import br.com.gerenciador.service.EmpresaService;
 import br.com.gerenciador.util.LocalDateUtil;
+import br.com.gerenciador.validation.ValidatorUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Query;
@@ -53,6 +59,8 @@ class EmpresaServiceTest {
 	private ArgumentCaptor<Empresa> empresaCaptor;
 
 	@Mock
+	private ValidatorUtil validator;
+	@Mock
 	private EmpresaRepository repository;
 	@Mock
 	private EntityTransaction transaction;
@@ -71,32 +79,34 @@ class EmpresaServiceTest {
     private static final String NOME_INVALIDO = "1@_";
     private static final String DATA_INVALIDA = "01-13-2100";
     
-    private static final String PARAM_ID = "id";
-    
 	private static final Pagination pg = new PaginationBuilder()
-			.setPageNumber("1")
-			.setPageSize("5")
-			.setTotalPages(1L)
-			.build();
+		.setPageNumber("1")
+		.setPageSize("5")
+		.setTotalPages(1L)
+		.build();
+
+	@BeforeEach
+	void setup() {
+		this.empresaService = new EmpresaService(repository, new ValidatorUtil());
+	}
     
+	
 	@Test
 	@DisplayName("Deveria cadastrar Empresa")
 	void cadastraEmpresaTest01() {
 	    //arrange
 	    NovaEmpresaDTO dto = new NovaEmpresaDTO(new EmpresaBaseDTO(NOME_VALIDO, DATA_VALIDA), usuario);
-	    BDDMockito.given(em.getTransaction()).willReturn(transaction);
 
 	    //act
 	    empresaService.cadastraEmpresa(dto);
 
 	    //assert
-	    BDDMockito.then(em).should().persist(empresaCaptor.capture());
-	    BDDMockito.then(transaction).should().commit();
+	    then(repository).should().persist(empresaCaptor.capture());
 
 	    var empresaCapturada = empresaCaptor.getValue();
-	    Assertions.assertEquals(empresaCapturada.getNome(), dto.base().nome());
-	    Assertions.assertEquals(empresaCapturada.getDataAbertura(), LocalDateUtil.formatStringToLocalDate(dto.base().data()));
-	    Assertions.assertEquals(empresaCapturada.getUsuario(), dto.usuario());
+	    assertEquals(empresaCapturada.getNome(), dto.base().nome());
+	    assertEquals(empresaCapturada.getDataAbertura(), LocalDateUtil.formatStringToLocalDate(dto.base().data()));
+	    assertEquals(empresaCapturada.getUsuario(), dto.usuario());
 	}
 	@Test
 	@DisplayName("Nao deveria cadastrar Empresa quando os campos 'nome' e 'data' estiverem errados")
@@ -105,9 +115,9 @@ class EmpresaServiceTest {
 	    NovaEmpresaDTO dto = new NovaEmpresaDTO(new EmpresaBaseDTO(NOME_INVALIDO, DATA_INVALIDA), usuario);
 
 	    //act and Assert
-	    BDDMockito.then(em).shouldHaveNoInteractions();
-	    BDDMockito.then(transaction).shouldHaveNoInteractions();
-	    Assertions.assertThrows(FormValidationException.class, () -> empresaService.cadastraEmpresa(dto));
+	    then(em).shouldHaveNoInteractions();
+	    then(transaction).shouldHaveNoInteractions();
+	    assertThrows(FormValidationException.class, () -> empresaService.cadastraEmpresa(dto));
 	}
 
 	@Test
@@ -115,25 +125,21 @@ class EmpresaServiceTest {
 	void alteraDadosEmpresaTest01() {
 	    //arrange
 	    AlteraEmpresaDTO dto = new AlteraEmpresaDTO(ID_VALIDO, new EmpresaBaseDTO(NOME_VALIDO, DATA_VALIDA));
-	    Empresa empresa = new Empresa(new NovaEmpresaDTO(new EmpresaBaseDTO(NOME_VALIDO, DATA_VALIDA), usuario));
 
-	    BDDMockito.given(em.createQuery(Mockito.anyString(), eq(Empresa.class))).willReturn(typedQuery);
-	    BDDMockito.given(typedQuery.setParameter(PARAM_ID, ID_VALIDO)).willReturn(typedQuery);
-	    BDDMockito.given(typedQuery.getSingleResult()).willReturn(empresa);
-	    BDDMockito.given(em.getTransaction()).willReturn((transaction));
+		Empresa empresa = new Empresa(new NovaEmpresaDTO(new EmpresaBaseDTO(NOME_VALIDO, DATA_VALIDA), usuario));
+		when(repository.findByIdAndUserId(anyLong(), anyLong())).thenReturn(empresa);
 
 	    //act
 	    empresaService.alteraDadosEmpresa(dto, usuario);
 
 	    //assert
-	    BDDMockito.then(em).should().merge(empresaCaptor.capture());
+	    then(repository).should().update(empresaCaptor.capture());
 	    var empresaCapturada = empresaCaptor.getValue();
 	    
-	    Assertions.assertEquals(empresaCapturada.getAtivo(), empresa.getAtivo());
-	    Assertions.assertEquals(empresaCapturada.getNome(), empresa.getNome());
-	    Assertions.assertEquals(empresaCapturada.getDataAbertura(), empresa.getDataAbertura());
-	    Assertions.assertEquals(empresaCapturada.getUsuario(), empresa.getUsuario());
-	    BDDMockito.then(em.merge(any()));
+	    assertEquals(empresaCapturada.getAtivo(), empresa.getAtivo());
+	    assertEquals(empresaCapturada.getNome(), empresa.getNome());
+	    assertEquals(empresaCapturada.getDataAbertura(), empresa.getDataAbertura());
+	    assertEquals(empresaCapturada.getUsuario(), empresa.getUsuario());
 	}
 	@Test
 	@DisplayName("Nao deveria alterar dados de Empresa quando os campos 'nome' e 'data' estiverem errados")
@@ -142,118 +148,113 @@ class EmpresaServiceTest {
 	    AlteraEmpresaDTO dto = new AlteraEmpresaDTO(ID_INVALIDO, new EmpresaBaseDTO(NOME_INVALIDO, DATA_INVALIDA));
 
 	    //act and Assert
-	    BDDMockito.then(em).shouldHaveNoInteractions();
-	    BDDMockito.then(transaction).shouldHaveNoInteractions();
-	    Assertions.assertThrows(FormValidationException.class, () -> empresaService.alteraDadosEmpresa(dto, usuario));
-	}
-	@Test
-	@DisplayName("Nao deveria alterar dados de Empresa quando os usuarios forem diferentes")
-	void alteraDadosEmpresaTest03() {
-		//arrange
-	    AlteraEmpresaDTO dto = new AlteraEmpresaDTO(
-	    		ID_VALIDO, 
-	    		new EmpresaBaseDTO(NOME_VALIDO, DATA_VALIDA)
-	    		);
 	    
-	    Empresa empresa = new Empresa(
-	    		new NovaEmpresaDTO(new EmpresaBaseDTO(NOME_VALIDO, DATA_VALIDA), usuario2)
-	    		);
-
-	    BDDMockito.given(usuario.getId()).willReturn(ID_VALIDO);
-	    BDDMockito.given(usuario2.getId()).willReturn((ID_VALIDO+1));
-	    BDDMockito.given(em.createQuery(Mockito.anyString(), eq(Empresa.class))).willReturn(typedQuery);
-	    BDDMockito.given(typedQuery.setParameter(PARAM_ID, ID_VALIDO)).willReturn(typedQuery);
-	    BDDMockito.given(typedQuery.getSingleResult()).willReturn(empresa);
-
-		//assert
-		Assertions.assertThrows(IllegalStateException.class, () -> empresaService.alteraDadosEmpresa(dto, usuario));
+        verify(repository, times(0)).update(any());
+	    assertThrows(FormValidationException.class, () -> empresaService.alteraDadosEmpresa(dto, usuario));
 	}
 
 	@Test
 	@DisplayName("Deveria consultar empresas")
+	void getEmpresasNamePagedTest() {
+		// Arrange
+		String nomeEmpresa = "empresa";
+		when(repository.findByNameLikePaged(anyString(), anyInt(), any())).thenReturn(empresas);
+		
+		// Act
+		List<EmpresaBaseDTO> empresasMock = empresaService.getEmpresasByNamePaged(this.pg, nomeEmpresa);
+		
+		// Assert
+		assertEquals(empresasMock.size(), empresas.size());
+		assertEquals(empresas.stream().map(EmpresaBaseDTO::new).toList(), empresasMock);
+	}
+	@Test
+	@DisplayName("Deveria consultar empresas")
 	void getEmpresasPagedTest() {
 		// Arrange
-		BDDMockito.given(em.createQuery(Mockito.anyString(), eq(Empresa.class))).willReturn(typedQuery);
-		BDDMockito.given(typedQuery.getResultList()).willReturn(empresas);
+		when(repository.findAllPaged(anyInt(), any())).thenReturn(empresas);
 		
 		// Act
 		List<EmpresaBaseDTO> empresasMock = empresaService.getEmpresasPaged(this.pg);
 		
 		// Assert
-		Assertions.assertEquals(empresasMock.size(), empresas.size());
-		Assertions.assertEquals(empresas.stream().map(EmpresaBaseDTO::new).toList(), empresasMock);
+		assertEquals(empresasMock.size(), empresas.size());
+		assertEquals(empresas.stream().map(EmpresaBaseDTO::new).toList(), empresasMock);
 	}
 
 	@Test
 	@DisplayName("Deveria consultar empresas do Usuario")
 	void getEmpresasUsuarioPagedTest() {
 		// Arrange
-		BDDMockito.given(em.createQuery(Mockito.anyString(), eq(Empresa.class))).willReturn(typedQuery);
-		BDDMockito.given(typedQuery.setParameter(PARAM_ID, ID_VALIDO)).willReturn(typedQuery);
-		BDDMockito.given(typedQuery.getResultList()).willReturn(empresas);
-		
-		// corrigir parâmetro para Pagination
+		when(repository.findByUsuarioIdAndAtivoPaged(anyLong(), any(), any(), anyBoolean())).thenReturn(empresas);
+
 		// Act
 		List<ListaEmpresasUsuarioDTO> empresasMock = empresaService.getEmpresasAtivoUsuarioPaged(this.pg, 1l, true);
 		
 		// Assert
-		Assertions.assertEquals(empresasMock.size(), empresas.size());
-		Assertions.assertEquals(empresas.stream().map(ListaEmpresasUsuarioDTO::new).toList(), empresasMock);
+		assertEquals(empresasMock.size(), empresas.size());
+		assertEquals(empresas.stream().map(ListaEmpresasUsuarioDTO::new).toList(), empresasMock);
 	}
 	
 	@Test
 	void getCountEmpresasTest01() {
 		// Arrange
-		BDDMockito.given(em.createQuery(anyString())).willReturn(query);
-		BDDMockito.given(query.getSingleResult()).willReturn(3L);
+		var QUANTIDADE_ESPERADA = 3L;
+		when(repository.countByAtivoTrue()).thenReturn(QUANTIDADE_ESPERADA);
+
 		
 		// Act
-		Long quantidade = empresaService.getCountEmpresas();
+		Long resultado = empresaService.getCountEmpresas();
 		
 		// Assert
-		Assertions.assertEquals(quantidade, 3L);
-	}
-	@Test
-	void getCountEmpresasTest02() {
-		// Arrange
-		BDDMockito.given(em.createQuery(anyString())).willReturn(query);
-		BDDMockito.given(query.getSingleResult()).willReturn(3L);
-		
-		// Act
-		Long quantidade = empresaService.getCountEmpresas();
-		
-		// Assert
-		Assertions.assertEquals(quantidade, 3L);
+		assertEquals(QUANTIDADE_ESPERADA, resultado);
 	}
 	@Test
 	void getCountEmpresasUsuarioAtivoTest() {
 		// Arrange
-		BDDMockito.given(em.createQuery(Mockito.anyString())).willReturn(query);
-		BDDMockito.given(query.setParameter("id", 123L)).willReturn(query);
-		BDDMockito.given(query.setParameter("ativo", true)).willReturn(query);
-		BDDMockito.given(query.getSingleResult()).willReturn(3L);
+		var QUANTIDADE_ESPERADA = 3L;
+		when(repository.countByUsuarioAndAtivo(anyLong(), any())).thenReturn(QUANTIDADE_ESPERADA);
 		
 		// Act
-		Long quantidade = empresaService.getCountEmpresasUsuarioAtivo(123l, true);
+		Long resultado = empresaService.getCountEmpresasUsuarioAtivo(123l, true);
 		
 		// Assert
-		Assertions.assertEquals(quantidade, 3L);
+		assertEquals(QUANTIDADE_ESPERADA, resultado);
 	}
 	@Test
-	void getCountEmpresasSearchTest() {
+	void getCountEmpresasSearchTest01() {
 		// Arrange
+		var QUANTIDADE_ESPERADA = 3L;
 		String nomeEmpresa = "Um nome qualquer";
-		BDDMockito.given(em.createQuery(anyString())).willReturn(query);
-		BDDMockito.given(query.setParameter(anyString(), eq("%" + nomeEmpresa + "%"))).willReturn(query);
-		BDDMockito.given(query.getSingleResult()).willReturn(3L);
+		given(repository.countByParamSearch(anyString())).willReturn(QUANTIDADE_ESPERADA);
 		
 		// Act
-		Long quantidade = empresaService.getCountEmpresasSearch(nomeEmpresa);
+		Long resultado = empresaService.getCountEmpresasSearch(nomeEmpresa);
 		
 		// Assert
-		Assertions.assertEquals(quantidade, 3L);
+		assertEquals(QUANTIDADE_ESPERADA, resultado);
+	}
+	@Test
+	void getCountEmpresasSearchTest02() {
+		// Arrange
+		var QUANTIDADE_ESPERADA = 0L;
+		String nomeEmpresa = "";
+		
+		// Act
+		Long resultado = empresaService.getCountEmpresasSearch(nomeEmpresa);
+		
+		// Assert
+		assertEquals(QUANTIDADE_ESPERADA, resultado);
+	}
+	@Test
+	void getCountEmpresasSearchTest03() {
+		// Arrange
+		var QUANTIDADE_ESPERADA = 0L;
+		String nomeEmpresa = null;
+		
+		// Act
+		Long resultado = empresaService.getCountEmpresasSearch(nomeEmpresa);
+		
+		// Assert
+		assertEquals(QUANTIDADE_ESPERADA, resultado);
 	}
 }
-
-
-
