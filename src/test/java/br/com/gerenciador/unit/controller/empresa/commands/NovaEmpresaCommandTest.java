@@ -19,7 +19,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import br.com.gerenciador.controller.empresa.commands.NovaEmpresaCommand;
+import br.com.gerenciador.controller.commands.empresa.NovaEmpresaCommand;
 import br.com.gerenciador.exception.DatabaseAccessException;
 import br.com.gerenciador.exception.FormValidationException;
 import br.com.gerenciador.modelo.dto.empresa.request.AlteraEmpresaDTO;

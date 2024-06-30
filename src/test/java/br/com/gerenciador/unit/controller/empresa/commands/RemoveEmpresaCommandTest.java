@@ -24,7 +24,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.google.gson.JsonObject;
 
-import br.com.gerenciador.controller.empresa.commands.RemoveEmpresaCommand;
+import br.com.gerenciador.controller.commands.empresa.RemoveEmpresaCommand;
 import br.com.gerenciador.exception.DatabaseAccessException;
 import br.com.gerenciador.modelo.Usuario;
 import br.com.gerenciador.modelo.dto.empresa.request.AlteraEmpresaDTO;

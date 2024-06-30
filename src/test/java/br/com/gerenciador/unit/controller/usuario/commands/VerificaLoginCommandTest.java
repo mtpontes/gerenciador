@@ -24,7 +24,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import br.com.gerenciador.controller.usuario.commands.VerificaLoginCommand;
+import br.com.gerenciador.controller.commands.usuario.VerificaLoginCommand;
 import br.com.gerenciador.exception.DatabaseAccessException;
 import br.com.gerenciador.service.UsuarioService;
 import jakarta.servlet.ServletException;

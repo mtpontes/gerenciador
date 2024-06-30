@@ -1,4 +1,4 @@
-package br.com.gerenciador.controller;
+package br.com.gerenciador.controller.commands;
 
 import java.io.IOException;
 

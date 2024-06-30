@@ -25,7 +25,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import br.com.gerenciador.controller.empresa.commands.ListaEmpresasAtivoUsuarioAjaxCommand;
+import br.com.gerenciador.controller.commands.empresa.ListaEmpresasAtivoUsuarioAjaxCommand;
 import br.com.gerenciador.exception.DatabaseAccessException;
 import br.com.gerenciador.modelo.Empresa;
 import br.com.gerenciador.modelo.Usuario;

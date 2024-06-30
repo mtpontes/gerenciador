@@ -1,17 +1,16 @@
-package br.com.gerenciador.controller.usuario;
+package br.com.gerenciador.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.gerenciador.controller.Command;
-import br.com.gerenciador.controller.NotFoundCommand;
-import br.com.gerenciador.controller.usuario.commands.NovoUsuarioCommand;
-import br.com.gerenciador.controller.usuario.commands.LoginFormCommand;
-import br.com.gerenciador.controller.usuario.commands.NovoUsuarioFormCommand;
-import br.com.gerenciador.controller.usuario.commands.LoginCommand;
-import br.com.gerenciador.controller.usuario.commands.LogoutCommand;
-import br.com.gerenciador.controller.usuario.commands.VerificaLoginCommand;
+import br.com.gerenciador.controller.commands.Command;
+import br.com.gerenciador.controller.commands.usuario.LoginCommand;
+import br.com.gerenciador.controller.commands.usuario.LoginFormCommand;
+import br.com.gerenciador.controller.commands.usuario.LogoutCommand;
+import br.com.gerenciador.controller.commands.usuario.NovoUsuarioCommand;
+import br.com.gerenciador.controller.commands.usuario.NovoUsuarioFormCommand;
+import br.com.gerenciador.controller.commands.usuario.VerificaLoginCommand;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;

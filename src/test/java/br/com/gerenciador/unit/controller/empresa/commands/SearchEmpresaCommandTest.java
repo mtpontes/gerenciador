@@ -21,7 +21,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import br.com.gerenciador.controller.empresa.commands.SearchCommand;
+import br.com.gerenciador.controller.commands.empresa.SearchCommand;
 import br.com.gerenciador.exception.DatabaseAccessException;
 import br.com.gerenciador.service.EmpresaService;
 import jakarta.servlet.RequestDispatcher;

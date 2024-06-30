@@ -26,7 +26,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import br.com.gerenciador.controller.empresa.commands.AtualizaEmpresaCommand;
+import br.com.gerenciador.controller.commands.empresa.AtualizaEmpresaCommand;
 import br.com.gerenciador.exception.DatabaseAccessException;
 import br.com.gerenciador.exception.FormValidationException;
 import br.com.gerenciador.modelo.Empresa;

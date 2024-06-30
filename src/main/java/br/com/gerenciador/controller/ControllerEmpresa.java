@@ -1,20 +1,19 @@
-package br.com.gerenciador.controller.empresa;
+package br.com.gerenciador.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.gerenciador.controller.Command;
-import br.com.gerenciador.controller.NotFoundCommand;
-import br.com.gerenciador.controller.empresa.commands.AtualizaEmpresaCommand;
-import br.com.gerenciador.controller.empresa.commands.NovaEmpresaFormCommand;
-import br.com.gerenciador.controller.empresa.commands.ListaEmpresasAtivoUsuarioAjaxCommand;
-import br.com.gerenciador.controller.empresa.commands.ListaEmpresasCommand;
-import br.com.gerenciador.controller.empresa.commands.ListaEmpresasUsuarioCommand;
-import br.com.gerenciador.controller.empresa.commands.NovaEmpresaCommand;
-import br.com.gerenciador.controller.empresa.commands.RemoveEmpresaCommand;
-import br.com.gerenciador.controller.empresa.commands.SearchAjaxCommand;
-import br.com.gerenciador.controller.empresa.commands.SearchCommand;
+import br.com.gerenciador.controller.commands.Command;
+import br.com.gerenciador.controller.commands.empresa.AtualizaEmpresaCommand;
+import br.com.gerenciador.controller.commands.empresa.ListaEmpresasAtivoUsuarioAjaxCommand;
+import br.com.gerenciador.controller.commands.empresa.ListaEmpresasCommand;
+import br.com.gerenciador.controller.commands.empresa.ListaEmpresasUsuarioCommand;
+import br.com.gerenciador.controller.commands.empresa.NovaEmpresaCommand;
+import br.com.gerenciador.controller.commands.empresa.NovaEmpresaFormCommand;
+import br.com.gerenciador.controller.commands.empresa.RemoveEmpresaCommand;
+import br.com.gerenciador.controller.commands.empresa.SearchAjaxCommand;
+import br.com.gerenciador.controller.commands.empresa.SearchCommand;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;

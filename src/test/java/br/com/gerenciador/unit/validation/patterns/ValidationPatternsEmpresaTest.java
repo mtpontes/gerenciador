@@ -14,7 +14,10 @@ import br.com.gerenciador.validation.patterns.ValidationPatternsEmpresa;
 @ExtendWith(MockitoExtension.class)
 class ValidationPatternsEmpresaTest {
 
-	private ValidationPatternsEmpresa empresaPatterns;
+	private final String NOME_EMPRESA_REGEX_PATTERN = ValidationPatternsEmpresa.NOME_EMPRESA_REGEX_PATTERN;
+	private final String DATA_EMPRESA_REGEX_PATTERN = ValidationPatternsEmpresa.DATA_EMPRESA_REGEX_PATTERN;
+
+
 	private List<String> nomesValidos = List.of(
 		"Um Nome Normal Com Espaço",
 		"Nome.Composto-D'ExemploComPontoHífenApóstrofo",
@@ -38,7 +41,7 @@ class ValidationPatternsEmpresaTest {
 	@Test
 	void regexNomeTest() {
 		//arange
-		Pattern patternNome = Pattern.compile(empresaPatterns.NOME_EMPRESA_REGEX_PATTERN);
+		Pattern patternNome = Pattern.compile(NOME_EMPRESA_REGEX_PATTERN);
 
 		// act/assert
 		nomesValidos.forEach(nomeValido -> {
@@ -55,7 +58,7 @@ class ValidationPatternsEmpresaTest {
 	@Test
 	void regexDataTest() {
 		//arrange
-		Pattern patternData = Pattern.compile(empresaPatterns.DATA_EMPRESA_REGEX_PATTERN);
+		Pattern patternData = Pattern.compile(DATA_EMPRESA_REGEX_PATTERN);
 
 		// act/assert
 		Assertions.assertTrue(patternData.matcher(DATA_VALIDA).matches());
