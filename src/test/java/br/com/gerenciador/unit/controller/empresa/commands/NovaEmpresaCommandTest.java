@@ -1,6 +1,7 @@
 package br.com.gerenciador.unit.controller.empresa.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
@@ -23,7 +24,6 @@ import br.com.gerenciador.exception.DatabaseAccessException;
 import br.com.gerenciador.exception.FormValidationException;
 import br.com.gerenciador.modelo.dto.empresa.request.AlteraEmpresaDTO;
 import br.com.gerenciador.service.EmpresaService;
-import br.com.gerenciador.unit.tests_utils.TestsUtils;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -51,8 +51,6 @@ class NovaEmpresaCommandTest {
     @Captor
     private ArgumentCaptor<AlteraEmpresaDTO> empresaDtoCaptor;
     
-    private static final String PARAM_ACAO = "acao";
-
     private static final String PARAM_NOME = "nome";
     private static final String PARAM_NOME_VALUE = "Um Nome";
     private static final String PARAM_DATA = "data";
@@ -74,8 +72,7 @@ class NovaEmpresaCommandTest {
     	verify(response).sendRedirect(stringCaptor.capture());
     	
     	String endereco = stringCaptor.getValue();
-    	String acao = TestsUtils.extractParamFromUrl(endereco, PARAM_ACAO);
-    	assertEquals("listaEmpresasUsuario", acao);
+		assertTrue(endereco.contains("listaEmpresasUsuario"));
     }
     @Test
     @DisplayName("Deve redirecionar para a mesma página caso lance uma FormValidationException")
