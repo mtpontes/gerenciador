@@ -1,20 +1,24 @@
 package br.com.gerenciador.service;
 
-import br.com.gerenciador.dto.usuario.NovoUsuarioDTO;
 import br.com.gerenciador.modelo.Usuario;
+import br.com.gerenciador.modelo.dto.usuario.NovoUsuarioDTO;
 import br.com.gerenciador.repository.UsuarioRepository;
 import br.com.gerenciador.repository.UsuarioRepositoryJPA;
 import br.com.gerenciador.validation.ValidatorUtil;
-import jakarta.persistence.EntityManager;
 
 public class UsuarioService {
 
 	private UsuarioRepository repository;
-	private ValidatorUtil validator = new ValidatorUtil();
+	private ValidatorUtil validator;
 
 	
-	public UsuarioService(EntityManager em) {
-		this.repository = new UsuarioRepositoryJPA(em);
+	public UsuarioService() {
+		this.repository = new UsuarioRepositoryJPA();
+		this.validator = new ValidatorUtil();
+	}
+	public UsuarioService(UsuarioRepository repository, ValidatorUtil validatorUtil) {
+		this.repository = repository;
+		this.validator = validatorUtil;
 	}
 	
 	public void cadastraUsuario(NovoUsuarioDTO dto) {

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import br.com.gerenciador.dto.usuario.NovoUsuarioDTO;
+import br.com.gerenciador.modelo.dto.usuario.NovoUsuarioDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

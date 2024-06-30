@@ -27,7 +27,6 @@ public class ControllerUtil {
         StringBuilder stringBuilder = new StringBuilder();
         String line;
         
-
         try {
         	//lê uma linha, quando terminar retorna null
         	while ((line = reader.readLine()) != null) {
@@ -37,6 +36,7 @@ public class ControllerUtil {
         	String corpoDaRequisicaoEmString = stringBuilder.toString();
         	JsonObject jsonObject = JsonParser.parseString(corpoDaRequisicaoEmString).getAsJsonObject();
         	return jsonObject;
+
 		} catch (JsonParseException e) {
 	        throw new IOException("Erro ao analisar o corpo da requisição como JSON", e);
 		}

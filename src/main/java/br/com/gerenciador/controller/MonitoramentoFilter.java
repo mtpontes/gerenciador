@@ -8,12 +8,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 
-//@WebFilter(urlPatterns="/entrada")
 public class MonitoramentoFilter implements Filter {
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		System.out.println("MonitoramentoFilter");
 		
 		long antes = System.currentTimeMillis();

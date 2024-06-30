@@ -16,4 +16,3 @@ public interface UsuarioRepository {
 	
 	boolean existsByLogin(String login);
 }
-

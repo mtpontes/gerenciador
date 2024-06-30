@@ -6,18 +6,17 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
 
-import br.com.gerenciador.dto.usuario.NovoUsuarioDTO;
-import br.com.gerenciador.exception.DatabaseAccessException;
+import br.com.gerenciador.integration.config.JPAUtilTest;
 import br.com.gerenciador.modelo.Usuario;
+import br.com.gerenciador.modelo.dto.usuario.NovoUsuarioDTO;
 import br.com.gerenciador.repository.UsuarioRepository;
 import br.com.gerenciador.repository.UsuarioRepositoryJPA;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
-import jakarta.persistence.PersistenceException;
 
 public class UsuarioRepositoryJPATest {
+	
 	private EntityManager em;
 	private UsuarioRepository rp;
 	
