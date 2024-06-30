@@ -17,23 +17,23 @@ import jakarta.servlet.http.HttpSession;
 public class AutorizacaoFilter implements Filter {
 
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
-		System.out.println("AutorizacaoFilter");
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
 		HttpSession sessaoAtual = request.getSession();
 		
 		String paramAcao = request.getParameter("acao");
 		List<String> acoesLiberadas = Arrays.asList(
-				"login", 
-				"loginForm", 
-				"novoUsuarioForm",
-				"novoUsuario", 
-				"verificaLogin");
+			"login", 
+			"loginForm", 
+			"novoUsuarioForm",
+			"novoUsuario", 
+			"verificaLogin"
+		);
 		
 		boolean usuarioNaoEstaLogado = (sessaoAtual.getAttribute("usuarioLogado") == null);
 		boolean ehUmaAcaoProtegida = !acoesLiberadas.contains(paramAcao);
 		
-		if(ehUmaAcaoProtegida && usuarioNaoEstaLogado) {
+		if ( ehUmaAcaoProtegida && usuarioNaoEstaLogado ) {
 			response.sendRedirect("usuario?acao=loginForm");
 			return;
 		}
