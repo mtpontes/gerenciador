@@ -20,35 +20,40 @@ Esse projeto foi desenvolvido na base de um projeto simples de MVC. Nele foi des
 - CSS
 - JavaScript (Front-end)
 
-## 🌟 Principais Melhorias
-
+## 🌟 Melhorias
 <details><summary>Clique para expandir</summary>
-<br>
 
 
-- Reestruturação de pacotes.
+### Boas práticas 
 - Gerenciamento de dependências com Maven.
+- Validação de entradas server-side com Bean Validation.
+- Padrões de design: services, repositories e DTOs.
+- Testes automatizados de unidade e integração.
+
+### Persistência
 - Relacionamento entre objetos.
 - Persistência com banco de dados relacional com JPA.
-- Criptografia de senha.
-- Validação de entradas server-side com Bean Validation.
-- Testes automatizados de unidade e integração.
-- Padrões de design: services, repositories e DTOs.
 - Paginação de consultas.
-- Migração da biblioteca javax-servlet para jakarta-servlet.
-- Validação de formulários client-side.
+- Criptografia de senha.
+
+### Front-End
 - Estilização com CSS.
 - Páginas dinâmicas com JS.
 - Modularização do front-end.
+- Validação de formulários client-side.
+
+### Outros
+- Reestruturação de pacotes.
+- Migração da biblioteca javax-servlet para jakarta-servlet.
 
 ## 🧩 Novas funções
-- Criar `Usuario`.
-- Criar `Empresa`.
-- Listar somente `Empresa` do `Usuario`.
-- Listar somente `Empresa` ativa ou somente arquivada.
-- Editar `Empresa` de forma dinâmica.
-- Arquivar `Empresa` de forma dinâmica. 
-- Pesquisar por registros `Empresa`.
+- Criar usuário.
+- Criar empresa.
+- Listar somente empresa do usuário.
+- Listar somente empresa ativa ou somente arquivada.
+- Editar empresa de forma dinâmica.
+- Arquivar empresa de forma dinâmica. 
+- Pesquisar por registros empresa.
 
 </details>
 
