@@ -28,10 +28,14 @@ public class ListaEmpresasCommand implements Command {
 	
 
     @Override
-    public void executa(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void executa(HttpServletRequest request, HttpServletResponse response
+	) throws IOException, ServletException {
 		try {
-			Pagination pg = PaginationUtil.criaPagination(request, empresaService.getCountEmpresas());
-			List<EmpresaBaseDTO> listaEmpresas = empresaService.getEmpresasPaged(pg);
+			Pagination pg = PaginationUtil.criaPagination(
+				request, empresaService.getCountEmpresas()
+			);
+			List<EmpresaBaseDTO> listaEmpresas = 
+				empresaService.getEmpresasPaged(pg);
 			
 			request.setAttribute("acao", "listaEmpresas");
 			request.setAttribute("empresas", listaEmpresas);
@@ -39,11 +43,13 @@ public class ListaEmpresasCommand implements Command {
 			request.setAttribute("pageSize", pg.getPageSize());
 			request.setAttribute("totalPages", pg.getTotalPages());
 			
-			RequestDispatcher rd = request.getRequestDispatcher(ControllerUtil.enderecoJSP("listaEmpresas.jsp"));
+			RequestDispatcher rd = request.getRequestDispatcher(
+				ControllerUtil.enderecoJSP("listaEmpresas.jsp"));
 			rd.forward(request, response);
 			
 		} catch (IOException | DatabaseAccessException e) {
-			RequestDispatcher rd = request.getRequestDispatcher(ControllerUtil.enderecoJSP("/error/500.html"));
+			RequestDispatcher rd = request.getRequestDispatcher(
+				ControllerUtil.enderecoJSP("/error/500.html"));
 			rd.forward(request, response);
 		}
     }

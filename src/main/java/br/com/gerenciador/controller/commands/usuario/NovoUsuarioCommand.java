@@ -25,7 +25,8 @@ public class NovoUsuarioCommand implements Command {
 	}
 
     @Override
-    public void executa(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void executa(HttpServletRequest request, HttpServletResponse response
+	) throws IOException, ServletException {
 		String nome = request.getParameter("nome");
 		String login = request.getParameter("login");
 		String senha = request.getParameter("senha");
@@ -34,13 +35,16 @@ public class NovoUsuarioCommand implements Command {
 		
 		try {
 			usuarioService.cadastraUsuario(dto);
-			response.sendRedirect(ControllerUtil.usuarioParamAcao("loginForm"));
+			response.sendRedirect(
+				ControllerUtil.usuarioParamAcao("loginForm"));
 		
 		} catch (FormValidationException e) {
-			response.sendRedirect(ControllerUtil.usuarioParamAcao("novoUsuarioForm"));
+			response.sendRedirect(
+				ControllerUtil.usuarioParamAcao("novoUsuarioForm"));
 			
 		} catch (IOException | DatabaseAccessException e) {
-			RequestDispatcher rd = request.getRequestDispatcher(ControllerUtil.enderecoJSP("/error/500.html"));
+			RequestDispatcher rd = request.getRequestDispatcher(
+				ControllerUtil.enderecoJSP("/error/500.html"));
 			rd.forward(request, response);
 		}
     }

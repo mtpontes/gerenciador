@@ -95,7 +95,8 @@ class EmpresaServiceTest {
 	@DisplayName("Deveria cadastrar Empresa")
 	void cadastraEmpresaTest01() {
 	    //arrange
-	    NovaEmpresaDTO dto = new NovaEmpresaDTO(new EmpresaBaseDTO(NOME_VALIDO, DATA_VALIDA), usuario);
+	    NovaEmpresaDTO dto = new NovaEmpresaDTO(
+			new EmpresaBaseDTO(NOME_VALIDO, DATA_VALIDA), usuario);
 
 	    //act
 	    empresaService.cadastraEmpresa(dto);
@@ -112,7 +113,8 @@ class EmpresaServiceTest {
 	@DisplayName("Nao deveria cadastrar Empresa quando os campos 'nome' e 'data' estiverem errados")
 	void cadastraEmpresaTest02() {
 	    //arrange
-	    NovaEmpresaDTO dto = new NovaEmpresaDTO(new EmpresaBaseDTO(NOME_INVALIDO, DATA_INVALIDA), usuario);
+	    NovaEmpresaDTO dto = new NovaEmpresaDTO(
+			new EmpresaBaseDTO(NOME_INVALIDO, DATA_INVALIDA), usuario);
 
 	    //act and Assert
 	    then(em).shouldHaveNoInteractions();
@@ -124,9 +126,12 @@ class EmpresaServiceTest {
 	@DisplayName("Deveria alterar dados de Empresa")
 	void alteraDadosEmpresaTest01() {
 	    //arrange
-	    AlteraEmpresaDTO dto = new AlteraEmpresaDTO(ID_VALIDO, new EmpresaBaseDTO(NOME_VALIDO, DATA_VALIDA));
+	    AlteraEmpresaDTO dto = new AlteraEmpresaDTO(
+			ID_VALIDO, new EmpresaBaseDTO(NOME_VALIDO, DATA_VALIDA));
 
-		Empresa empresa = new Empresa(new NovaEmpresaDTO(new EmpresaBaseDTO(NOME_VALIDO, DATA_VALIDA), usuario));
+		Empresa empresa = new Empresa(
+			new NovaEmpresaDTO(
+				new EmpresaBaseDTO(NOME_VALIDO, DATA_VALIDA), usuario));
 		when(repository.findByIdAndUserId(anyLong(), anyLong())).thenReturn(empresa);
 
 	    //act
@@ -145,7 +150,8 @@ class EmpresaServiceTest {
 	@DisplayName("Nao deveria alterar dados de Empresa quando os campos 'nome' e 'data' estiverem errados")
 	void alteraDadosEmpresaTest02() {
 	    //arrange
-	    AlteraEmpresaDTO dto = new AlteraEmpresaDTO(ID_INVALIDO, new EmpresaBaseDTO(NOME_INVALIDO, DATA_INVALIDA));
+	    AlteraEmpresaDTO dto = new AlteraEmpresaDTO(
+			ID_INVALIDO, new EmpresaBaseDTO(NOME_INVALIDO, DATA_INVALIDA));
 
 	    //act and Assert
 	    
@@ -158,10 +164,12 @@ class EmpresaServiceTest {
 	void getEmpresasNamePagedTest() {
 		// Arrange
 		String nomeEmpresa = "empresa";
-		when(repository.findByNameLikePaged(anyString(), anyInt(), any())).thenReturn(empresas);
+		when(repository.findByNameLikePaged(anyString(), anyInt(), any()))
+			.thenReturn(empresas);
 		
 		// Act
-		List<EmpresaBaseDTO> empresasMock = empresaService.getEmpresasByNamePaged(this.pg, nomeEmpresa);
+		List<EmpresaBaseDTO> empresasMock = 
+			empresaService.getEmpresasByNamePaged(this.pg, nomeEmpresa);
 		
 		// Assert
 		assertEquals(empresasMock.size(), empresas.size());
@@ -174,7 +182,8 @@ class EmpresaServiceTest {
 		when(repository.findAllPaged(anyInt(), any())).thenReturn(empresas);
 		
 		// Act
-		List<EmpresaBaseDTO> empresasMock = empresaService.getEmpresasPaged(this.pg);
+		List<EmpresaBaseDTO> empresasMock = 
+			empresaService.getEmpresasPaged(this.pg);
 		
 		// Assert
 		assertEquals(empresasMock.size(), empresas.size());
@@ -185,10 +194,12 @@ class EmpresaServiceTest {
 	@DisplayName("Deveria consultar empresas do Usuario")
 	void getEmpresasUsuarioPagedTest() {
 		// Arrange
-		when(repository.findByUsuarioIdAndAtivoPaged(anyLong(), any(), any(), anyBoolean())).thenReturn(empresas);
+		when(repository.findByUsuarioIdAndAtivoPaged(anyLong(), any(), any(), anyBoolean()))
+			.thenReturn(empresas);
 
 		// Act
-		List<ListaEmpresasUsuarioDTO> empresasMock = empresaService.getEmpresasAtivoUsuarioPaged(this.pg, 1l, true);
+		List<ListaEmpresasUsuarioDTO> empresasMock = 
+			empresaService.getEmpresasAtivoUsuarioPaged(this.pg, 1l, true);
 		
 		// Assert
 		assertEquals(empresasMock.size(), empresas.size());
@@ -212,7 +223,8 @@ class EmpresaServiceTest {
 	void getCountEmpresasUsuarioAtivoTest() {
 		// Arrange
 		var QUANTIDADE_ESPERADA = 3L;
-		when(repository.countByUsuarioAndAtivo(anyLong(), any())).thenReturn(QUANTIDADE_ESPERADA);
+		when(repository.countByUsuarioAndAtivo(anyLong(), any()))
+			.thenReturn(QUANTIDADE_ESPERADA);
 		
 		// Act
 		Long resultado = empresaService.getCountEmpresasUsuarioAtivo(123l, true);
@@ -225,7 +237,8 @@ class EmpresaServiceTest {
 		// Arrange
 		var QUANTIDADE_ESPERADA = 3L;
 		String nomeEmpresa = "Um nome qualquer";
-		given(repository.countByParamSearch(anyString())).willReturn(QUANTIDADE_ESPERADA);
+		given(repository.countByParamSearch(anyString()))
+			.willReturn(QUANTIDADE_ESPERADA);
 		
 		// Act
 		Long resultado = empresaService.getCountEmpresasSearch(nomeEmpresa);

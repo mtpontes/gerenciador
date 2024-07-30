@@ -31,30 +31,45 @@ public class AtualizaEmpresaCommand implements Command {
 	
 
     @Override
-    public void executa(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void executa(HttpServletRequest request, HttpServletResponse response
+	) throws IOException, ServletException {
 		JsonObject jsonResponse = new JsonObject();
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		
 		try {
-			JsonObject jsonRequestBody = ControllerUtil.converteCorpoRequisicaoParaJsonObject(request);
+			JsonObject jsonRequestBody = 
+				ControllerUtil.converteCorpoRequisicaoParaJsonObject(request);
 			
 			String nome = jsonRequestBody.get("nome").getAsString();
 			String data = jsonRequestBody.get("data").getAsString();
 			Long id = jsonRequestBody.get("id").getAsLong();
-			Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
+			Usuario usuario = 
+				(Usuario) request.getSession().getAttribute("usuarioLogado");
 			
-			AlteraEmpresaDTO dto = new AlteraEmpresaDTO(id, new EmpresaBaseDTO(nome, data));
+			AlteraEmpresaDTO dto = new AlteraEmpresaDTO(
+				id, 
+				new EmpresaBaseDTO(nome, data)
+			);
 			empresaService.alteraDadosEmpresa(dto, usuario);
-			jsonResponse.addProperty("message", "empresa atualizada com sucesso");
+			jsonResponse.addProperty(
+				"message", "empresa atualizada com sucesso");
 			
-		} catch(DatabaseAccessException| NoResultException | IllegalStateException | FormValidationException e) {
-			response.setStatus(HttpStatusErrorMapperUtil.getStatusCodeByException(e));
+		} catch(
+			DatabaseAccessException | 
+			NoResultException | 
+			IllegalStateException | 
+			FormValidationException e
+			) {
+			response.setStatus(
+				HttpStatusErrorMapperUtil.getStatusCodeByException(e));
 			jsonResponse.addProperty("message", e.getMessage());
 			
 		} catch (IOException e) {
-			response.setStatus(HttpStatusErrorMapperUtil.getStatusCodeByException(e));
-			jsonResponse.addProperty("message", "ocorreu um erro interno no servidor");
+			response.setStatus(
+				HttpStatusErrorMapperUtil.getStatusCodeByException(e));
+			jsonResponse.addProperty(
+				"message", "ocorreu um erro interno no servidor");
 		}
 		response.getWriter().print(jsonResponse.toString());
     }

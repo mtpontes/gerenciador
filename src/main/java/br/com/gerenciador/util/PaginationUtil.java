@@ -6,7 +6,10 @@ import jakarta.servlet.http.HttpServletRequest;
 
 public class PaginationUtil {
 
-    public static Pagination criaPagination(HttpServletRequest request, Long totalPages) {
+    public static Pagination criaPagination(
+		HttpServletRequest request, 
+		Long totalPages
+	) {
 		String paramPageNumber = request.getParameter("page");
 		String paramPageSize = request.getParameter("size");
 		Pagination pg = new PaginationBuilder()

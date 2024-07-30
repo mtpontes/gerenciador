@@ -26,13 +26,15 @@ public class VerificaLoginCommand implements Command {
 	
 
     @Override
-    public void executa(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void executa(HttpServletRequest request, HttpServletResponse response) 
+	throws IOException, ServletException {
     	JsonObject respostaJson = new JsonObject();
     	response.setContentType("application/json");
     	response.setCharacterEncoding("UTF-8");
 
     	try {
-        	JsonObject jsonRequest = ControllerUtil.converteCorpoRequisicaoParaJsonObject(request);
+        	JsonObject jsonRequest = 
+				ControllerUtil.converteCorpoRequisicaoParaJsonObject(request);
         	String login = jsonRequest.get("login").getAsString();
 
         	if (usuarioService.verificaSeLoginExiste(login)) {
@@ -41,7 +43,8 @@ public class VerificaLoginCommand implements Command {
                 respostaJson.addProperty("response", false);
             }
         } catch (DatabaseAccessException e) {
-			response.setStatus(HttpStatusErrorMapperUtil.getStatusCodeByException(e));
+			response.setStatus(
+				HttpStatusErrorMapperUtil.getStatusCodeByException(e));
             respostaJson.addProperty("error", e.getMessage());
         }
 	    response.getWriter().print(respostaJson.toString());

@@ -12,8 +12,10 @@ import jakarta.servlet.http.HttpServletResponse;
 public class NovaEmpresaFormCommand implements Command {
 
     @Override
-    public void executa(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        RequestDispatcher rd = request.getRequestDispatcher(ControllerUtil.enderecoJSP("formNovaEmpresa.jsp"));
+    public void executa(HttpServletRequest request, HttpServletResponse response
+    ) throws IOException, ServletException {
+        RequestDispatcher rd = request.getRequestDispatcher(
+            ControllerUtil.enderecoJSP("formNovaEmpresa.jsp"));
         rd.forward(request, response);
     }
 }

@@ -9,11 +9,15 @@ import jakarta.validation.constraints.Pattern;
 public record EmpresaBaseDTO(
 		
 	@NotBlank(message = "Nome não pode ser nulo")
-	@Pattern(regexp = ValidationPatternsEmpresa.NOME_EMPRESA_REGEX_PATTERN, message = ValidationPatternsEmpresa.NOME_EMPRESA_ERROR_MESSAGE)
+	@Pattern(
+		regexp = ValidationPatternsEmpresa.NOME_EMPRESA_REGEX_PATTERN, 
+		message = ValidationPatternsEmpresa.NOME_EMPRESA_ERROR_MESSAGE)
 	String nome,
 	
 	@NotBlank(message = "Data não pode ser nulo")
-	@Pattern(regexp = ValidationPatternsEmpresa.DATA_EMPRESA_REGEX_PATTERN, message = ValidationPatternsEmpresa.DATA_EMPRESA_ERROR_FORMAT_MESSAGE)
+	@Pattern(
+		regexp = ValidationPatternsEmpresa.DATA_EMPRESA_REGEX_PATTERN, 
+		message = ValidationPatternsEmpresa.DATA_EMPRESA_ERROR_FORMAT_MESSAGE)
 	@DataNaoFutura
 	String data
 	) {

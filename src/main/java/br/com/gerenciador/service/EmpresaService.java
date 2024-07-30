@@ -22,23 +22,36 @@ public class EmpresaService {
 	public EmpresaService() {
 		this.repository = new EmpresaRepositoryJPA();
 	}
-	public EmpresaService(EmpresaRepository repository, ValidatorUtil validatorUtil) {
+	public EmpresaService(
+		EmpresaRepository repository, 
+		ValidatorUtil validatorUtil
+	) {
 		this.repository = repository;
 		this.validator = validatorUtil;
 	}
 	
 	
-	public void cadastraEmpresa(NovaEmpresaDTO dto) {
+	public void cadastraEmpresa(
+		NovaEmpresaDTO dto
+	) {
 		validator.valida(dto);
 		repository.persist(new Empresa(dto));
 	}
 	
-	public void alteraDadosEmpresa(AlteraEmpresaDTO dto, Usuario usuario) {
+	public void alteraDadosEmpresa(
+		AlteraEmpresaDTO dto, Usuario usuario
+	) {
 		validator.valida(dto);
-		Empresa empresa = repository.findByIdAndUserId(dto.id(), usuario.getId());
+		Empresa empresa = repository.findByIdAndUserId(
+			dto.id(), 
+			usuario.getId()
+		);
 
 		if (empresa != null) {
-			empresa.alteraDados(dto.base().nome(), LocalDateUtil.formatStringToLocalDate(dto.base().data()));
+			empresa.alteraDados(
+				dto.base().nome(), 
+				LocalDateUtil.formatStringToLocalDate(dto.base().data())
+			);
 			repository.update(empresa);
 		}
 	}
@@ -50,23 +63,42 @@ public class EmpresaService {
 		repository.update(empresa);
 	}
 
-	public List<EmpresaBaseDTO> getEmpresasByNamePaged(Pagination pg, String nomeEmpresa) {
+	public List<EmpresaBaseDTO> getEmpresasByNamePaged(
+		Pagination pg, 
+		String nomeEmpresa
+	) {
 		if(nomeEmpresa == null || nomeEmpresa.trim().isEmpty()) {
 			return null;
 		}
-		return repository.findByNameLikePaged(nomeEmpresa, pg.getStartIndex(), pg.getPageSize()).stream()
+		return repository.findByNameLikePaged(
+			nomeEmpresa, 
+			pg.getStartIndex(), 
+			pg.getPageSize()
+		)
+		.stream()
 			.map(EmpresaBaseDTO::new)
 			.toList();
 	}
 	
 	public List<EmpresaBaseDTO> getEmpresasPaged(Pagination pg){
-		return repository.findAllPaged(pg.getStartIndex(), pg.getPageSize()).stream()
-			.map(EmpresaBaseDTO::new)
-			.toList();
+		return repository.findAllPaged(pg.getStartIndex(), pg.getPageSize())
+			.stream()
+				.map(EmpresaBaseDTO::new)
+				.toList();
 	}
 	
-	public List<ListaEmpresasUsuarioDTO> getEmpresasAtivoUsuarioPaged(Pagination pg, Long userId, Boolean ativo) {
-		return repository.findByUsuarioIdAndAtivoPaged(userId, pg.getStartIndex(), pg.getPageSize(), ativo).stream()
+	public List<ListaEmpresasUsuarioDTO> getEmpresasAtivoUsuarioPaged(
+		Pagination pg, 
+		Long userId, 
+		Boolean ativo
+	) {
+		return repository.findByUsuarioIdAndAtivoPaged(
+			userId, 
+			pg.getStartIndex(), 
+			pg.getPageSize(), 
+			ativo
+		)
+		.stream()
 			.map(ListaEmpresasUsuarioDTO::new)
 			.toList();
 	}

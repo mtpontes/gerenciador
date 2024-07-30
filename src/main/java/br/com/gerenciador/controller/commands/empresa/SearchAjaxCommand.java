@@ -31,30 +31,38 @@ public class SearchAjaxCommand implements Command {
 	
 
     @Override
-    public void executa(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void executa(HttpServletRequest request, HttpServletResponse response
+	) throws IOException, ServletException {
 		JsonObject jsonResponse = new JsonObject();
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		
 		try {
 			String nomeEmpresa = request.getParameter("nomeEmpresa");
-			Pagination pg = PaginationUtil.criaPagination(request, empresaService.getCountEmpresasSearch(nomeEmpresa));
+			Pagination pg = PaginationUtil.criaPagination(
+				request, 
+				empresaService.getCountEmpresasSearch(nomeEmpresa)
+			);
 			List<EmpresaBaseDTO> listaEmpresas = empresaService
 					.getEmpresasByNamePaged(pg,nomeEmpresa);
 			
-			EmpresaBaseWrapperDTO wrapper = new EmpresaBaseWrapperDTO(listaEmpresas, pg);
+			EmpresaBaseWrapperDTO wrapper = 
+				new EmpresaBaseWrapperDTO(listaEmpresas, pg);
 			
 			String listaEmpresaJson = new Gson().toJson(wrapper);
 			response.getWriter().print(listaEmpresaJson);
 			
 		} catch (DatabaseAccessException e) {
-			response.setStatus(HttpStatusErrorMapperUtil.getStatusCodeByException(e));
+			response.setStatus(
+				HttpStatusErrorMapperUtil.getStatusCodeByException(e));
 			jsonResponse.addProperty("message", e.getMessage());
 			response.getWriter().print(jsonResponse.toString());
 			
 		} catch (IOException e) {
-			response.setStatus(HttpStatusErrorMapperUtil.getStatusCodeByException(e));
-			jsonResponse.addProperty("message", "ocorreu um erro interno no servidor");
+			response.setStatus(
+				HttpStatusErrorMapperUtil.getStatusCodeByException(e));
+			jsonResponse.addProperty(
+				"message", "ocorreu um erro interno no servidor");
 			response.getWriter().print(jsonResponse.toString());
 		}
     }

@@ -64,7 +64,8 @@ class LoginCommandTest {
     	//arrange
     	given(request.getParameter(PARAM_LOGIN)).willReturn(PARAM_LOGIN_VALUE);
     	given(request.getParameter(PARAM_SENHA)).willReturn(PARAM_SENHA_VALUE);
-    	given(usuarioService.buscaUsuarioPorLogin(PARAM_LOGIN_VALUE)).willReturn(usuario);
+    	given(usuarioService.buscaUsuarioPorLogin(PARAM_LOGIN_VALUE))
+			.willReturn(usuario);
     	given(request.getSession()).willReturn(session);
     	given(usuario.verificarSenha(any())).willReturn(true);
     	
@@ -81,7 +82,8 @@ class LoginCommandTest {
     void loginTest02() throws ServletException, IOException {
     	//arrange
     	given(request.getParameter(PARAM_LOGIN)).willReturn(PARAM_LOGIN_VALUE);
-    	given(usuarioService.buscaUsuarioPorLogin(PARAM_LOGIN_VALUE)).willReturn(usuario);
+    	given(usuarioService.buscaUsuarioPorLogin(PARAM_LOGIN_VALUE))
+			.willReturn(usuario);
     	given(usuario.verificarSenha(any())).willReturn(false);
     	
     	//act
@@ -100,7 +102,8 @@ class LoginCommandTest {
     void loginTest03() throws ServletException, IOException {
     	//arrange
     	given(request.getParameter(PARAM_LOGIN)).willReturn(PARAM_LOGIN_VALUE);
-    	willThrow(new NoResultException()).given(usuarioService).buscaUsuarioPorLogin(any());
+    	willThrow(new NoResultException())
+			.given(usuarioService).buscaUsuarioPorLogin(any());
     	
     	//act
     	command.executa(request, response);
@@ -118,7 +121,8 @@ class LoginCommandTest {
     void loginTest04() throws ServletException, IOException {
     	//arrange
     	given(request.getParameter(PARAM_LOGIN)).willReturn(PARAM_LOGIN_VALUE);
-    	willThrow(new DatabaseAccessException("")).given(usuarioService).buscaUsuarioPorLogin(any());
+    	willThrow(new DatabaseAccessException(""))
+			.given(usuarioService).buscaUsuarioPorLogin(any());
     	given(request.getRequestDispatcher(anyString())).willReturn(rd);
     	
     	//act

@@ -27,7 +27,8 @@ public class LoginCommand implements Command {
 	
 
     @Override
-    public void executa(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void executa(HttpServletRequest request, HttpServletResponse response
+	) throws IOException, ServletException {
         String login = request.getParameter("login");
 		String senha = request.getParameter("senha");
 		
@@ -39,7 +40,8 @@ public class LoginCommand implements Command {
 				sessao.setAttribute("usuarioLogado", usuario);
 				sessao.setMaxInactiveInterval(3600);
 
-				response.sendRedirect(ControllerUtil.empresaParamAcao("listaEmpresasUsuario"));
+				response.sendRedirect(
+					ControllerUtil.empresaParamAcao("listaEmpresasUsuario"));
 			} 
 			response.sendRedirect(ControllerUtil.usuarioParamAcao("loginForm"));
 
@@ -47,7 +49,8 @@ public class LoginCommand implements Command {
 			response.sendRedirect(ControllerUtil.empresaParamAcao("loginForm"));
 			
 		} catch (DatabaseAccessException e) {
-			RequestDispatcher rd = request.getRequestDispatcher(ControllerUtil.enderecoJSP("/error/500.html"));
+			RequestDispatcher rd = request.getRequestDispatcher(
+				ControllerUtil.enderecoJSP("/error/500.html"));
 			rd.forward(request, response);
 		}
     }

@@ -23,6 +23,7 @@ public class UsuarioBuilder {
 	}
 	
 	public Usuario build() {
-		return new Usuario(new NovoUsuarioDTO(this.nome, this.login, this.senha, this.senha));
+		return new Usuario(
+			new NovoUsuarioDTO(this.nome, this.login, this.senha, this.senha));
 	}
 }

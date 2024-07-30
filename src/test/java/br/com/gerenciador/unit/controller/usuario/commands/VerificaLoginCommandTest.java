@@ -56,7 +56,8 @@ class VerificaLoginCommandTest {
     void verificaLoginTest01() throws ServletException, IOException {
     	//arrange
     	String requestBody = "{\"login\":\"umLogin\"}";
-        given(request.getReader()).willReturn(new BufferedReader(new StringReader(requestBody)));
+        given(request.getReader()).willReturn(
+            new BufferedReader(new StringReader(requestBody)));
         given(response.getWriter()).willReturn(out);
     	
     	//act
@@ -64,7 +65,8 @@ class VerificaLoginCommandTest {
     	
     	//assert
     	verify(out).print(stringCaptor.capture());
-    	JsonObject jsonResponse = JsonParser.parseString(stringCaptor.getValue()).getAsJsonObject();
+    	JsonObject jsonResponse = 
+            JsonParser.parseString(stringCaptor.getValue()).getAsJsonObject();
     	
     	assertTrue(jsonResponse.has("response"));
     }
@@ -73,10 +75,12 @@ class VerificaLoginCommandTest {
     void verificaLoginTest02() throws ServletException, IOException {
     	//arrange
     	String requestBody = "{\"login\":\"umLogin\"}";
-    	given(request.getReader()).willReturn(new BufferedReader(new StringReader(requestBody)));
+    	given(request.getReader())
+            .willReturn(new BufferedReader(new StringReader(requestBody)));
     	given(response.getWriter()).willReturn(out);
     	
-    	willThrow(new DatabaseAccessException("")).given(usuarioService).verificaSeLoginExiste(anyString());
+    	willThrow(new DatabaseAccessException(""))
+            .given(usuarioService).verificaSeLoginExiste(anyString());
     	
     	//act
 		command.executa(request, response);
@@ -86,7 +90,8 @@ class VerificaLoginCommandTest {
     	Integer statusCode = statusCodeCaptor.getValue();
     	
     	verify(out).print(stringCaptor.capture());
-    	JsonObject jsonResponse = JsonParser.parseString(stringCaptor.getValue()).getAsJsonObject();
+    	JsonObject jsonResponse = 
+            JsonParser.parseString(stringCaptor.getValue()).getAsJsonObject();
     	
     	assertTrue(jsonResponse.has("error"));
     	assertEquals(statusCode, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

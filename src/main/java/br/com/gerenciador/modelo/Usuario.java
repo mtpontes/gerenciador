@@ -40,11 +40,13 @@ public class Usuario {
 	
 	private void setSenha(String senha) {
     	String secret = System.getenv("SECRET");
-		this.senha = BCrypt.withDefaults().hashToString(4, (secret + senha).toCharArray());
+		this.senha = BCrypt.withDefaults()
+			.hashToString(4, (secret + senha).toCharArray());
 	}
 	
     public boolean verificarSenha(String senha) {
     	String secret = System.getenv("SECRET");
-    	return BCrypt.verifyer().verify((secret + senha).getBytes(), this.senha.getBytes()).verified;
+    	return BCrypt.verifyer()
+			.verify((secret + senha).getBytes(), this.senha.getBytes()).verified;
     }
 }

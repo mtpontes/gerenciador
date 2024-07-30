@@ -16,7 +16,11 @@ import jakarta.servlet.http.HttpSession;
 
 public class AutorizacaoFilter implements Filter {
 
-	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
+	public void doFilter(
+		ServletRequest servletRequest, 
+		ServletResponse servletResponse, 
+		FilterChain chain
+	) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
 		HttpSession sessaoAtual = request.getSession();
@@ -30,7 +34,8 @@ public class AutorizacaoFilter implements Filter {
 			"verificaLogin"
 		);
 		
-		boolean usuarioNaoEstaLogado = (sessaoAtual.getAttribute("usuarioLogado") == null);
+		boolean usuarioNaoEstaLogado = 
+			(sessaoAtual.getAttribute("usuarioLogado") == null);
 		boolean ehUmaAcaoProtegida = !acoesLiberadas.contains(paramAcao);
 		
 		if ( ehUmaAcaoProtegida && usuarioNaoEstaLogado ) {

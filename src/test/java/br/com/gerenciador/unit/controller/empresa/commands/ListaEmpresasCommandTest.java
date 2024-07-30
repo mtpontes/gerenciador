@@ -60,7 +60,9 @@ class ListaEmpresasCommandTest {
         command.executa(request, response);
 
     	//assert
-    	then(request).should(times(5)).setAttribute(anyString(), any());
+    	then(request)
+            .should(times(5))
+                .setAttribute(anyString(), any());
     	verify(request).getRequestDispatcher(any());
     	then(rd).should().forward(request, response);
     }
@@ -69,7 +71,8 @@ class ListaEmpresasCommandTest {
     void listaEmpresaTest02() throws ServletException, IOException {
     	//arrange
     	given(request.getRequestDispatcher(Mockito.anyString())).willReturn(rd);
-    	willThrow(new DatabaseAccessException("")).given(empresaService).getEmpresasPaged(any());
+    	willThrow(new DatabaseAccessException(""))
+            .given(empresaService).getEmpresasPaged(any());
 
     	//act
         command.executa(request, response);
@@ -78,7 +81,8 @@ class ListaEmpresasCommandTest {
     	verify(request).getRequestDispatcher(stringCaptor.capture());
     	
     	String enderecoHtml = stringCaptor.getValue();
-    	enderecoHtml = enderecoHtml.substring(enderecoHtml.indexOf("500.html"));
+    	enderecoHtml = enderecoHtml.substring(
+            enderecoHtml.indexOf("500.html"));
     	assertEquals(enderecoHtml, "500.html");
     	
     	then(rd).should().forward(request, response);

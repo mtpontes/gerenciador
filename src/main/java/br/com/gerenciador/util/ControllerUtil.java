@@ -23,7 +23,9 @@ public class ControllerUtil {
 		return "empresa?acao=".concat(nomeDoMetodo);
 	}
 	
-	public static JsonObject converteCorpoRequisicaoParaJsonObject(HttpServletRequest request) throws IOException {
+	public static JsonObject converteCorpoRequisicaoParaJsonObject(
+		HttpServletRequest request
+	) throws IOException {
         BufferedReader reader = request.getReader();
         StringBuilder stringBuilder = new StringBuilder();
         String line;
@@ -35,11 +37,14 @@ public class ControllerUtil {
         	}
 
         	String corpoDaRequisicaoEmString = stringBuilder.toString();
-        	JsonObject jsonObject = JsonParser.parseString(corpoDaRequisicaoEmString).getAsJsonObject();
+        	JsonObject jsonObject = JsonParser
+				.parseString(corpoDaRequisicaoEmString)
+				.getAsJsonObject();
         	return jsonObject;
 
 		} catch (JsonParseException e) {
-	        throw new IOException("Erro ao analisar o corpo da requisição como JSON", e);
+	        throw new IOException(
+				"Erro ao analisar o corpo da requisição como JSON", e);
 		}
 	}
 }

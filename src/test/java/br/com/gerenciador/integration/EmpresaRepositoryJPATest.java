@@ -25,16 +25,45 @@ public class EmpresaRepositoryJPATest {
 	private static final Long USUARIO_ID_INVALIDO = 9999l;
 	private static final Usuario usuario = new UsuarioBuilder().setNome("Um Nome").setLogin("umLogin").setSenha("umaSenha").build();
 	private static final List<Empresa> empresasTest = List.of(
-		new EmpresaBuilder().setNome("Empresa1").setData("01/12/2023").setUsuario(usuario).build(),
-		new EmpresaBuilder().setNome("Empresa2").setData("01/12/2023").setUsuario(usuario).build(),
-		new EmpresaBuilder().setNome("Empresa3").setData("01/12/2023").setUsuario(usuario).build(),
-		new EmpresaBuilder().setNome("Empresa4").setData("01/12/2023").setUsuario(usuario).build().removeOrRestoreEmpresa(),
-		new EmpresaBuilder().setNome("Empresa4").setData("01/12/2023").setUsuario(usuario).build().removeOrRestoreEmpresa(),
-		new EmpresaBuilder().setNome("Empresa4").setData("01/12/2023").setUsuario(usuario).build().removeOrRestoreEmpresa()
+		new EmpresaBuilder()
+			.setNome("Empresa1")
+			.setData("01/12/2023")
+			.setUsuario(usuario)
+			.build(),
+		new EmpresaBuilder()
+			.setNome("Empresa2")
+			.setData("01/12/2023")
+			.setUsuario(usuario)
+			.build(),
+		new EmpresaBuilder()
+			.setNome("Empresa3")
+			.setData("01/12/2023")
+			.setUsuario(usuario)
+			.build(),
+		new EmpresaBuilder()
+			.setNome("Empresa4")
+			.setData("01/12/2023")
+			.setUsuario(usuario)
+			.build()
+			.removeOrRestoreEmpresa(),
+		new EmpresaBuilder()
+			.setNome("Empresa4")
+			.setData("01/12/2023")
+			.setUsuario(usuario)
+			.build()
+			.removeOrRestoreEmpresa(),
+		new EmpresaBuilder()
+			.setNome("Empresa4")
+			.setData("01/12/2023")
+			.setUsuario(usuario)
+			.build()
+			.removeOrRestoreEmpresa()
 		);
 	
-	private static Long QUANTIDADE_REGISTROS_TRUE = empresasTest.stream().filter(empresa -> empresa.getAtivo().equals(true)).count();
-	private static Long QUANTIDADE_REGISTROS_FALSE= empresasTest.stream().filter(empresa -> empresa.getAtivo().equals(false)).count();
+	private static Long QUANTIDADE_REGISTROS_TRUE = empresasTest.stream()
+		.filter(empresa -> empresa.getAtivo().equals(true)).count();
+	private static Long QUANTIDADE_REGISTROS_FALSE= empresasTest.stream()
+		.filter(empresa -> empresa.getAtivo().equals(false)).count();
 	
 	private static final int INDEX_START = 0;
 	private static final int MAX_RESULTS = 2;
@@ -69,7 +98,8 @@ public class EmpresaRepositoryJPATest {
 	@Test
 	void findByIdAndUserIdTest02() {
 		//act e assert 
-		Assertions.assertThrows(NoResultException.class, () -> rp.findByIdAndUserId(EMPRESA_ID_INVALIDO, USUARIO_ID_INVALIDO));
+		Assertions.assertThrows(NoResultException.class, 
+			() -> rp.findByIdAndUserId(EMPRESA_ID_INVALIDO, USUARIO_ID_INVALIDO));
 	}
 
 	@Test
@@ -89,7 +119,12 @@ public class EmpresaRepositoryJPATest {
 	@Test
 	void findByUsuarioIdAndAtivoPagedTest() {
 		//act
-		List<Empresa> listaEmpresas = rp.findByUsuarioIdAndAtivoPaged(USUARIO_ID_VALIDO, INDEX_START, MAX_RESULTS, ATIVO_TRUE);
+		List<Empresa> listaEmpresas = rp.findByUsuarioIdAndAtivoPaged(
+			USUARIO_ID_VALIDO, 
+			INDEX_START, 
+			MAX_RESULTS, 
+			ATIVO_TRUE
+		);
 		//assert
 		Assertions.assertEquals(listaEmpresas.size(), MAX_RESULTS);
 		listaEmpresas.forEach(empresa -> {
@@ -101,7 +136,11 @@ public class EmpresaRepositoryJPATest {
 	@Test
 	void findByNameLikePagedTest() {
 		//act
-		List<Empresa> empresas = rp.findByNameLikePaged("Empresa", INDEX_START, MAX_RESULTS);
+		List<Empresa> empresas = rp.findByNameLikePaged(
+			"Empresa", 
+			INDEX_START, 
+			MAX_RESULTS
+		);
 		//assert
 		Assertions.assertEquals(empresas.size(), MAX_RESULTS);
 	}
@@ -116,8 +155,10 @@ public class EmpresaRepositoryJPATest {
 	@Test
 	public void countByUsuarioAndAtivoTest() {
 		//act
-		Long quantidadeRegistrosTrue = rp.countByUsuarioAndAtivo(USUARIO_ID_VALIDO, ATIVO_TRUE);
-		Long quantidadeRegistrosFalse = rp.countByUsuarioAndAtivo(USUARIO_ID_VALIDO, ATIVO_FALSE);
+		Long quantidadeRegistrosTrue = 
+			rp.countByUsuarioAndAtivo(USUARIO_ID_VALIDO, ATIVO_TRUE);
+		Long quantidadeRegistrosFalse = 
+			rp.countByUsuarioAndAtivo(USUARIO_ID_VALIDO, ATIVO_FALSE);
 		//assert
 		Assertions.assertEquals(quantidadeRegistrosTrue, QUANTIDADE_REGISTROS_TRUE);
 		Assertions.assertEquals(quantidadeRegistrosFalse, QUANTIDADE_REGISTROS_FALSE);

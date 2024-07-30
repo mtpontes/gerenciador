@@ -70,7 +70,8 @@ class RemoveEmpresaCommandTest {
     void removeEmpresaTest01() throws ServletException, IOException {
     	//arrange
     	String corpoRequisicao = "{\"empresaId\": 123}";
-        given(request.getReader()).willReturn(new BufferedReader(new StringReader(corpoRequisicao)));
+        given(request.getReader())
+			.willReturn(new BufferedReader(new StringReader(corpoRequisicao)));
     	given(request.getSession()).willReturn(session);
     	given(session.getAttribute("usuarioLogado")).willReturn(usuario);
     	
@@ -93,12 +94,14 @@ class RemoveEmpresaCommandTest {
     void removeEmpresaTest02() throws ServletException, IOException {
     	//arrange
     	String corpoRequisicao = "{\"empresaId\": 123}";
-        given(request.getReader()).willReturn(new BufferedReader(new StringReader(corpoRequisicao)));
+        given(request.getReader())
+			.willReturn(new BufferedReader(new StringReader(corpoRequisicao)));
     	given(request.getSession()).willReturn(session);
     	given(session.getAttribute("usuarioLogado")).willReturn(usuario);
     	
     	given(response.getWriter()).willReturn(out);
-    	doThrow(new DatabaseAccessException("")).when(empresaService).arquivaEmpresa(anyLong(), anyLong());
+    	doThrow(new DatabaseAccessException(""))
+			.when(empresaService).arquivaEmpresa(anyLong(), anyLong());
     	
     	//act
         command.executa(request, response);
@@ -120,12 +123,14 @@ class RemoveEmpresaCommandTest {
     void removeEmpresaTest03() throws ServletException, IOException {
     	//arrange
     	String corpoRequisicao = "{\"empresaId\": 123}";
-    	given(request.getReader()).willReturn(new BufferedReader(new StringReader(corpoRequisicao)));
+    	given(request.getReader())
+			.willReturn(new BufferedReader(new StringReader(corpoRequisicao)));
     	given(request.getSession()).willReturn(session);
     	given(session.getAttribute("usuarioLogado")).willReturn(usuario);
     	
     	given(response.getWriter()).willReturn(out);
-    	doThrow(new IllegalStateException("")).when(empresaService).arquivaEmpresa(anyLong(), anyLong());
+    	doThrow(new IllegalStateException(""))
+			.when(empresaService).arquivaEmpresa(anyLong(), anyLong());
     	
     	//act
         command.executa(request, response);

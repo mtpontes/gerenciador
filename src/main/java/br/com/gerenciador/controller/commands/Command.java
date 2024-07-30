@@ -8,5 +8,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public interface Command {
 
-    public void executa(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException;
+    public void executa(HttpServletRequest request, HttpServletResponse response)
+    throws IOException, ServletException;
 }

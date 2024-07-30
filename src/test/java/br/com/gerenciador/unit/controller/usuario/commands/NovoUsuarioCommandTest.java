@@ -66,7 +66,8 @@ class NovoUsuarioCommandTest {
     @DisplayName("Deve redirecionar para página atual ao falhar em cadastrar usuário")
     void novoUsuarioTest02() throws ServletException, IOException {
     	//arrange
-    	willThrow(new FormValidationException("")).given(usuarioService).cadastraUsuario(any());;
+    	willThrow(new FormValidationException(""))
+			.given(usuarioService).cadastraUsuario(any());;
 
     	//act
     	command.executa(request, response);
@@ -83,7 +84,8 @@ class NovoUsuarioCommandTest {
     void novoUsuarioTest03() throws ServletException, IOException {
     	//arrange
     	given(request.getRequestDispatcher(anyString())).willReturn(rd);
-    	willThrow(new DatabaseAccessException("")).given(usuarioService).cadastraUsuario(any());;
+    	willThrow(new DatabaseAccessException(""))
+			.given(usuarioService).cadastraUsuario(any());;
     	given(request.getRequestDispatcher(anyString())).willReturn(rd);
     	
     	//act

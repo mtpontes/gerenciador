@@ -12,9 +12,11 @@ import jakarta.servlet.http.HttpSession;
 public class LogoutCommand implements Command {
 
     @Override
-    public void executa(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void executa(HttpServletRequest request, HttpServletResponse response
+    ) throws IOException, ServletException {
         HttpSession sessao = request.getSession();
         sessao.invalidate();
-        response.sendRedirect(ControllerUtil.usuarioParamAcao("loginForm"));
+        response.sendRedirect(
+            ControllerUtil.usuarioParamAcao("loginForm"));
     }
 }

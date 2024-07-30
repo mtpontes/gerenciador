@@ -29,7 +29,14 @@ public class UsuarioRepositoryJPATest {
 	public static void beforeAll() {
 		EntityManager emSetup = JPAUtilTest.getEntityManager();
 		emSetup.getTransaction().begin();
-		Usuario usuario = new Usuario(new NovoUsuarioDTO("Um Nome", "umLogin", "umaSenha", "umaSenha"));
+		Usuario usuario = new Usuario(
+			new NovoUsuarioDTO(
+				"Um Nome", 
+				"umLogin", 
+				"umaSenha", 
+				"umaSenha"
+			)
+		);
 		emSetup.persist(usuario);
 		emSetup.getTransaction().commit();
 	}
@@ -46,8 +53,12 @@ public class UsuarioRepositoryJPATest {
 	public static void setUpAfter() {
 		EntityManager emSetup = JPAUtilTest.getEntityManager();
 		emSetup.getTransaction().begin();
-		emSetup.createNativeQuery("DELETE FROM empresas; DELETE FROM usuarios").executeUpdate();
-		emSetup.createNativeQuery("ALTER TABLE usuarios ALTER COLUMN id RESTART WITH 1").executeUpdate();
+		emSetup.createNativeQuery(
+			"DELETE FROM empresas; DELETE FROM usuarios")
+			.executeUpdate();
+		emSetup.createNativeQuery(
+			"ALTER TABLE usuarios ALTER COLUMN id RESTART WITH 1")
+			.executeUpdate();
 		emSetup.getTransaction().commit();
 	}
 	
@@ -62,7 +73,8 @@ public class UsuarioRepositoryJPATest {
 	}
 	@Test
 	void findByLoginTest02() {
-		Assertions.assertThrows(NoResultException.class, () -> rp.findByLogin("outroLogin"));
+		Assertions.assertThrows(NoResultException.class, 
+			() -> rp.findByLogin("outroLogin"));
 	}
 	
 	@Test

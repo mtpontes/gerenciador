@@ -16,7 +16,10 @@ public class UsuarioService {
 		this.repository = new UsuarioRepositoryJPA();
 		this.validator = new ValidatorUtil();
 	}
-	public UsuarioService(UsuarioRepository repository, ValidatorUtil validatorUtil) {
+	public UsuarioService(
+		UsuarioRepository repository, 
+		ValidatorUtil validatorUtil
+	) {
 		this.repository = repository;
 		this.validator = validatorUtil;
 	}

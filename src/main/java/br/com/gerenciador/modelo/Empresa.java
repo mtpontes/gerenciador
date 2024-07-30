@@ -31,7 +31,10 @@ public class Empresa {
 
 	public Empresa(NovaEmpresaDTO dto) {
 		this.nome = dto.base().nome();
-		this.dataAbertura = LocalDate.parse(dto.base().data(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		this.dataAbertura = LocalDate.parse(
+			dto.base().data(), 
+			DateTimeFormatter.ofPattern("dd/MM/yyyy")
+		);
 		this.usuario = dto.usuario(); 
 	}
 	

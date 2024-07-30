@@ -12,8 +12,10 @@ import jakarta.servlet.http.HttpServletResponse;
 public class LoginFormCommand implements Command {
 	
     @Override
-    public void executa(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		RequestDispatcher rd = request.getRequestDispatcher(ControllerUtil.enderecoJSP("formLogin.jsp"));
-		rd.forward(request, response);
+    public void executa(HttpServletRequest request, HttpServletResponse response
+    ) throws IOException, ServletException {
+        RequestDispatcher rd = request.getRequestDispatcher(
+            ControllerUtil.enderecoJSP("formLogin.jsp"));
+        rd.forward(request, response);
     }
 }

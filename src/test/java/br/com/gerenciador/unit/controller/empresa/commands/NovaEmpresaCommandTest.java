@@ -81,7 +81,8 @@ class NovaEmpresaCommandTest {
     	given(request.getParameter(PARAM_NOME)).willReturn(PARAM_NOME_VALUE);
     	given(request.getParameter(PARAM_DATA)).willReturn(PARAM_DATA_VALUE);
     	given(request.getSession()).willReturn(session);
-    	willThrow(new FormValidationException("")).given(empresaService).cadastraEmpresa(any());
+    	willThrow(new FormValidationException(""))
+			.given(empresaService).cadastraEmpresa(any());
     	
     	//act
     	command.executa(request, response);
@@ -102,7 +103,8 @@ class NovaEmpresaCommandTest {
     	given(request.getSession()).willReturn(session);
     	given(request.getRequestDispatcher(anyString())).willReturn(rd);
     	
-    	willThrow(new DatabaseAccessException("")).given(empresaService).cadastraEmpresa(any());;
+    	willThrow(new DatabaseAccessException(""))
+			.given(empresaService).cadastraEmpresa(any());;
     	
     	//act
     	command.executa(request, response);

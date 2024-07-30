@@ -28,12 +28,17 @@ public class SearchCommand implements Command {
 	
 
     @Override
-    public void executa(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void executa(HttpServletRequest request, HttpServletResponse response
+	) throws IOException, ServletException {
 		String nomeEmpresa = request.getParameter("nomeEmpresa");
 		
 		try {
-			Pagination pg = PaginationUtil.criaPagination(request, empresaService.getCountEmpresasSearch(nomeEmpresa));
-			List<EmpresaBaseDTO> listaEmpresas = empresaService.getEmpresasByNamePaged(pg,nomeEmpresa);
+			Pagination pg = PaginationUtil.criaPagination(
+				request, 
+				empresaService.getCountEmpresasSearch(nomeEmpresa)
+			);
+			List<EmpresaBaseDTO> listaEmpresas = 
+				empresaService.getEmpresasByNamePaged(pg,nomeEmpresa);
 			
 			request.setAttribute("acao", "searchAjax");
 			request.setAttribute("empresas", listaEmpresas);
@@ -41,11 +46,13 @@ public class SearchCommand implements Command {
 			request.setAttribute("pageSize", pg.getPageSize());
 			request.setAttribute("totalPages", pg.getTotalPages());
 			request.setAttribute("nomeEmpresa", nomeEmpresa);
-			RequestDispatcher rd = request.getRequestDispatcher(ControllerUtil.enderecoJSP("searchEmpresas.jsp"));
+			RequestDispatcher rd = request.getRequestDispatcher(
+				ControllerUtil.enderecoJSP("searchEmpresas.jsp"));
 			rd.forward(request, response);
 			
 		} catch (IOException | DatabaseAccessException e) {
-			RequestDispatcher rd = request.getRequestDispatcher(ControllerUtil.enderecoJSP("/error/500.html"));
+			RequestDispatcher rd = request.getRequestDispatcher(
+				ControllerUtil.enderecoJSP("/error/500.html"));
 			rd.forward(request, response);
 		}
     }

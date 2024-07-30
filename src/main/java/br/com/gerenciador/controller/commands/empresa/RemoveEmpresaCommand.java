@@ -27,26 +27,31 @@ public class RemoveEmpresaCommand implements Command {
 	
 
     @Override
-    public void executa(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void executa(HttpServletRequest request, HttpServletResponse response)
+	 throws IOException, ServletException {
 		JsonObject jsonResponse = new JsonObject();
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		
 		try {
-			JsonObject jsonRequestBody = ControllerUtil.converteCorpoRequisicaoParaJsonObject(request);
+			JsonObject jsonRequestBody = 
+				ControllerUtil.converteCorpoRequisicaoParaJsonObject(request);
 			
-			Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
+			Usuario usuario = 
+				(Usuario) request.getSession().getAttribute("usuarioLogado");
 			Long empresaId = jsonRequestBody.get("empresaId").getAsLong();
 			
 			empresaService.arquivaEmpresa(empresaId, usuario.getId());
 			jsonResponse.addProperty("response", true);
 			
 		} catch(DatabaseAccessException | IllegalStateException e) {
-			response.setStatus(HttpStatusErrorMapperUtil.getStatusCodeByException(e));
+			response.setStatus(
+				HttpStatusErrorMapperUtil.getStatusCodeByException(e));
 			jsonResponse.addProperty("message", e.getMessage());
 			
 		} catch (IOException e) {
-			response.setStatus(HttpStatusErrorMapperUtil.getStatusCodeByException(e));
+			response.setStatus(
+				HttpStatusErrorMapperUtil.getStatusCodeByException(e));
 			jsonResponse.addProperty("message", "ocorreu um erro interno no servidor");
 		}
 		response.getWriter().print(jsonResponse);

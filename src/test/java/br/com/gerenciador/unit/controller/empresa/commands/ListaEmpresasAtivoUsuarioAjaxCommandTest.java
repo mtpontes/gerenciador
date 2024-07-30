@@ -82,11 +82,13 @@ class ListaEmpresasAtivoUsuarioAjaxCommandTest {
         command.executa(request, response);
     	
     	//assert
-    	verify(empresaService).getCountEmpresasUsuarioAtivo(anyLong(), booleanCaptor.capture());
+    	verify(empresaService)
+            .getCountEmpresasUsuarioAtivo(anyLong(), booleanCaptor.capture());
     	assertTrue(booleanCaptor.getValue());
 
     	then(out).should().print(stringCaptor.capture());
-    	JsonObject resposta = JsonParser.parseString(stringCaptor.getValue()).getAsJsonObject();
+    	JsonObject resposta = JsonParser.parseString(stringCaptor.getValue())
+            .getAsJsonObject();
     	
     	assertTrue(resposta.has("empresas"));
     	assertTrue(resposta.has("pagination"));
@@ -101,7 +103,9 @@ class ListaEmpresasAtivoUsuarioAjaxCommandTest {
     	given(session.getAttribute(SESSION_ATRIBUTE)).willReturn(usuario);
     	given(usuario.getId()).willReturn(1l);
     	
-    	willThrow(new DatabaseAccessException("test")).given(empresaService).getEmpresasAtivoUsuarioPaged(any(), any(), any());
+    	willThrow(new DatabaseAccessException("test"))
+            .given(empresaService)
+                .getEmpresasAtivoUsuarioPaged(any(), any(), any());
     	given(response.getWriter()).willReturn(out);
     	
     	//act

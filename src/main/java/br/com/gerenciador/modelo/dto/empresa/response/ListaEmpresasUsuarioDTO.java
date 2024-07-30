@@ -14,7 +14,14 @@ public record ListaEmpresasUsuarioDTO(
 		this(null, new EmpresaBaseDTO(dto.getNome(), (dto.data())), null);
 	}
 	public ListaEmpresasUsuarioDTO(Empresa empresa) {
-		this(empresa.getId(), new EmpresaBaseDTO(empresa.getNome(), LocalDateUtil.formatLocalDateToString(empresa.getDataAbertura())), empresa.getAtivo());
+		this(
+			empresa.getId(), 
+			new EmpresaBaseDTO(
+				empresa.getNome(), 
+				LocalDateUtil.formatLocalDateToString(empresa.getDataAbertura())
+			), 
+			empresa.getAtivo()
+		);
 	}
 	
 

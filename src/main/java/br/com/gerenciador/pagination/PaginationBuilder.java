@@ -37,13 +37,15 @@ public class PaginationBuilder {
     }
     //define o número total de páginas com base no número total de registros e no tamanho da página
     public PaginationBuilder setTotalPages(Long totalPages) {
-        this.totalPages = Math.max((int) Math.ceil((double) totalPages / this.pageSize), 1);
+        this.totalPages = 
+            Math.max((int) Math.ceil((double) totalPages / this.pageSize), 1);
         return this;
     }
 
     public Pagination build() {
     	//garante que pageNumber não seja maior que totalPages
-    	this.pageNumber = (this.pageNumber > this.totalPages) ? this.totalPages : this.pageNumber;
+    	this.pageNumber = (this.pageNumber > this.totalPages) ? 
+            this.totalPages : this.pageNumber;
         setStartIndex();
         return new Pagination(this);
     }

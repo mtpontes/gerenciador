@@ -28,21 +28,27 @@ public class NovaEmpresaCommand implements Command {
 	
 
     @Override
-    public void executa(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void executa(HttpServletRequest request, HttpServletResponse response
+	) throws IOException, ServletException {
 		String nome = request.getParameter("nome");
 		String data = request.getParameter("data");
-		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
+		Usuario usuario = 
+			(Usuario) request.getSession().getAttribute("usuarioLogado");
 		
-		NovaEmpresaDTO empresaDto = new NovaEmpresaDTO(new EmpresaBaseDTO(nome,  data), usuario);
+		NovaEmpresaDTO empresaDto = 
+			new NovaEmpresaDTO(new EmpresaBaseDTO(nome,  data), usuario);
 		try {
 			empresaService.cadastraEmpresa(empresaDto);
-			response.sendRedirect(ControllerUtil.empresaParamAcao("listaEmpresasUsuario"));
+			response.sendRedirect(
+				ControllerUtil.empresaParamAcao("listaEmpresasUsuario"));
 			
 		} catch (FormValidationException e) {
-			response.sendRedirect(ControllerUtil.empresaParamAcao("novaEmpresaForm"));
+			response.sendRedirect(
+				ControllerUtil.empresaParamAcao("novaEmpresaForm"));
 			
 		} catch (IOException | DatabaseAccessException e) {
-			RequestDispatcher rd = request.getRequestDispatcher(ControllerUtil.enderecoJSP("/error/500.html"));
+			RequestDispatcher rd = request.getRequestDispatcher(
+				ControllerUtil.enderecoJSP("/error/500.html"));
 			rd.forward(request, response);
 		}
     }

@@ -29,13 +29,16 @@ public class ListaEmpresasUsuarioCommand implements Command {
 	
 
     @Override
-    public void executa(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void executa(HttpServletRequest request, HttpServletResponse response
+	) throws IOException, ServletException {
 		try {
-			Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
+			Usuario usuario = 
+				(Usuario) request.getSession().getAttribute("usuarioLogado");
 			
 			Pagination pg = PaginationUtil.criaPagination(
 				request, 
-				empresaService.getCountEmpresasUsuarioAtivo(usuario.getId(), true));
+				empresaService.getCountEmpresasUsuarioAtivo(
+					usuario.getId(), true));
 			List<ListaEmpresasUsuarioDTO> listaEmpresas = empresaService
 				.getEmpresasAtivoUsuarioPaged(pg, usuario.getId(), true);
 			
@@ -45,11 +48,13 @@ public class ListaEmpresasUsuarioCommand implements Command {
 			request.setAttribute("pageSize", pg.getPageSize());
 			request.setAttribute("totalPages", pg.getTotalPages());
 			
-			RequestDispatcher rd = request.getRequestDispatcher(ControllerUtil.enderecoJSP("usuarioEmpresas.jsp"));
+			RequestDispatcher rd = request.getRequestDispatcher(
+				ControllerUtil.enderecoJSP("usuarioEmpresas.jsp"));
 			rd.forward(request, response);
 			
 		} catch (IOException | PersistenceException e) {
-			RequestDispatcher rd = request.getRequestDispatcher(ControllerUtil.enderecoJSP("/error/500.html"));
+			RequestDispatcher rd = request.getRequestDispatcher(
+				ControllerUtil.enderecoJSP("/error/500.html"));
 			rd.forward(request, response);
 		}
     }

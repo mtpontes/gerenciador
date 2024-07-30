@@ -12,7 +12,8 @@ import jakarta.validation.ValidatorFactory;
 
 public class ValidatorUtil {
 
-	private static ValidatorFactory factoryValidator = Validation.buildDefaultValidatorFactory();
+	private static ValidatorFactory factoryValidator = 
+		Validation.buildDefaultValidatorFactory();
 
 	public void valida(Record record) {
 		Validator validator = factoryValidator.getValidator();

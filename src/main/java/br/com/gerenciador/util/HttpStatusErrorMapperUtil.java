@@ -12,15 +12,30 @@ public class HttpStatusErrorMapperUtil {
     private static final Map<Class<? extends Exception>, Integer> errorMap = new HashMap<>();
 
     static {
-    	errorMap.put(DatabaseAccessException.class, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-    	errorMap.put(NoResultException.class, HttpServletResponse.SC_NOT_FOUND);
-        errorMap.put(IllegalStateException.class, HttpServletResponse.SC_FORBIDDEN);
-        errorMap.put(FormValidationException.class, HttpServletResponse.SC_BAD_REQUEST);
+    	errorMap.put(
+            DatabaseAccessException.class, 
+            HttpServletResponse.SC_INTERNAL_SERVER_ERROR
+            );
+    	errorMap.put(
+            NoResultException.class, 
+            HttpServletResponse.SC_NOT_FOUND
+            );
+        errorMap.put(
+            IllegalStateException.class, 
+            HttpServletResponse.SC_FORBIDDEN
+            );
+        errorMap.put(
+            FormValidationException.class, 
+            HttpServletResponse.SC_BAD_REQUEST
+            );
     }
 
     public static Integer getStatusCodeByException(Exception error) {
     	Class<? extends Exception> errorClass = error.getClass();
     	
-        return errorMap.getOrDefault(errorClass, HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
+        return errorMap.getOrDefault(
+            errorClass, 
+            HttpServletResponse.SC_INTERNAL_SERVER_ERROR
+        );
     }
 }

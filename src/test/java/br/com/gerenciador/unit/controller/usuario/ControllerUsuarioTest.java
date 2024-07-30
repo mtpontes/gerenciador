@@ -88,7 +88,8 @@ class ControllerUsuarioTest {
 		// act
 		controller.doPost(request, response);
 
-		Command command = (Command) this.getClass().getDeclaredField(commandMock).get(this);
+		Command command = 
+			(Command) this.getClass().getDeclaredField(commandMock).get(this);
 		verify(command).executa(request, response);
 	}
 
@@ -106,7 +107,8 @@ class ControllerUsuarioTest {
 		// act
 		controller.doGet(request, response);
 
-		Command command = (Command) this.getClass().getDeclaredField(commandMock).get(this);
+		Command command = 
+			(Command) this.getClass().getDeclaredField(commandMock).get(this);
 		verify(command).executa(request, response);
 	}
 

@@ -76,9 +76,11 @@ class AtualizaEmpresaCommandTest {
     void atualizaEmpresa01() throws ServletException, IOException {
     	//arrange
     	String requestBody = "{\"nome\":\"EmpresaX\",\"data\":\"2022-01-01\",\"id\":1}";
-        given(request.getReader()).willReturn(new BufferedReader(new StringReader(requestBody)));
+        given(request.getReader())
+            .willReturn(new BufferedReader(new StringReader(requestBody)));
         given(request.getSession()).willReturn(this.session);
-        given(session.getAttribute("usuarioLogado")).willReturn(this.usuario);
+        given(session.getAttribute("usuarioLogado"))
+            .willReturn(this.usuario);
         given(response.getWriter()).willReturn(this.out);
        
         //act
@@ -99,12 +101,14 @@ class AtualizaEmpresaCommandTest {
     void atualizaEmpresa02() throws ServletException, IOException {
     	//arrange
     	String corpoRequisicao = "{\"nome\":\"EmpresaX\",\"data\":\"2022-01-01\",\"id\":1}";
-    	given(request.getReader()).willReturn(new BufferedReader(new StringReader(corpoRequisicao)));
+    	given(request.getReader())
+            .willReturn(new BufferedReader(new StringReader(corpoRequisicao)));
         given(request.getSession()).willReturn(session);
     	given(session.getAttribute("usuarioLogado")).willReturn(usuario);
     	given(response.getWriter()).willReturn(out);
     	
-    	willThrow(new FormValidationException("")).given(empresaService).alteraDadosEmpresa(any(), any());;
+    	willThrow(new FormValidationException(""))
+            .given(empresaService).alteraDadosEmpresa(any(), any());;
     	
     	//act
         command.executa(request, response);
@@ -113,7 +117,8 @@ class AtualizaEmpresaCommandTest {
     	int currentStatus = statusCodeCaptor.getValue();
     	
     	then(out).should().print(stringCaptor.capture());
-    	JsonObject json = JsonParser.parseString(stringCaptor.getValue()).getAsJsonObject();
+    	JsonObject json = JsonParser.parseString(stringCaptor.getValue())
+            .getAsJsonObject();
     	
     	//assert
     	assertEquals(currentStatus, HttpServletResponse.SC_BAD_REQUEST);
@@ -123,13 +128,16 @@ class AtualizaEmpresaCommandTest {
     @DisplayName("Deve retornar json de erro e status code 500")
     void atualizaEmpresa03() throws ServletException, IOException {
     	//arrange
-    	String corpoRequisicao = "{\"nome\":\"EmpresaX\",\"data\":\"2022-01-01\",\"id\":1}";
-    	given(request.getReader()).willReturn(new BufferedReader(new StringReader(corpoRequisicao)));
+    	String corpoRequisicao = 
+            "{\"nome\":\"EmpresaX\",\"data\":\"2022-01-01\",\"id\":1}";
+    	given(request.getReader())
+            .willReturn(new BufferedReader(new StringReader(corpoRequisicao)));
     	given(request.getSession()).willReturn(session);
     	given(session.getAttribute("usuarioLogado")).willReturn(usuario);
     	given(response.getWriter()).willReturn(out);
     	
-    	willThrow(new DatabaseAccessException("")).given(empresaService).alteraDadosEmpresa(any(), any());;
+    	willThrow(new DatabaseAccessException(""))
+            .given(empresaService).alteraDadosEmpresa(any(), any());;
     	
     	//act
         command.executa(request, response);
@@ -138,7 +146,8 @@ class AtualizaEmpresaCommandTest {
     	int currentStatus = statusCodeCaptor.getValue();
     	
     	then(out).should().print(stringCaptor.capture());
-    	JsonObject json = JsonParser.parseString(stringCaptor.getValue()).getAsJsonObject();
+    	JsonObject json = JsonParser.parseString(stringCaptor.getValue())
+            .getAsJsonObject();
     	
     	//assert
     	assertEquals(currentStatus, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

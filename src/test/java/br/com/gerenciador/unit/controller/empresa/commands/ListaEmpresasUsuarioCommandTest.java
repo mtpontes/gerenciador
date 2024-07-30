@@ -69,7 +69,9 @@ class ListaEmpresasUsuarioCommandTest {
         command.executa(request, response);
     	
     	//assert
-    	then(request).should(Mockito.times(5)).setAttribute(anyString(), any());
+    	then(request)
+            .should(Mockito.times(5))
+                .setAttribute(anyString(), any());
     	verify(request).getRequestDispatcher(stringCaptor.capture());
     	String enderecoHtml = stringCaptor.getValue();
     	enderecoHtml = enderecoHtml.substring(enderecoHtml.indexOf("usuarioEmpresas.jsp"));
@@ -84,7 +86,9 @@ class ListaEmpresasUsuarioCommandTest {
     	given(request.getSession()).willReturn(session);
     	given(session.getAttribute(SESSION_ATRIBUTE)).willReturn(usuario);
     	given(usuario.getId()).willReturn(1l);
-    	willThrow(new PersistenceException("")).given(empresaService).getEmpresasAtivoUsuarioPaged(any(), anyLong(), anyBoolean());
+    	willThrow(new PersistenceException(""))
+            .given(empresaService)
+                .getEmpresasAtivoUsuarioPaged(any(), anyLong(), anyBoolean());
     	given(request.getRequestDispatcher(Mockito.anyString())).willReturn(rd);
     	
     	//act
@@ -93,7 +97,8 @@ class ListaEmpresasUsuarioCommandTest {
     	//assert
     	verify(request).getRequestDispatcher(stringCaptor.capture());
     	String enderecoHtml = stringCaptor.getValue();
-    	enderecoHtml = enderecoHtml.substring(enderecoHtml.indexOf("500.html"));
+    	enderecoHtml = enderecoHtml.substring(
+            enderecoHtml.indexOf("500.html"));
     	assertTrue(enderecoHtml.equals("500.html"));
     	
     	then(rd).should().forward(request, response);

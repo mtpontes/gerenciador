@@ -32,31 +32,42 @@ public class ListaEmpresasAtivoUsuarioAjaxCommand implements Command {
 	
 
     @Override
-    public void executa(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void executa(HttpServletRequest request, HttpServletResponse response
+	) throws IOException, ServletException {
 		JsonObject jsonResponse = new JsonObject();
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 
 		try {
-			boolean ativo = request.getParameter("ativo") == null ? true : Boolean.valueOf(request.getParameter("ativo"));
-			Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
-			Pagination pg = PaginationUtil.criaPagination(request, (empresaService.getCountEmpresasUsuarioAtivo(usuario.getId(), ativo)));
+			boolean ativo = request.getParameter("ativo") == null ? 
+				true : Boolean.valueOf(request.getParameter("ativo"));
+			Usuario usuario = 
+				(Usuario) request.getSession().getAttribute("usuarioLogado");
+			Pagination pg = PaginationUtil.criaPagination(
+				request, 
+				(empresaService.getCountEmpresasUsuarioAtivo(
+					usuario.getId(), ativo))
+			);
 			
 			List<ListaEmpresasUsuarioDTO> listaEmpresas = empresaService
 				.getEmpresasAtivoUsuarioPaged(pg, usuario.getId(), ativo);
-			ListaEmpresasUsuarioWrapperDTO wrapper = new ListaEmpresasUsuarioWrapperDTO(listaEmpresas, pg);
+			ListaEmpresasUsuarioWrapperDTO wrapper = 
+				new ListaEmpresasUsuarioWrapperDTO(listaEmpresas, pg);
 			
 			String empresaWrapper = new Gson().toJson(wrapper);
 			response.getWriter().print(empresaWrapper);
 			
 		} catch (DatabaseAccessException e) {
-			response.setStatus(HttpStatusErrorMapperUtil.getStatusCodeByException(e));
+			response.setStatus(
+				HttpStatusErrorMapperUtil.getStatusCodeByException(e));
 			jsonResponse.addProperty("message", e.getMessage());
 			response.getWriter().print(jsonResponse.toString());
 			
 		} catch (IOException e) {
-			response.setStatus(HttpStatusErrorMapperUtil.getStatusCodeByException(e));
-			jsonResponse.addProperty("message", "ocorreu um erro interno no servidor");
+			response.setStatus(
+				HttpStatusErrorMapperUtil.getStatusCodeByException(e));
+			jsonResponse.addProperty(
+				"message", "ocorreu um erro interno no servidor");
 			response.getWriter().print(jsonResponse.toString());
 		}
     }

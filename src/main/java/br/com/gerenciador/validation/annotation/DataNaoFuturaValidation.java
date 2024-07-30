@@ -24,7 +24,9 @@ public class DataNaoFuturaValidation implements ConstraintValidator<DataNaoFutur
 			
 		} catch (DateTimeParseException e) {
 			context.disableDefaultConstraintViolation();
-			context.buildConstraintViolationWithTemplate(ValidationPatternsEmpresa.DATA_EMPRESA_ERROR_FORMAT_MESSAGE).addConstraintViolation();
+			context.buildConstraintViolationWithTemplate(
+				ValidationPatternsEmpresa.DATA_EMPRESA_ERROR_FORMAT_MESSAGE)
+					.addConstraintViolation();
 			return false;//data inválida
 		}
 	}	

@@ -33,7 +33,8 @@ public class UsuarioRepositoryJPA implements UsuarioRepository{
 			
 		} catch (PersistenceException e) {
 			transaction.rollback();
-			throw new DatabaseAccessException("ocorreu um erro ao cadastrar usuário", e);
+			throw new DatabaseAccessException(
+				"ocorreu um erro ao cadastrar usuário", e);
 		}
 	}
 	
@@ -48,34 +49,45 @@ public class UsuarioRepositoryJPA implements UsuarioRepository{
 			
 		} catch (PersistenceException e) {
 			transaction.rollback();
-			throw new DatabaseAccessException("ocorreu um erro ao atualizar usuário", e);
+			throw new DatabaseAccessException(
+				"ocorreu um erro ao atualizar usuário", e);
 		}
 	}
 	
 	public Usuario findByLogin(String login) {
 		try {
-			Query query = em.createQuery("SELECT e FROM Usuario e WHERE e.login =:login", Usuario.class);
+			Query query = em.createQuery(
+				"SELECT e FROM Usuario e WHERE e.login =:login", 
+				Usuario.class
+			);
 			query.setParameter("login", login);
 			return(Usuario) query.getSingleResult();
 			
 		} catch (NoResultException e) {
-			throw new NoResultException("nenhum resultado foi encontrado na consulta por login");
+			throw new NoResultException(
+				"nenhum resultado foi encontrado na consulta por login");
 			
 		} catch(PersistenceException e) {
-			throw new DatabaseAccessException("ocorreu um erro ao consultar login", e);
+			throw new DatabaseAccessException(
+				"ocorreu um erro ao consultar login", e);
 		}
 	}
 	
 	public boolean existsByLogin(String login) {
 		try {
-			Query query = em.createQuery("SELECT CASE WHEN COUNT(u) > 0 THEN TRUE ELSE FALSE END FROM Usuario u WHERE u.login = :login");
+			Query query = em.createQuery("""
+					SELECT CASE WHEN COUNT(u) > 0 
+					THEN TRUE ELSE FALSE END FROM Usuario u 
+					WHERE u.login = :login
+				"""
+			);
 			query.setParameter("login", login);
 			
 			return (boolean) query.getSingleResult();
 			
 		} catch (PersistenceException e) {
-			throw new DatabaseAccessException("ocorreu um erro ao verificar existência de login", e);
+			throw new DatabaseAccessException(
+				"ocorreu um erro ao verificar existência de login", e);
 		}
-        		
 	}
 }

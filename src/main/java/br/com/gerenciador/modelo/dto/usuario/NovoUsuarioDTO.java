@@ -9,7 +9,9 @@ import jakarta.validation.constraints.Size;
 public record NovoUsuarioDTO(
 	
 	@NotBlank(message = "Nome não pode ser nulo")
-	@Pattern(regexp = ValidationPatternsUsuario.NOME_USUARIO_REGEX_PATTERN, message = ValidationPatternsUsuario.NOME_USUARIO_ERROR_MESSAGE)
+	@Pattern(
+		regexp = ValidationPatternsUsuario.NOME_USUARIO_REGEX_PATTERN, 
+		message = ValidationPatternsUsuario.NOME_USUARIO_ERROR_MESSAGE)
 	String nome,
 	
 	@NotBlank(message = "Login não pode ser nulo")

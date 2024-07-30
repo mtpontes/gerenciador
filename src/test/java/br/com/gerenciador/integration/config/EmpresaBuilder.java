@@ -24,6 +24,8 @@ public class EmpresaBuilder {
 	}
 	
 	public Empresa build() {
-		return new Empresa(new NovaEmpresaDTO(new EmpresaBaseDTO(this.nome, this.data), usuario));
+		return new Empresa(
+			new NovaEmpresaDTO(
+				new EmpresaBaseDTO(this.nome, this.data), usuario));
 	}
 }

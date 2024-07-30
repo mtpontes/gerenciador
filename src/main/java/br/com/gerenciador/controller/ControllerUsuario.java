@@ -21,7 +21,10 @@ public class ControllerUsuario extends HttpServlet {
 	private final Map<String, Command> postCommands;
 	private final Map<String, Command> getCommands;
 
-	public ControllerUsuario(Map<String, Command> postCommands, Map<String, Command> getCommands) {
+	public ControllerUsuario(
+		Map<String, Command> postCommands, 
+		Map<String, Command> getCommands
+	) {
 		this.postCommands = postCommands;
 		this.getCommands = getCommands;
 	}
@@ -50,7 +53,10 @@ public class ControllerUsuario extends HttpServlet {
 			.executa(request, response);
 	}
 
-	private Command getCommand(HttpServletRequest request, Map<String, Command> commands) {
+	private Command getCommand(
+		HttpServletRequest request, 
+		Map<String, Command> commands
+	) {
 		String acao = request.getParameter("acao");
 		return commands.getOrDefault(acao, new NotFoundCommand());
 	}

@@ -63,7 +63,8 @@ class SearchAjaxCommandTest {
     	given(request.getParameter("page")).willReturn("1");
     	given(request.getParameter("size")).willReturn("5");
     	
-    	given(empresaService.getEmpresasByNamePaged(any(), anyString())).willReturn(listaEmpresas);
+    	given(empresaService.getEmpresasByNamePaged(any(), anyString()))
+			.willReturn(listaEmpresas);
     	given(response.getWriter()).willReturn(out);
     	
     	//act
@@ -71,7 +72,8 @@ class SearchAjaxCommandTest {
     	
     	//assert
     	then(out).should().print(stringCaptor.capture());
-    	JsonObject resposta = JsonParser.parseString(stringCaptor.getValue()).getAsJsonObject();
+    	JsonObject resposta = JsonParser.parseString(stringCaptor.getValue())
+			.getAsJsonObject();
     	
     	var empresasArray = resposta.get("empresas").getAsJsonArray();
     	assertTrue(empresasArray.isJsonArray() && empresasArray.size() == 2);
@@ -85,7 +87,8 @@ class SearchAjaxCommandTest {
     	given(request.getParameter("page")).willReturn("1");
     	given(request.getParameter("size")).willReturn("5");
     	
-    	willThrow(new DatabaseAccessException("test")).given(empresaService).getEmpresasByNamePaged(any(), any());
+    	willThrow(new DatabaseAccessException("test"))
+			.given(empresaService).getEmpresasByNamePaged(any(), any());
     	given(response.getWriter()).willReturn(out);
     	
     	//act
@@ -93,7 +96,8 @@ class SearchAjaxCommandTest {
     	
     	//assert
     	then(out).should().print(stringCaptor.capture());
-    	JsonObject resposta = JsonParser.parseString(stringCaptor.getValue()).getAsJsonObject();
+    	JsonObject resposta = JsonParser.parseString(stringCaptor.getValue())
+			.getAsJsonObject();
     	
     	assertTrue(resposta.has("message"));
     	assertEquals(resposta.get("message").getAsString(), "test");
