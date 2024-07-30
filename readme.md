@@ -63,7 +63,7 @@ Esse projeto foi desenvolvido na base de um projeto simples de MVC. Nele foi des
 <details><summary>Clique para expandir</summary>
 <br>
 
-Os endpoints são baseados principalmente em query params. As duas principais rotas básicas são `/empresa` e `/usuario`.
+Os endpoints são baseados principalmente em query params. A URL base é `/gerenciador`, as duas principais rotas são `/empresa` e `/usuario`.
 
 ### Parâmetros para rota `/usuario`
 
@@ -93,7 +93,6 @@ Os endpoints são baseados principalmente em query params. As duas principais ro
 #### PUT
 - `removeEmpresa`: Arquiva empresa
 - `atualizaEmpresa`: Atualiza dados da empresa
-
 
 
 ## 📱 Telas
@@ -141,14 +140,63 @@ Os endpoints são baseados principalmente em query params. As duas principais ro
 ![pesquisaEmpresas](readme/pesquisaEmpresas.png)
 ![pesquisaEmpresasFail](readme/pesquisaEmpresasFail.png)
 
-### Tratamento das entradas nos formulários  server-side
+### Tratamento das entradas nos formulários server-side
 
 - Mesmo que o usuário consiga inserir entradas que estão em desacordo com as regras dos campos, são feitas validações com Bean Validation do lado do servidor.
 
 </details>
 
-## 💻 Desenvolvimento do projeto
+## 🚀 Como Rodar
+<details><summary>Clique para expandir</summary>
 
+### Pré-requisitos
+
+- Java 17
+- Banco de dados MySQL 8.0
+- Service Tomcat 10.1
+
+### Instalando
+
+- Clone o projeto: 
+
+        `git clone https://github.com/mtpontes/gerenciador.git`
+
+- Entre no diretório principal do projeto e execute: 
+    * Para Linux: 
+    
+          ./mvnw clean install -DskipTests
+
+
+    * Para Windows: 
+          
+          mvnw.cmd clean install -DskipTests
+
+
+    * Caso já possua Maven instalado: 
+    
+          mvn clean install -DskipTests
+
+### Detalhes
+
+A aplicação está configurada para se conectar ao MySQL pela porta 3306.
+
+### Variáveis de ambiente:
+- `DB_USERNAME`: valor padrão **root**
+- `DB_PASSWORD`: valor padrão **root**
+
+##### Essas configurações também podem ser alteradas no `persistence.xml`.
+
+### Deploy
+O app empacotado pode ser encontrado no diretório `/target` após seguir o procedimento de instalação.
+
+- Copie o `.war` para o diretório webapp do servidor Tomcat
+- Execute o script de inicialização do Tomcat no diretório bin do servidor:
+    - Linux: `sudo ./startup.sh`
+    - Windows: `startup.bat`
+
+</details>
+
+## 💻 Desenvolvimento do projeto
 <details><summary>Clique para expandir</summary>
 <br>
 
