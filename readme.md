@@ -1,26 +1,25 @@
 # Gerenciador de Empresas
 
-## Sobre 
-
 Esse projeto foi desenvolvido na base de um projeto simples de MVC. Nele foi desenvolvido um back-end mais robusto e um front-end dinâmico. A base desse projeto foi criada no curso [Java Web: crie aplicações com Servlets e MVC](https://cursos.alura.com.br/formacao-java-web) da [Alura](https://github.com/alura-cursos), a versão base se encontra na branch versao-original-alura. O conteúdo das outras branches já não condiz mais em quase nada com o projeto base. Essa é uma aplicação web de registro de empresas com Java legado, o usuário insere um nome e a data de abertura, pode editar o cadastro e também arquivar.
 
-## Desenvolvimento do projeto
+## 💻 Desenvolvimento do projeto
 
+<details><summary>Clique para expandir</summary>
 É meu primeiro projeto web, nele tive a primeira vez de muitas coisas, por isso, preferi por não usar frameworks e libs no front-end, para conseguir resolver tudo da maneira mais crua, de forma que exercitasse bastante a minha lógica, criatividade e conhecimento de algorítmos. Esse projeto surgiu como um treinamento para praticar CSS e alguns conceitos de backend. A medida que fui desenvolvendo surgiram novas ideias e foi tomando novas proporções.
 
-## Aprendizado
+## 🧠 Aprendizado
 
-### Tecnologias aprendidas
+### Tecnologias e libs
 - CSS
 - JSP
 - JavaScript
-
-### Conhecimentos de tecnologias, conceitos e ferramentas consolidados
 - Jakarta Persistence API (JPA)
-- Arquitetura MVC
+- Bean Validation
 - Testes automatizados de unidade com Junit
 - Testes automatizados de integração com Junit e H2
-- Bean Validation
+
+### Ferramentas e conceitos consolidados
+- Arquitetura MVC
 - Validações server-side e client-side
 - Manipulação e tratamento de exceções
 - Tratamento de resposta ao cliente
@@ -31,9 +30,11 @@ Esse projeto foi desenvolvido na base de um projeto simples de MVC. Nele foi des
 - Padrão de design DTO
 - Padrão de projeto Builder
 - Paginação
-- Criptografia de senhas com Bcrypt
+- Criptografia de senhas
 
-## Tecnologias utilizadas
+</details>
+
+## 🛠️ Tecnologias utilizadas
 
 - Java 17
 - Maven
@@ -51,7 +52,9 @@ Esse projeto foi desenvolvido na base de um projeto simples de MVC. Nele foi des
 - CSS
 - JavaScript (Front-end)
 
-## Principais Melhorias
+## 🌟 Principais Melhorias
+
+<details><summary>Clique para expandir</summary>
 
 - Reestruturação de pacotes.
 - Gerenciamento de dependências com Maven.
@@ -68,7 +71,7 @@ Esse projeto foi desenvolvido na base de um projeto simples de MVC. Nele foi des
 - Páginas dinâmicas com JS.
 - Modularização do front-end.
 
-## Novas funções
+## 🧩 Novas funções
 - Criar `Usuario`.
 - Criar `Empresa`.
 - Listar somente `Empresa` do `Usuario`.
@@ -77,9 +80,14 @@ Esse projeto foi desenvolvido na base de um projeto simples de MVC. Nele foi des
 - Arquivar `Empresa` de forma dinâmica. 
 - Pesquisar por registros `Empresa`.
 
+</details>
+
 ---
 
-## Login
+## 📱 Telas
+<details><summary>Clique para expandir</summary>
+
+### Login
 - Antes de enviar o formulário para o servidor é verificado se os campos atendem às regras mínimas dos campos.
 
 ![login](readme/login.png)
@@ -126,8 +134,12 @@ Esse projeto foi desenvolvido na base de um projeto simples de MVC. Nele foi des
 
 - Mesmo que o usuário consiga inserir entradas que estão em desacordo com as regras dos campos, são feitas validações com Bean Validation do lado do servidor.
 
+</details>
 
-## Considerações finais
+
+## 🧑‍💻 Considerações finais
+<details><summary>Clique para expandir</summary>
+
 Consigo ver diversas melhorias que posso fazer, mas pretendo apenas melhorar o que já está pronto. Este projeto está finalizado e não irei mais implementar coisas novas nele, farei apenas refatorações.
 
 ### Pontos fracos
@@ -148,5 +160,8 @@ Consigo ver diversas melhorias que posso fazer, mas pretendo apenas melhorar o q
 ### Destaque
 - **Completude:** é um projeto bem completo, não ficou limitado a demonstrar uma única coisa. Nele você vai encontrar: implementação de persistência com JPA; arquitetura mvc com services e repositories; CRUD completo; criptografia de senha; validações server-side com Bean Validation e client-side com JS; anotações personalizadas; expressões regulares; DTOs e wrappers com Records; paginação end-to-end; tratamento de erros; desserialização de objeto Java para Json; classes Util para abstração de código repetitivo; testes automatizados de unidade e integração; tratamento de respostas ao cliente; requisições assíncronas com JS; JSP; HTML; CSS; JS manipulando o DOM; modularização do front; interface dinâmica.
 
-    Em vez de um micro-projeto abordando uma simulação de um caso de teste, um caso de validação, um caso de arquitetura e etc, aqui temos uma aplicação completa, funcional e com diversos conceitos implementados na prática.
+### Conclusão
 
+Em vez de um micro-projeto abordando uma simulação de um caso de teste, um caso de validação, um caso de arquitetura e etc, aqui temos uma aplicação completa, funcional e com diversos conceitos implementados na prática.
+
+</details>
