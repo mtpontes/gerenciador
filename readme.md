@@ -23,6 +23,8 @@ Esse projeto foi desenvolvido na base de um projeto simples de MVC. Nele foi des
 ## 🌟 Principais Melhorias
 
 <details><summary>Clique para expandir</summary>
+<br>
+
 
 - Reestruturação de pacotes.
 - Gerenciamento de dependências com Maven.
@@ -54,6 +56,7 @@ Esse projeto foi desenvolvido na base de um projeto simples de MVC. Nele foi des
 
 ## 🌐 Endpoints
 <details><summary>Clique para expandir</summary>
+<br>
 
 Os endpoints são baseados principalmente em query params. As duas principais rotas básicas são `/empresa` e `/usuario`.
 
@@ -142,6 +145,7 @@ Os endpoints são baseados principalmente em query params. As duas principais ro
 ## 💻 Desenvolvimento do projeto
 
 <details><summary>Clique para expandir</summary>
+<br>
 
 
 O Gerenciador é um Web App baseado em query params, os quais utilizada para direcionar o fluxo das requisições.
