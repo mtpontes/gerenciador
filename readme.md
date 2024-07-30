@@ -2,38 +2,6 @@
 
 Esse projeto foi desenvolvido na base de um projeto simples de MVC. Nele foi desenvolvido um back-end mais robusto e um front-end dinâmico. A base desse projeto foi criada no curso [Java Web: crie aplicações com Servlets e MVC](https://cursos.alura.com.br/formacao-java-web) da [Alura](https://github.com/alura-cursos), a versão base se encontra na branch versao-original-alura. O conteúdo das outras branches já não condiz mais em quase nada com o projeto base. Essa é uma aplicação web de registro de empresas com Java legado, o usuário insere um nome e a data de abertura, pode editar o cadastro e também arquivar.
 
-## 💻 Desenvolvimento do projeto
-
-<details><summary>Clique para expandir</summary>
-É meu primeiro projeto web, nele tive a primeira vez de muitas coisas, por isso, preferi por não usar frameworks e libs no front-end, para conseguir resolver tudo da maneira mais crua, de forma que exercitasse bastante a minha lógica, criatividade e conhecimento de algorítmos. Esse projeto surgiu como um treinamento para praticar CSS e alguns conceitos de backend. A medida que fui desenvolvendo surgiram novas ideias e foi tomando novas proporções.
-
-## 🧠 Aprendizado
-
-### Tecnologias e libs
-- CSS
-- JSP
-- JavaScript
-- Jakarta Persistence API (JPA)
-- Bean Validation
-- Testes automatizados de unidade com Junit
-- Testes automatizados de integração com Junit e H2
-
-### Ferramentas e conceitos consolidados
-- Arquitetura MVC
-- Validações server-side e client-side
-- Manipulação e tratamento de exceções
-- Tratamento de resposta ao cliente
-- Serialização e desserialização
-- Requisições em formato Json
-- Expressões Regulares
-- Anotações personalizadas
-- Padrão de design DTO
-- Padrão de projeto Builder
-- Paginação
-- Criptografia de senhas
-
-</details>
-
 ## 🛠️ Tecnologias utilizadas
 
 - Java 17
@@ -84,8 +52,43 @@ Esse projeto foi desenvolvido na base de um projeto simples de MVC. Nele foi des
 
 ---
 
-## 📱 Telas
+## 🌐 Endpoints
 <details><summary>Clique para expandir</summary>
+
+Os endpoints são baseados principalmente em query params. As duas principais rotas básicas são `/empresa` e `/usuario`.
+
+### Parâmetros para rota `/usuario`
+
+#### POST
+- `novoUsuario`: Cadastra um novo usuário
+- `verificaLogin`: Utilizado pelo formulário de cadastro de usuário para validar se o login está disponível
+- `login`: Autentica o usuário
+
+#### GET
+- `loginForm`: Retorna a página de formulário de login
+- `novoUsuarioForm`: Retorna página de formulário de cadastro de um novo usuário
+- `logout`: Invalida a autenticação do usuário
+
+### Parâmetros para rota `/empresa`
+
+#### POST
+- `novaEmpresa`: Cadastra uma nova empresa
+
+#### GET
+- `search`: Faz uma pesquisa por empresas de acordo com o nome enviado
+- `searchAjax`: É utilizado pelo mecanismo de pesquisa do Front-End, onde executa a pesquisa via Ajax para atualizar a página de forma dinâmica
+- `listaEmpresas`: Retorna a página com todas as empresas da plataforma
+- `listaEmpresasUsuario`: Retorna a página com todas as empresas cadastradas pelo usuário 
+- `listaEmpresasUsuarioAtivoAjax`: É utilizado pelo front-end para retornar todas as empresas do usuário de forma dinâmica
+- `novaEmpresaForm`: Retorna a página de formulário de cadastro de empresa
+
+#### PUT
+- `removeEmpresa`: Arquiva empresa
+- `atualizaEmpresa`: Atualiza dados da empresa
+
+
+
+## 📱 Telas
 
 ### Login
 - Antes de enviar o formulário para o servidor é verificado se os campos atendem às regras mínimas dos campos.
@@ -136,9 +139,42 @@ Esse projeto foi desenvolvido na base de um projeto simples de MVC. Nele foi des
 
 </details>
 
+## 💻 Desenvolvimento do projeto
 
-## 🧑‍💻 Considerações finais
 <details><summary>Clique para expandir</summary>
+
+
+O Gerenciador é um Web App baseado em query params, os quais utilizada para direcionar o fluxo das requisições.
+
+Esse projeto surgiu como um treinamento para praticar CSS e alguns conceitos de backend. A medida que fui desenvolvendo surgiram novas ideias e foi tomando novas proporções. É meu primeiro projeto de programação, nele tive a primeira vez de muitas coisas, por isso, preferi por não usar frameworks e libs no front-end, para conseguir resolver tudo da maneira mais crua, de forma que exercitasse bastante a minha lógica, criatividade e conhecimento de algorítmos.
+
+
+## 🧠 Aprendizado
+
+### Tecnologias e libs
+- CSS
+- JSP
+- JavaScript
+- Jakarta Persistence API (JPA)
+- Bean Validation
+- Testes automatizados de unidade com Junit
+- Testes automatizados de integração com Junit e H2
+
+### Ferramentas e conceitos consolidados
+- Arquitetura MVC
+- Validações server-side e client-side
+- Manipulação e tratamento de exceções
+- Tratamento de resposta ao cliente
+- Serialização e desserialização
+- Requisições em formato Json
+- Expressões Regulares
+- Anotações personalizadas
+- Padrão de design DTO
+- Padrão de projeto Builder
+- Paginação
+- Criptografia de senhas
+
+### Considerações finais
 
 Consigo ver diversas melhorias que posso fazer, mas pretendo apenas melhorar o que já está pronto. Este projeto está finalizado e não irei mais implementar coisas novas nele, farei apenas refatorações.
 
@@ -154,8 +190,6 @@ Consigo ver diversas melhorias que posso fazer, mas pretendo apenas melhorar o q
 - **Responsividade:** como eu estava iniciando, dispensei a responsividade para não aumentar a complexidade.
 
 - **Separação de responsabilidades:** O controller EmpresaController com a responsabilidade de receber requisições json e requisições de apresentação me incomoda, pois apesar de fazer o trabalho de um controller, ele está lidando com tipos diferentes de trabalho, indo contra o S dos princípios SOLID.
-
-- **Ordenação:** esqueci.
 
 ### Destaque
 - **Completude:** é um projeto bem completo, não ficou limitado a demonstrar uma única coisa. Nele você vai encontrar: implementação de persistência com JPA; arquitetura mvc com services e repositories; CRUD completo; criptografia de senha; validações server-side com Bean Validation e client-side com JS; anotações personalizadas; expressões regulares; DTOs e wrappers com Records; paginação end-to-end; tratamento de erros; desserialização de objeto Java para Json; classes Util para abstração de código repetitivo; testes automatizados de unidade e integração; tratamento de respostas ao cliente; requisições assíncronas com JS; JSP; HTML; CSS; JS manipulando o DOM; modularização do front; interface dinâmica.
