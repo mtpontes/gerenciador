@@ -195,9 +195,9 @@ O Gerenciador é um Web App baseado em query params, os quais utilizada para dir
 
 Esse projeto surgiu como um treinamento para praticar CSS e alguns conceitos de backend. A medida que fui desenvolvendo surgiram novas ideias e foi tomando novas proporções. É meu primeiro projeto de programação, nele tive a primeira vez de muitas coisas, por isso, preferi por não usar frameworks e libs no front-end, para conseguir resolver tudo da maneira mais crua, de forma que exercitasse bastante a minha lógica, criatividade e conhecimento de algorítmos.
 
-<details><summary><h2>🧠 Aprendizado</h2></summary>
+<details><summary><h3>Aprendizado</h2></summary>
 
-### Tecnologias e libs
+#### Tecnologias e libs
 - CSS
 - JSP
 - JavaScript
@@ -206,7 +206,7 @@ Esse projeto surgiu como um treinamento para praticar CSS e alguns conceitos de 
 - Testes automatizados de unidade com Junit
 - Testes automatizados de integração com Junit e H2
 
-### Ferramentas e conceitos consolidados
+#### Ferramentas e conceitos consolidados
 - Arquitetura MVC
 - Validações server-side e client-side
 - Manipulação e tratamento de exceções
@@ -220,11 +220,11 @@ Esse projeto surgiu como um treinamento para praticar CSS e alguns conceitos de 
 - Paginação
 - Criptografia de senhas
 
-### Considerações finais
+#### Considerações finais
 
 Consigo ver diversas melhorias que posso fazer, mas pretendo apenas melhorar o que já está pronto. Este projeto está finalizado e não irei mais implementar coisas novas nele, farei apenas refatorações.
 
-### Pontos fracos
+#### Pontos fracos
 - **Segurança:** merecia mais atenção, ficou de lado nesse projeto, mas o foco era entregar código back e front funcionando.
 
 - **CSS:** a escrita está complexa e acoplada, visivelmente um novato.
@@ -237,10 +237,10 @@ Consigo ver diversas melhorias que posso fazer, mas pretendo apenas melhorar o q
 
 - **Separação de responsabilidades:** O controller EmpresaController com a responsabilidade de receber requisições json e requisições de apresentação me incomoda, pois apesar de fazer o trabalho de um controller, ele está lidando com tipos diferentes de trabalho, indo contra o S dos princípios SOLID.
 
-### Destaque
+#### Destaque
 - **Completude:** é um projeto bem completo, não ficou limitado a demonstrar uma única coisa. Nele você vai encontrar: implementação de persistência com JPA; arquitetura mvc com services e repositories; CRUD completo; criptografia de senha; validações server-side com Bean Validation e client-side com JS; anotações personalizadas; expressões regulares; DTOs e wrappers com Records; paginação end-to-end; tratamento de erros; desserialização de objeto Java para Json; classes Util para abstração de código repetitivo; testes automatizados de unidade e integração; tratamento de respostas ao cliente; requisições assíncronas com JS; JSP; HTML; CSS; JS manipulando o DOM; modularização do front; interface dinâmica.
 
-### Conclusão
+#### Conclusão
 
 Em vez de um micro-projeto abordando uma simulação de um caso de teste, um caso de validação, um caso de arquitetura e etc, aqui temos uma aplicação completa, funcional e com diversos conceitos implementados na prática.
 
