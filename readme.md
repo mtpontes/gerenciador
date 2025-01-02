@@ -20,9 +20,7 @@ Esse projeto foi desenvolvido na base de um projeto simples de MVC. Nele foi des
 - CSS
 - JavaScript (Front-end)
 
-## 🌟 Melhorias
-<details><summary>Clique para expandir</summary>
-
+<details><summary><h2>🌟 Melhorias</h2></summary>
 
 ### Boas práticas 
 - Gerenciamento de dependências com Maven.
@@ -46,7 +44,7 @@ Esse projeto foi desenvolvido na base de um projeto simples de MVC. Nele foi des
 - Reestruturação de pacotes.
 - Migração da biblioteca javax-servlet para jakarta-servlet.
 
-## 🧩 Novas funções
+### Novas funções
 - Criar usuário.
 - Criar empresa.
 - Listar somente empresa do usuário.
@@ -57,11 +55,7 @@ Esse projeto foi desenvolvido na base de um projeto simples de MVC. Nele foi des
 
 </details>
 
----
-
-## 🌐 Endpoints
-<details><summary>Clique para expandir</summary>
-<br>
+<details><summary><h2>🌐 Endpoints</h2></summary>
 
 Os endpoints são baseados principalmente em query params. A URL base é `/gerenciador`, as duas principais rotas são `/empresa` e `/usuario`.
 
@@ -146,8 +140,7 @@ Os endpoints são baseados principalmente em query params. A URL base é `/geren
 
 </details>
 
-## 🚀 Como Rodar
-<details><summary>Clique para expandir</summary>
+<details><summary><h2>🚀 Como Rodar</h2></summary>
 
 ### Pré-requisitos
 
@@ -196,17 +189,13 @@ O app empacotado pode ser encontrado no diretório `/target` após seguir o proc
 
 </details>
 
-## 💻 Desenvolvimento do projeto
-<details><summary>Clique para expandir</summary>
-<br>
-
+<details><summary><h2>💻 Desenvolvimento do projeto</h2></summary>
 
 O Gerenciador é um Web App baseado em query params, os quais utilizada para direcionar o fluxo das requisições.
 
 Esse projeto surgiu como um treinamento para praticar CSS e alguns conceitos de backend. A medida que fui desenvolvendo surgiram novas ideias e foi tomando novas proporções. É meu primeiro projeto de programação, nele tive a primeira vez de muitas coisas, por isso, preferi por não usar frameworks e libs no front-end, para conseguir resolver tudo da maneira mais crua, de forma que exercitasse bastante a minha lógica, criatividade e conhecimento de algorítmos.
 
-
-## 🧠 Aprendizado
+<details><summary><h2>🧠 Aprendizado</h2></summary>
 
 ### Tecnologias e libs
 - CSS
