@@ -152,7 +152,7 @@ Os endpoints são baseados principalmente em query params. A URL base é `/geren
 
 - Clone o projeto: 
 
-        `git clone https://github.com/mtpontes/gerenciador.git`
+        git clone https://github.com/mtpontes/gerenciador.git
 
 - Entre no diretório principal do projeto e execute: 
     * Para Linux: 
